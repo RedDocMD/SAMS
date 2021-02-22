@@ -34,31 +34,30 @@
     urlcolor=purple,        % color of external links
     linktoc=page            % only page is linked
 }%
-\def\myversion{1.0 }
+\def\myversion{1.0.0 }
 \date{}
 %\title{%
 
 %}
 \usepackage{hyperref}
 \begin{document}
-
+\thispagestyle{empty}
 \begin{flushright}
     \rule{16cm}{5pt}\vskip1cm
-    \begin{bfseries}
+    \bfseries{
         \Huge{SOFTWARE REQUIREMENTS\\ SPECIFICATION}\\
         \vspace{1.9cm}
         for\\
         \vspace{1.9cm}
-        $<$Project$>$\\
+        Student Auditorium Management System (SAMS)\\
         \vspace{1.9cm}
-        \LARGE{Version \myversion approved}\\
-        \vspace{1.9cm}
-        Prepared by $<$author$>$\\
-        \vspace{1.9cm}
-        $<$Organization$>$\\
+        Prepared by \\
+        Aaditya Agrawal (19CS10003)\\
+        Debanjan Saha (19CS30014) \\
+        Deep Majumder (19CS30015) \\ 
         \vspace{1.9cm}
         \today\\
-    \end{bfseries}
+}
 \end{flushright}
 
 \tableofcontents
@@ -71,9 +70,7 @@
         \hline
 	    Name & Date & Reason For Changes & Version\\
         \hline
-	    21 & 22 & 23 & 24\\
-        \hline
-	    31 & 32 & 33 & 34\\
+	     &  &  & \\
         \hline
     \end{tabular}
 \end{center}
@@ -81,10 +78,7 @@
 \chapter{Introduction}
 
 \section{Purpose}
-$<$Identify the product whose software requirements are specified in this 
-document, including the revision or release number. Describe the scope of the 
-product that is covered by this SRS, particularly if this SRS describes only 
-part of the system or a single subsystem.$>$
+This document is to define the functional and non-functional requirements of the Student Auditorium Management System (SAMS). This software consists of a backend API server and a frontend application, which together allow for efficiently managing shows, selling and refunding tickets and maintaining a balance sheet.
 
 \section{Document Conventions}
 $<$Describe any standards or typographical conventions that were followed when 
