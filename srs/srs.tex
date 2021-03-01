@@ -96,30 +96,32 @@ overview sections and proceeding through the sections that are most pertinent to
 each reader type.$>$
 
 \section{Project Scope}
-$<$Provide a short description of the software being specified and its purpose, 
-including relevant benefits, objectives, and goals. Relate the software to 
-corporate goals or business strategies. If a separate vision and scope document 
-is available, refer to it rather than duplicating its contents here.$>$
+The software can be used in IIT Kharagpur to book auditorium during fests. This software consists of following functions:
+\begin{enumerate}
+	\item Adding new events as per availability of the Auditorium, and editing events which are already present.
+	\item Allocating Balcony and Ordinary Seats for sale or to offer as complementary gifts. Also fixing the price of different seats.
+	\item Booking and Cancellation of seats for an event.
+	\item Printing Ticket for booking and cancellation of a seat of an event.
+	\item Querying the number of available seats of different classes for an event.
+	\item Querying the percentage of seats booked for various classes of seats and the amount collected in each case.
+	\item Booking available seat for a particular show
+	\item Creating new authorized sales person’s and clerk’s log in accounts.
+	\item Recording all the transactions including the sales person ID.
+	\item Preparing balance sheets for each event and also for the entire year.
+\end{enumerate}
 
 \section{References}
-$<$List any other documents or Web addresses to which this SRS refers. These may 
-include user interface style guides, contracts, standards, system requirements 
-specifications, use case documents, or a vision and scope document. Provide 
-enough information so that the reader could access a copy of each reference, 
-including title, author, version number, date, and source or location.$>$
+\begin{enumerate}
+	\item IEEE Std 830-1998 IEEE Recommended Practice for Software Requirements Specifications. IEEE Computer Society, 1998.
+	\item SE Lectures (Provided by Prof. Partha Pratim Das)
+\end{enumerate}
 
 
 \chapter{Overall Description}
 
 \section{Product Perspective}
-$<$Describe the context and origin of the product being specified in this SRS.  
-For example, state whether this product is a follow-on member of a product 
-family, a replacement for certain existing systems, or a new, self-contained 
-product. If the SRS defines a component of a larger system, relate the 
-requirements of the larger system to the functionality of this software and 
-identify interfaces between the two. A simple diagram that shows the major 
-components of the overall system, subsystem interconnections, and external 
-interfaces can be helpful.$>$
+This software is made to help provide an efficient methods for students and administration to book auditoriums for various events. It is build to add new events as per availability of the Auditorium, and edit events which are already present. The software is flexible and can be extended for various types of seats and other functionalities. It is a software that can be deployed in schools and colleges to reduce errors often caused due to physical selling of tickets. One could book a ticket directly from any place as the software can be hosted on a web server. An user of the software can book seats , cancel already booked seats for an event and get printed ticket for booking and cancellation. User can check number of available and book seats for an event. User can create new authorized sales person’s and clerk’s log in accounts. It also records all the transactions and prepares balance sheets for each event and also for the entire year. The manager can create new authorized sales person’s and clerk’s log in accounts.
+
 
 \section{Product Functions}
 $<$Summarize the major functions the product must perform or must let the user 
@@ -130,13 +132,16 @@ related requirements and how they relate, such as a top level data flow diagram
 or object class diagram, is often effective.$>$
 
 \section{User Classes and Characteristics}
-$<$Identify the various user classes that you anticipate will use this product.  
-User classes may be differentiated based on frequency of use, subset of product 
-functions used, technical expertise, security or privilege levels, educational 
-level, or experience. Describe the pertinent characteristics of each user class.  
-Certain requirements may pertain only to certain user classes. Distinguish the 
-most important user classes for this product from those who are less important 
-to satisfy.$>$
+We have used following classes in our software :
+\begin{enumerate}
+	\item Show: Show is a class to handle shows hosted by auditorium. It stores show ID, show
+date and time, seats list and price of different types of seats. It also keeps a count of seats booked.
+	\item Ticket: Ticket holds information about which show it is for, the type of seat booked, total price and details about the user.
+	\item Transaction: It is a class to store information about flow of money, it stores the amount and id of clerk who validated the sale.
+	\item Expenditure: A show has various expenditures incurred including payment of artists.
+	\item User: A user has his personal details like name,email,etc.
+\end{enumerate}
+
 
 \section{Operating Environment}
 $<$Describe the environment in which the software will operate, including the 
