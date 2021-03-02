@@ -1,3 +1,14 @@
+1.1 -Deep did it
 Updated 1.2
 Updated 1.3
-Updated 2.4
+1.4 - Aaditya
+1.5 - Aaditya
+2.1 - TBD Aaditya
+2.2 - Updated for one type. 3 remaining
+2.3 - TBD Aaditya
+2.4 - TBD Me
+2.5 - TBD Me
+2.6 - TBD Me
+2.7 - TBD Me
+
+/* Tip for myself - dont commit everytime you fucking piece of shit. */
