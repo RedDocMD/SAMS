@@ -86,6 +86,8 @@ Following defintions and abbreviations are used in this document:
 \begin{enumerate}
 	\item SAMS: Students' Auditorium Management System
 	\item SM: Show Manager
+	\item SP: Sales Person
+	\item AC: Accounts Clerk
 	\item Some things to be added...
 \end{enumerate}
 
@@ -140,35 +142,47 @@ interfaces can be helpful.$>$
 
 The software is intended for the use of four types of users - show manager,accounts clerk,sales persons and customers(spectators). The functions for each type of user provided by this software are listed as follows:
 
+
 \begin{enumerate}
-\item Show Manager
+\item \textbf{Show Manager}
 	\begin{enumerate}
-		\item Add New Show: The SM can add a new show with a date,timings based on the availability of the auditorium. Fixing a particular number of shows on a date and fixing the number and price of the balcony and ordinary seats for a particular are exculusive rights of SM.Offering seats as complimentary gifts to the students' society and VIPs are also handled by the SM.
+		\item Add New Show: The SM can add a new show with a date,timings based on the availability of the auditorium. Fixing a particular number of shows on a date and fixing the number and price of the balcony and ordinary seats for sale in a particular show are exclusive rights of SM. Offering seats as complimentary gifts to the students' society and VIPs are also handled by the SM.
 
 		\item Create Account for SalesPerson and Clerk: The SM is able to create new account for authorised salespersons and accounts clerk.
 		
 		\item Query :The SM can query the percentage of seats booked of each type and also the amount collected for each show
 		
-		\item Check Balance Sheet: The SM can access the balance sheet for the auditorium.
+		\item Check Balance Sheet: The SM can access different types of balance sheets(based on a show or annual sheet) for the auditorium.
+		
 	\end{enumerate}
-\item Accounts Clerk
+	
+\item \textbf{Accounts Clerk}
 	\begin{enumerate}
-		\item Add New Show: The SM 
+	
+		\item Add Expenditure: The AC can add expenditures for a show with a description for the expense. 
+		
+		\item Generate Balance Sheet: AC can generate a balance sheet for every show and an up-to-date balance sheet for every year.
 		
 	\end{enumerate}
 
-\item Sales Person
+\item \textbf{Sales Person}
 	\begin{enumerate}
-		\item Add New Show: The SM 
-		
+		\item  Authorise Ticket Booking: SP will be able to authorise tickets for a customer and make a sale for the show.
 	\end{enumerate}
 
-\item Customer
+\item \textbf{Customer}
 	\begin{enumerate}
-		\item Add New Show: The SM 
+		\item Book Tickets: The customer will be able to book tickets for themselves by paying the ticket price to an authorised SP.
+		
+		\item Cancel Tickets: The Customer will be able to cancel their tickets before the starting of the show.
+		
+		\item Query for Seats: The Customer will be able to check the availability of different classes of seats.
 		
 	\end{enumerate}
+ 
+ 
 \end{enumerate}
+
 
 $<$Summarize the major functions the product must perform or must let the user 
 perform. Details will be provided in Section 3, so only a high level summary 
@@ -187,11 +201,25 @@ most important user classes for this product from those who are less important
 to satisfy.$>$
 
 \section{Operating Environment}
+
+
 $<$Describe the environment in which the software will operate, including the 
 hardware platform, operating system and versions, and any other software 
 components or applications with which it must peacefully coexist.$>$
 
 \section{Design and Implementation Constraints}
+
+\begin{enumerate}
+	\item Total number of seats in the auditorium must be fixed at any time.
+	
+	\item  Total number of seats booked by a customer can not exceed a beyond a considerable logical value.
+	
+	\item SM can not be fired. In other words, there must be a SM present in the auditorium to manage the system.
+	
+	\item Tickets can not be sold by spectators or transfered to others.
+	
+\end{enumerate}
+
 $<$Describe any items or issues that will limit the options available to the 
 developers. These might include: corporate or regulatory policies; hardware 
 limitations (timing requirements, memory requirements); interfaces to other 
@@ -202,10 +230,26 @@ customer’s organization will be responsible for maintaining the delivered
 software).$>$
 
 \section{User Documentation}
+
+
+
 $<$List the user documentation components (such as user manuals, on-line help, 
 and tutorials) that will be delivered along with the software. Identify any 
 known user documentation delivery formats or standards.$>$
 \section{Assumptions and Dependencies}
+
+We have assumed the following: 
+\begin{itemize}
+	\item Computers are available to all types of users and printers are provided to the SP for ticket printing.
+	
+	\item Only one SM is present at a time. 
+	
+\end{itemize}
+
+Our dependencies are as follows:
+\begin{itemize}
+	\item 
+\end{itemize}
 
 $<$List any assumed factors (as opposed to known facts) that could affect the 
 requirements stated in the SRS. These could include third-party or commercial 
