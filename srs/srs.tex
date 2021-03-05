@@ -134,12 +134,11 @@ or object class diagram, is often effective.$>$
 \section{User Classes and Characteristics}
 We have used following classes in our software :
 \begin{enumerate}
-	\item Show: Show is a class to handle shows hosted by auditorium. It stores show ID, show
-date and time, seats list and price of different types of seats. It also keeps a count of seats booked.
-	\item Ticket: Ticket holds information about which show it is for, the type of seat booked, total price and details about the user.
-	\item Transaction: It is a class to store information about flow of money, it stores the amount and id of clerk who validated the sale.
+	\item Show: Show is a class to handle shows hosted by auditorium. It stores show ID, show date and time, seats list and price of different types of seats.
+	\item Ticket: Ticket holds information about which show it is for, the type of seat booked, total price and the userId.
+	\item Transaction: It is a class to store information about flow of money, it stores the details about a transaction of money.It stores the reason for transaction, amount, date and time. It also stores the Id of user involved in the transaction.
 	\item Expenditure: A show has various expenditures incurred including payment of artists.
-	\item User: A user has his personal details like name,email,etc.
+	\item User: A user has his personal details like UserId, Name, email,etc.
 \end{enumerate}
 
 
