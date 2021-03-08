@@ -45,7 +45,7 @@ app.get('/users', (_req, res) => {
     res.send(users);
 });
 
-app.get('/users/info/:id', (req, res) => {
+app.get('/users/actions/:id', (req, res) => {
     const id = req.params.id;
     for (const user of users) {
         if (user.id === id) {
@@ -60,11 +60,11 @@ app.post('/users', (req, res) => {
     res.send(req.body);
 });
 
-app.delete('/users', (req, res) => {
+app.delete('/users/actions/:id', (req, res) => {
     res.send(req.body);
 });
 
-app.patch('/users', (req, res) => {
+app.patch('/users/actions/:id', (req, res) => {
     res.send(req.body);
 });
 
