@@ -88,29 +88,14 @@ Following defintions and abbreviations are used in this document:
 	\item SM: Show Manager
 	\item SP: Sales Person
 	\item AC: Accounts Clerk
-	\item Some things to be added...
+	\item User: User corresponds to either SM or AC or SP or customer.
 \end{enumerate}
-
-$<$Describe any standards or typographical conventions that were followed when 
-writing this SRS, such as fonts or highlighting that have special significance.  
-For example, state whether priorities  for higher-level requirements are assumed 
-to be inherited by detailed requirements, or whether every requirement statement 
-is to have its own priority.$>$
-
 
 \section{Intended Audience and Reading Suggestions}
 
-This document mainly focuses on the design analysis and requirement specifications for this software. Software developers,testers,documentation writers are always welcome to read this document. However, it is not necessary for the users of this software to read this document. Nevertheless, we would encourage everyone to look into this document to get to know how we create the software from ground zero.\\ 
-
-For the readers, we would encourage you to read the content in the same order in which we have documented this and not to skip in between,so that you get a smoother understanding of this software. 
-
-
-$<$Describe the different types of reader that the document is intended for, 
-such as developers, project managers, marketing staff, users, testers, and 
-documentation writers. Describe what the rest of this SRS contains and how it is 
-organized. Suggest a sequence for reading the document, beginning with the 
-overview sections and proceeding through the sections that are most pertinent to 
-each reader type.$>$
+This document mainly focuses on the design analysis and requirement specifications for this software. Software developers, testers, documentation writers are always welcome to read this document. However, it is not necessary for the users of this software to read this document. Nevertheless, we would encourage everyone to look into this document to get to know how we create the software from ground zero.
+\\ \\
+For the readers, we would encourage you to read the content in the same order in which we have documented this and not to skip in between, so that you get a smoother understanding of this software. 
 
 \section{Project Scope}
 $<$Provide a short description of the software being specified and its purpose, 	
@@ -148,9 +133,9 @@ The software is intended for the use of four types of users - show manager,accou
 	\begin{enumerate}
 		\item Add New Show: The SM can add a new show with a date,timings based on the availability of the auditorium. Fixing a particular number of shows on a date and fixing the number and price of the balcony and ordinary seats for sale in a particular show are exclusive rights of SM. Offering seats as complimentary gifts to the students' society and VIPs are also handled by the SM.
 
-		\item Create Account for SalesPerson and Clerk: The SM is able to create new account for authorised salespersons and accounts clerk.
+		\item Manage Account for SP and AC: The SM is able to create new account for authorised SP and AC and will be able to change passwords for the all SP and AC.
 		
-		\item Query :The SM can query the percentage of seats booked of each type and also the amount collected for each show
+		\item Query: The SM can query the percentage of seats booked of each type and also the amount collected for each show
 		
 		\item Check Balance Sheet: The SM can access different types of balance sheets(based on a show or annual sheet) for the auditorium.
 		
@@ -161,18 +146,15 @@ The software is intended for the use of four types of users - show manager,accou
 	
 		\item Add Expenditure: The AC can add expenditures for a show with a description for the expense. 
 		
-		\item Generate Balance Sheet: AC can generate a balance sheet for every show and an up-to-date balance sheet for every year.
-		
 	\end{enumerate}
 
 \item \textbf{Sales Person}
 	\begin{enumerate}
-		\item  Authorise Ticket Booking: SP will be able to authorise tickets for a customer and make a sale for the show.
+		\item  Book Ticket: SP will be able to book and authorise tickets for a customer and make a sale for the show.
 	\end{enumerate}
 
 \item \textbf{Customer}
 	\begin{enumerate}
-		\item Book Tickets: The customer will be able to book tickets for themselves by paying the ticket price to an authorised SP.
 		
 		\item Cancel Tickets: The Customer will be able to cancel their tickets before the starting of the show.
 		
@@ -183,13 +165,6 @@ The software is intended for the use of four types of users - show manager,accou
  
 \end{enumerate}
 
-
-$<$Summarize the major functions the product must perform or must let the user 
-perform. Details will be provided in Section 3, so only a high level summary 
-(such as a bullet list) is needed here. Organize the functions to make them 
-understandable to any reader of the SRS. A picture of the major groups of 
-related requirements and how they relate, such as a top level data flow diagram 
-or object class diagram, is often effective.$>$
 
 \section{User Classes and Characteristics}
 $<$Identify the various user classes that you anticipate will use this product.  
@@ -202,10 +177,7 @@ to satisfy.$>$
 
 \section{Operating Environment}
 
-
-$<$Describe the environment in which the software will operate, including the 
-hardware platform, operating system and versions, and any other software 
-components or applications with which it must peacefully coexist.$>$
+We are testing this to work on the following tech stack- JDK11 and above, MongoDB 4.4 and above, Apache Maven 3.6 and above and node 14.5 and above. We have tested it to run on reasonably recent modern browser like Google Chrome 88 and above, firefox 86 and above with amd64 architecture.
 
 \section{Design and Implementation Constraints}
 
@@ -220,27 +192,16 @@ components or applications with which it must peacefully coexist.$>$
 	
 \end{enumerate}
 
-$<$Describe any items or issues that will limit the options available to the 
-developers. These might include: corporate or regulatory policies; hardware 
-limitations (timing requirements, memory requirements); interfaces to other 
-applications; specific technologies, tools, and databases to be used; parallel 
-operations; language requirements; communications protocols; security 
-considerations; design conventions or programming standards (for example, if the 
-customer’s organization will be responsible for maintaining the delivered 
-software).$>$
 
 \section{User Documentation}
 
+The frontend of the software will be kept sufficiently intuitive and straight forward for an internet literate person to use.
 
-
-$<$List the user documentation components (such as user manuals, on-line help, 
-and tutorials) that will be delivered along with the software. Identify any 
-known user documentation delivery formats or standards.$>$
 \section{Assumptions and Dependencies}
 
 We have assumed the following: 
 \begin{itemize}
-	\item Computers are available to all types of users and printers are provided to the SP for ticket printing.
+	\item Computers are available to all types of users and users are computer literate and internet literate.
 	
 	\item Only one SM is present at a time. 
 	
@@ -248,17 +209,8 @@ We have assumed the following:
 
 Our dependencies are as follows:
 \begin{itemize}
-	\item 
+	\item The software is being developed in linux operating system.
 \end{itemize}
-
-$<$List any assumed factors (as opposed to known facts) that could affect the 
-requirements stated in the SRS. These could include third-party or commercial 
-components that you plan to use, issues around the development or operating 
-environment, or constraints. The project could be affected if these assumptions 
-are incorrect, are not shared, or change. Also identify any dependencies the 
-project has on external factors, such as software components that you intend to 
-reuse from another project, unless they are already documented elsewhere (for 
-example, in the vision and scope document or the project plan).$>$
 
 
 \chapter{External Interface Requirements}

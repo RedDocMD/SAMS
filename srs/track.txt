@@ -1,70 +1,7 @@
-1.1 - Deep.
-1.2 - Partially done.to be discussed.
-1.3 - Updated.
-1.4 - Aaditya.
-1.5 - Aaditya.
-2.1 - Aaditya.
-2.2 - Updated.
-2.3 - Aaditya.
-2.4 - Not yet.
-2.5 - Updated.
-2.6 - Not yet.
-2.7 - Partially Done.
+2.2- figures
 
-/* Tip for myself - dont commit everytime you fucking piece of shit. */
-
-/*--------------Doubts
-1.change password?
-
-2.clerk can generate balance sheet?but not see it? is it logical?
-only manager can see b.sheet.
-dont add 
- 
-
-3. can SP and customer both cancel tickets?
-or customer ---> SP ----> cancel?
-cancel only for customer
-dont add book tickets in customer put it in SP
-
-
-4. Module 2.4 and 2.6 to be discussed with team.
-
-5. 
-
----------------*/
-
-
-** My Fix
-
-1.3 commas
-2.4 We are testing this to work on the following tech stack- JDK11 and above, MongoDB 4.4 and above,Apache Maven 3.6 and above ;
-node 14.5 and above,
-We have tested it to run on reasonably recent modern browser like Google Chrome 88 and above, firefox 86 above, amd64 architecture.
-
-2.6 -- The frontend of the software will be kept sufficiently intuitive and straight-forward for an internet literate person to use. 
-
-2.7 - user is computer literate + internet literate.
-uninterupted internet service 
-linux 
-
-remove printer
-
-___________________________________________________
-
-**Aaditya fixes
-
-Module 2.3
-1.  remove count of seats booked.
-2.  replace user with userid
-3.  a single transaction of money;
- 	add reason of transaction - clerk,accountant,user and 		ids and date time of transaction.
- 	add showid 
-4.	
-
- 	
-
-
-
+doubt -
+2.2.4 Customer -> Request tickets?
 
 
 
