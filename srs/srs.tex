@@ -81,19 +81,21 @@
 This document is to define the functional and non-functional requirements of the Student Auditorium Management System (SAMS). This software consists of a backend API server and a frontend application, which together allow for efficiently managing shows, selling and refunding tickets and maintaining a balance sheet.
 
 \section{Document Conventions}
-$<$Describe any standards or typographical conventions that were followed when 
-writing this SRS, such as fonts or highlighting that have special significance.  
-For example, state whether priorities  for higher-level requirements are assumed 
-to be inherited by detailed requirements, or whether every requirement statement 
-is to have its own priority.$>$
+
+Following defintions and abbreviations are used in this document:
+\begin{enumerate}
+	\item SAMS: Students' Auditorium Management System
+	\item SM: Show Manager
+	\item SP: Sales Person
+	\item AC: Accounts Clerk
+	\item User: User corresponds to either SM or AC or SP or customer.
+\end{enumerate}
 
 \section{Intended Audience and Reading Suggestions}
-$<$Describe the different types of reader that the document is intended for, 
-such as developers, project managers, marketing staff, users, testers, and 
-documentation writers. Describe what the rest of this SRS contains and how it is 
-organized. Suggest a sequence for reading the document, beginning with the 
-overview sections and proceeding through the sections that are most pertinent to 
-each reader type.$>$
+
+This document mainly focuses on the design analysis and requirement specifications for this software. Software developers, testers, documentation writers are always welcome to read this document. However, it is not necessary for the users of this software to read this document. Nevertheless, we would encourage everyone to look into this document to get to know how we create the software from ground zero.
+\\ \\
+For the readers, we would encourage you to read the content in the same order in which we have documented this and not to skip in between, so that you get a smoother understanding of this software. 
 
 \section{Project Scope}
 The software can be used in any auditorium to organise sale of tickets of various shows. This software consists of following functions:
@@ -124,12 +126,47 @@ This software is made to help provide an efficient methods for students and admi
 
 
 \section{Product Functions}
-$<$Summarize the major functions the product must perform or must let the user 
-perform. Details will be provided in Section 3, so only a high level summary 
-(such as a bullet list) is needed here. Organize the functions to make them 
-understandable to any reader of the SRS. A picture of the major groups of 
-related requirements and how they relate, such as a top level data flow diagram 
-or object class diagram, is often effective.$>$
+
+The software is intended for the use of four types of users - show manager,accounts clerk,sales persons and customers(spectators). The functions for each type of user provided by this software are listed as follows:
+
+
+\begin{enumerate}
+\item \textbf{Show Manager}
+	\begin{enumerate}
+		\item Add New Show: The SM can add a new show with a date,timings based on the availability of the auditorium. Fixing a particular number of shows on a date and fixing the number and price of the balcony and ordinary seats for sale in a particular show are exclusive rights of SM. Offering seats as complimentary gifts to the students' society and VIPs are also handled by the SM.
+
+		\item Manage Account for SP and AC: The SM is able to create new account for authorised SP and AC and will be able to change passwords for the all SP and AC.
+		
+		\item Query: The SM can query the percentage of seats booked of each type and also the amount collected for each show
+		
+		\item Check Balance Sheet: The SM can access different types of balance sheets(based on a show or annual sheet) for the auditorium.
+		
+	\end{enumerate}
+	
+\item \textbf{Accounts Clerk}
+	\begin{enumerate}
+	
+		\item Add Expenditure: The AC can add expenditures for a show with a description for the expense. 
+		
+	\end{enumerate}
+
+\item \textbf{Sales Person}
+	\begin{enumerate}
+		\item  Book Ticket: SP will be able to book and authorise tickets for a customer and make a sale for the show.
+	\end{enumerate}
+
+\item \textbf{Customer}
+	\begin{enumerate}
+		
+		\item Cancel Tickets: The Customer will be able to cancel their tickets before the starting of the show.
+		
+		\item Query for Seats: The Customer will be able to check the availability of different classes of seats.
+		
+	\end{enumerate}
+ 
+ 
+\end{enumerate}
+
 
 \section{User Classes and Characteristics}
 We have used following classes in our software :
@@ -143,34 +180,41 @@ We have used following classes in our software :
 
 
 \section{Operating Environment}
-$<$Describe the environment in which the software will operate, including the 
-hardware platform, operating system and versions, and any other software 
-components or applications with which it must peacefully coexist.$>$
+
+We are testing this to work on the following tech stack- JDK11 and above, MongoDB 4.4 and above, Apache Maven 3.6 and above and node 14.5 and above. We have tested it to run on reasonably recent modern browser like Google Chrome 88 and above, firefox 86 and above with amd64 architecture.
 
 \section{Design and Implementation Constraints}
-$<$Describe any items or issues that will limit the options available to the 
-developers. These might include: corporate or regulatory policies; hardware 
-limitations (timing requirements, memory requirements); interfaces to other 
-applications; specific technologies, tools, and databases to be used; parallel 
-operations; language requirements; communications protocols; security 
-considerations; design conventions or programming standards (for example, if the 
-customer’s organization will be responsible for maintaining the delivered 
-software).$>$
+
+\begin{enumerate}
+	\item Total number of seats in the auditorium must be fixed at any time.
+	
+	\item  Total number of seats booked by a customer can not exceed a beyond a considerable logical value.
+	
+	\item SM can not be fired. In other words, there must be a SM present in the auditorium to manage the system.
+	
+	\item Tickets can not be sold by spectators or transfered to others.
+	
+\end{enumerate}
+
 
 \section{User Documentation}
-$<$List the user documentation components (such as user manuals, on-line help, 
-and tutorials) that will be delivered along with the software. Identify any 
-known user documentation delivery formats or standards.$>$
+
+The frontend of the software will be kept sufficiently intuitive and straight forward for an internet literate person to use.
+
 \section{Assumptions and Dependencies}
 
-$<$List any assumed factors (as opposed to known facts) that could affect the 
-requirements stated in the SRS. These could include third-party or commercial 
-components that you plan to use, issues around the development or operating 
-environment, or constraints. The project could be affected if these assumptions 
-are incorrect, are not shared, or change. Also identify any dependencies the 
-project has on external factors, such as software components that you intend to 
-reuse from another project, unless they are already documented elsewhere (for 
-example, in the vision and scope document or the project plan).$>$
+We have assumed the following: 
+\begin{itemize}
+	\item Computers are available to all types of users and users are computer literate and internet literate.
+	
+	\item Only one SM is present at a time. 
+	
+\end{itemize}
+
+Our dependencies are as follows:
+\begin{itemize}
+	\item The software is being developed in linux operating system.
+\end{itemize}
 
 
 \chapter{External Interface Requirements}
