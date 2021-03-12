@@ -1,5 +1,6 @@
 package eternal.blue.sams.user;
 
+import eternal.blue.sams.SamsApplication;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * This class is used to defined routes related to User.
  */
+@CrossOrigin(SamsApplication.apiConsumerAddress)
 @RestController
 @RequestMapping("/users")
 public class UserController {
