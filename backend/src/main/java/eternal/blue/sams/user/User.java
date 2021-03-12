@@ -15,7 +15,6 @@ public class User {
     private String username;
     private String password;
     private UserType type;
-
     public User(String username, String password, UserType type) {
         this.username = username;
         this.password = password;
@@ -23,6 +22,16 @@ public class User {
     }
 
     public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", type=" + type +
+                '}';
     }
 
     public String getUsername() {
