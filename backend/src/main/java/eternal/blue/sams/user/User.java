@@ -2,6 +2,7 @@ package eternal.blue.sams.user;
 
 import org.springframework.data.annotation.Id;
 
+import java.math.BigInteger;
 import java.util.Objects;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Objects;
  */
 public class User {
     @Id
-    private String id;
+    private BigInteger id;
     private String username;
     private String password;
     private UserType type;
@@ -61,7 +62,7 @@ public class User {
         return Objects.hash(username);
     }
 
-    public String getId() {
+    public BigInteger getId() {
         return id;
     }
 }
