@@ -13,7 +13,7 @@
 %http://tex.stackexchange.com/questions/42602/software-requirements-specification-with-latex
 %http://tex.stackexchange.com/users/963/yiannis-lazarides
 %Also based on the template of Karl E. Wiegers
-%http://www.se.rit.edu/~emad/teaching/slides/srs_template_sep14.pdf
+%http://www.se.rit.edu/~emUmbrelload/teaching/slides/srs_template_sep14.pdf
 %http://karlwiegers.com
 \documentclass{scrreprt}
 \usepackage{listings}
@@ -264,34 +264,96 @@ prefer to organize this section by use case, mode of operation, user class,
 object class, functional hierarchy, or combinations of these, whatever makes the 
 most logical sense for your product.$>$
 
-\section{System Feature 1}
-$<$Don’t really say “System Feature 1.” State the feature name in just a few 
-words.$>$
+\section{Login}
+\begin{itemize}
+\item \textbf{Goal in Context}: Open view relevant to the user on giving a correct login credentials.
+\item \textbf{Preconditions}: User should exist with given username.
+\item \textbf{Successful End Condition}: Opens the view corresponding to the user.
+\item \textbf{Failed End Condition}: If password or username isn't correct, it shows a dialog printing the same.
+\item \textbf{Actors}: User
+\item \textbf{Trigger}: The user enters their username and password, and clicks the Login button.
+\end{itemize}
 
-\subsection{Description and Priority}
-$<$Provide a short description of the feature and indicate whether it is of 
-High, Medium, or Low priority. You could also include specific priority 
-component ratings, such as benefit, penalty, cost, and risk (each rated on a 
-relative scale from a low of 1 to a high of 9).$>$
+\section{Create Show}
+\begin{itemize}
+\item \textbf{Goal in Context}: Create a show
+\item \textbf{Preconditions}: There shouldn't be a show with clashing time
+\item \textbf{Successful End Condition}: A show with given details is created
+\item \textbf{Failed End Condition}: If preconditions are not met, then no show isn't created
+\item \textbf{Actors}: SM
+\item \textbf{Trigger}: In manager dashboard, there is a button for Creating a show.
+\end{itemize}
 
-\subsection{Stimulus/Response Sequences}
-$<$List the sequences of user actions and system responses that stimulate the 
-behavior defined for this feature. These will correspond to the dialog elements 
-associated with use cases.$>$
+\section{Create Accountant}
+\begin{itemize}
+\item \textbf{Goal in Context}: Create an AC account.
+\item \textbf{Preconditions}: SM should be logged in.
+\item \textbf{Successful End Condition}: An account for AC is created
+\item \textbf{Failed End Condition}: There shouldn't exist an User with clashing username.
+\item \textbf{Actors}: SM
+\item \textbf{Trigger}: In manager dashboard, there is a button for Creating an accountant.
+\end{itemize}
 
-\subsection{Functional Requirements}
-$<$Itemize the detailed functional requirements associated with this feature.  
-These are the software capabilities that must be present in order for the user 
-to carry out the services provided by the feature, or to execute the use case.  
-Include how the product should respond to anticipated error conditions or 
-invalid inputs. Requirements should be concise, complete, unambiguous, 
-verifiable, and necessary. Use “TBD” as a placeholder to indicate when necessary 
-information is not yet available.$>$
+\section{Create Salesman}
+\begin{itemize}
+\item \textbf{Goal in Context}: Create a SP account.
+\item \textbf{Preconditions}: SM should be logged in.
+\item \textbf{Successful End Condition}: An account for SP is created
+\item \textbf{Failed End Condition}: There shouldn't exist an User with clashing username.
+\item \textbf{Actors}: SM
+\item \textbf{Trigger}: In manager dashboard, there is a button for Creating a Salesman.
+\end{itemize}
 
-$<$Each requirement should be uniquely identified with a sequence number or a 
-meaningful tag of some kind.$>$
+\section{View Shows}
+\begin{itemize}
+\item \textbf{Goal in Context}: Display list of all shows.
+\item \textbf{Preconditions}: Shows should be created.
+\item \textbf{Successful End Condition}: List of all shows displayed.
+\item \textbf{Failed End Condition}: No fail conditions.
+\item \textbf{Actors}: SM
+\item \textbf{Trigger}: In manager dashboard, there is a button for Creating a view shows.
+\end{itemize}
 
-REQ-1:	REQ-2:
+\section{Show Stats}
+\begin{itemize}
+\item \textbf{Goal in Context}: Show all statistics related to particular shows.
+\item \textbf{Preconditions}: A show should be selected from view shows.
+\item \textbf{Successful End Condition}: Statistics like percentage of seats booked from each category are shown.
+\item \textbf{Failed End Condition}: No fail conditions.
+\item \textbf{Actors}: SM
+\item \textbf{Trigger}: In manager dashboard, there is a button for Showing Stastics of a show already selected.
+\end{itemize}
+
+\section{Show Balance Sheets}
+\begin{itemize}
+\item \textbf{Goal in Context}: Show balance sheet of a particular shows.
+\item \textbf{Preconditions}: A show should be selected from view shows.
+\item \textbf{Successful End Condition}: Statistics like percentage of seats booked from each category are shown.
+\item \textbf{Failed End Condition}: No fail conditions.
+\item \textbf{Actors}: SM
+\item \textbf{Trigger}: In manager dashboard, there is a button for Showing Stastics of a show already selected.
+\end{itemize}
+
+\section{Show Balance Sheets}
+\begin{itemize}
+\item \textbf{Goal in Context}: Show all statistics related to particular shows.
+\item \textbf{Preconditions}: A show should be selected from view shows.
+\item \textbf{Successful End Condition}: Statistics like percentage of seats booked from each category are shown.
+\item \textbf{Failed End Condition}: No fail conditions.
+\item \textbf{Actors}: SM
+\item \textbf{Trigger}: In manager dashboard, there is a button for Showing Stastics of a show already selected.
+\end{itemize}
+
+
+\section{View Accountants}
+\begin{itemize}
+\item \textbf{Goal in Context}: Show list of all AC
+\item \textbf{Preconditions}: AC should be created.
+\item \textbf{Successful End Condition}: List of ACs is shown.
+\item \textbf{Failed End Condition}: No fail conditions
+\item \textbf{Actors}: SM
+\item \textbf{Trigger}: In manager dashboard, there is a button for viewing accountants.
+\end{itemize}
 
 \section{System Feature 2 (and so on)}
 
