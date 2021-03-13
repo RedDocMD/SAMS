@@ -1,2 +1,4 @@
+srs/srs.*
+!srs/srs.tex
 mock-server/node_modules/
 mock-server/package-lock.json
