@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 /**
  * This class represents a single Show instance.
@@ -40,6 +41,33 @@ public class Show {
     }
 
     public Show() {
+    }
+
+    @Override
+    public String toString() {
+        return "Show{" +
+                "id=" + id +
+                ", date=" + date +
+                ", time=" + time +
+                ", duration=" + duration +
+                ", balconyTicketCount=" + balconyTicketCount +
+                ", regularTicketCount=" + regularTicketCount +
+                ", balconyTicketPrice=" + balconyTicketPrice +
+                ", regularTicketPrice=" + regularTicketPrice +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Show show = (Show) o;
+        return Objects.equals(date, show.date) && Objects.equals(time, show.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, time);
     }
 
     public BigInteger getId() {
