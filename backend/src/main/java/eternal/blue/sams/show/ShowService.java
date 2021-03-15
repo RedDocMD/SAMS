@@ -21,7 +21,7 @@ public class ShowService {
         return showRepository.findAll();
     }
 
-    public Optional<Show> getUser(BigInteger id) {
+    public Optional<Show> getShow(BigInteger id) {
         return showRepository.findById(id);
     }
 

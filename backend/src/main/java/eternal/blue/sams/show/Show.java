@@ -18,25 +18,25 @@ public class Show {
     private LocalDate date;
     private LocalTime time;
     private Duration duration;
-    private int balconySeatCount;
-    private int ordinarySeatCount;
-    private double balconySeatPrice;
-    private double ordinarySeatPrice;
+    private int balconyTicketCount;
+    private int regularTicketCount;
+    private double balconyTicketPrice;
+    private double regularTicketPrice;
 
     public Show(LocalDate date,
                 LocalTime time,
                 Duration duration,
-                int balconySeatCount,
-                int ordinarySeatCount,
-                double balconySeatPrice,
-                double ordinarySeatPrice) {
+                int balconyTicketCount,
+                int regularTicketCount,
+                double balconyTicketPrice,
+                double regularTicketPrice) {
         this.date = date;
         this.time = time;
         this.duration = duration;
-        this.balconySeatCount = balconySeatCount;
-        this.ordinarySeatCount = ordinarySeatCount;
-        this.balconySeatPrice = balconySeatPrice;
-        this.ordinarySeatPrice = ordinarySeatPrice;
+        this.balconyTicketCount = balconyTicketCount;
+        this.regularTicketCount = regularTicketCount;
+        this.balconyTicketPrice = balconyTicketPrice;
+        this.regularTicketPrice = regularTicketPrice;
     }
 
     public Show() {
@@ -70,35 +70,35 @@ public class Show {
         this.duration = duration;
     }
 
-    public int getBalconySeatCount() {
-        return balconySeatCount;
+    public int getBalconyTicketCount() {
+        return balconyTicketCount;
     }
 
-    public void setBalconySeatCount(int balconySeatCount) {
-        this.balconySeatCount = balconySeatCount;
+    public void setBalconyTicketCount(int balconyTicketCount) {
+        this.balconyTicketCount = balconyTicketCount;
     }
 
-    public int getOrdinarySeatCount() {
-        return ordinarySeatCount;
+    public int getRegularTicketCount() {
+        return regularTicketCount;
     }
 
-    public void setOrdinarySeatCount(int ordinarySeatCount) {
-        this.ordinarySeatCount = ordinarySeatCount;
+    public void setRegularTicketCount(int regularTicketCount) {
+        this.regularTicketCount = regularTicketCount;
     }
 
-    public double getBalconySeatPrice() {
-        return balconySeatPrice;
+    public double getBalconyTicketPrice() {
+        return balconyTicketPrice;
     }
 
-    public void setBalconySeatPrice(double balconySeatPrice) {
-        this.balconySeatPrice = balconySeatPrice;
+    public void setBalconyTicketPrice(double balconyTicketPrice) {
+        this.balconyTicketPrice = balconyTicketPrice;
     }
 
-    public double getOrdinarySeatPrice() {
-        return ordinarySeatPrice;
+    public double getRegularTicketPrice() {
+        return regularTicketPrice;
     }
 
-    public void setOrdinarySeatPrice(double ordinarySeatPrice) {
-        this.ordinarySeatPrice = ordinarySeatPrice;
+    public void setRegularTicketPrice(double regularTicketPrice) {
+        this.regularTicketPrice = regularTicketPrice;
     }
 }
