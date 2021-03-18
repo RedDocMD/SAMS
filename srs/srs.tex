@@ -321,7 +321,7 @@ most logical sense for your product.$>$
 \item \textbf{Successful End Condition}: Statistics like percentage of seats booked from each category are shown.
 \item \textbf{Failed End Condition}: No fail conditions.
 \item \textbf{Actors}: SM
-\item \textbf{Trigger}: In manager dashboard, there is a button for Showing Stastics of a show already selected.
+\item \textbf{Trigger}: In manager dashboard, there is a button for Showing Statistics of a show already selected.
 \end{itemize}
 
 \section{Show Balance Sheets}
@@ -341,7 +341,7 @@ most logical sense for your product.$>$
 \item \textbf{Successful End Condition}: Statistics like percentage of seats booked from each category are shown.
 \item \textbf{Failed End Condition}: No fail conditions.
 \item \textbf{Actors}: SM
-\item \textbf{Trigger}: In manager dashboard, there is a button for Showing Stastics of a show already selected.
+\item \textbf{Trigger}: In manager dashboard, there is a button for Showing Statistics of a show already selected.
 \end{itemize}
 
 
@@ -355,7 +355,93 @@ most logical sense for your product.$>$
 \item \textbf{Trigger}: In manager dashboard, there is a button for viewing accountants.
 \end{itemize}
 
-\section{System Feature 2 (and so on)}
+\section{View Salespersons}
+\begin{itemize}
+\item \textbf{Goal in Context}: Display list of all SP.
+\item \textbf{Preconditions}: Account for SP should be created beforehand.
+\item \textbf{Successful End Condition}:  List of SP is shown.
+\item \textbf{Failed End Condition}: No fail condition.
+\item \textbf{Actors}: SM
+\item \textbf{Trigger}: In SM dashboard, there is a button to view all SPs present in the system.
+\end{itemize}
+
+
+\section{View Yearly Balance Sheet}
+\begin{itemize}
+\item \textbf{Goal in Context}: Show annual balance sheet for the auditorium.
+\item \textbf{Preconditions}: The year selected should be a valid year in which at least one ticket was sold using SAMS.  
+\item \textbf{Successful End Condition}: It will display balance sheet for a particular year.
+\item \textbf{Failed End Condition}: No fail condition.
+\item \textbf{Actors}: SM
+\item \textbf{Trigger}: In SM dashboard, there is a button to view  yearly balance sheet. 
+\end{itemize}
+
+
+\section{Signup}
+\begin{itemize}
+\item \textbf{Goal in Context}: Create an account for the SM
+\item \textbf{Preconditions}: Only one SM account should be created for managing SAMS.
+\item \textbf{Successful End Condition}: A new account is created for an SM. 
+\item \textbf{Failed End Condition}: If one SM already exists, SAMS will not create another account for SM.
+\item \textbf{Actors}: A system admin or the SM. 
+\item \textbf{Trigger}: The system admin will enter details of the SM in a Signup Page and press signup button. 
+\end{itemize}
+
+
+\section{View Shows}
+\begin{itemize}
+\item \textbf{Goal in Context}: Display a list of all available shows.
+\item \textbf{Preconditions}: There should be at least one available show.
+\item \textbf{Successful End Condition}: List of all available shows is displayed.
+\item \textbf{Failed End Condition}: No fail condition. 
+\item \textbf{Actors}: Customer
+\item \textbf{Trigger}: In Customer dashboard, there is a button to view all shows.
+\end{itemize}
+
+
+\section{View Tickets}
+\begin{itemize}
+\item \textbf{Goal in Context}: Show available tickets for a particular show.
+\item \textbf{Preconditions}: There should be an existing show to view tickets for it.
+\item \textbf{Successful End Condition}: Show tickets for selected show. 
+\item \textbf{Failed End Condition}: No fail condition.
+\item \textbf{Actors}: Customer
+\item \textbf{Trigger}: In Customer dashboard, there is a button to view tickets for a show.
+\end{itemize}
+
+
+\section{Cancel Tickets}
+\begin{itemize}
+\item \textbf{Goal in Context}: Cancel tickets for a particular show.
+\item \textbf{Preconditions}: At least one ticket should be booked for a show in order to be able to cancel it and it should be done before the show starts. 
+\item \textbf{Successful End Condition}: Ticket for selected show gets cancelled with automatic deduction of money based on date of cancellation based on policy of the auditorium.
+\item \textbf{Failed End Condition}: No fail condition. 
+\item \textbf{Actors}: Customer
+\item \textbf{Trigger}: In Customer dashboard, there is a button to cancel tickets for a show.
+\end{itemize}
+
+
+\section{Book Ticket}
+\begin{itemize}
+\item \textbf{Goal in Context}: Book a ticket for a customer.
+\item \textbf{Preconditions}: There should be at least one booking request from a customer for a particular show. 
+\item \textbf{Successful End Condition}: One or multiple tickets are booked for a customer for a show.
+\item \textbf{Failed End Condition}: No fail condition.
+\item \textbf{Actors}: SP
+\item \textbf{Trigger}: In SP dashboard, there is a button to book tickets for a show for a particular customer.
+\end{itemize}
+
+
+\section{Add expenditure}
+\begin{itemize}
+\item \textbf{Goal in Context}: Add various types of expenditure for a particular show
+\item \textbf{Preconditions}: No precondition. 
+\item \textbf{Successful End Condition}: An expenditure with details is added for a show.
+\item \textbf{Failed End Condition}: No fail condition.
+\item \textbf{Actors}: AC
+\item \textbf{Trigger}: In AC dashboard, there is a button to add various expenditures for a show.
+\end{itemize}
+
 
 
 \chapter{Other Nonfunctional Requirements}
