@@ -27,6 +27,10 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
+    public List<Transaction> allTransactions() {
+        return transactionRepository.findAll();
+    }
+
     public Optional<Transaction> getTransactionById(BigInteger id) {
         return transactionRepository.findById(id);
     }
