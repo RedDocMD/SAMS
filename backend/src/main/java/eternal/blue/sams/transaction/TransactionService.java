@@ -22,9 +22,9 @@ public class TransactionService {
     }
 
     // Note that we don't take the time, it is auto-generated.
-    public Transaction createTransaction(double amount, BigInteger initiatorId, UserType initiatorType, BigInteger showId) {
+    public void createTransaction(double amount, BigInteger initiatorId, UserType initiatorType, BigInteger showId) {
         var transaction = new Transaction(amount, initiatorId, showId, initiatorType, LocalDateTime.now());
-        return transactionRepository.save(transaction);
+        transactionRepository.save(transaction);
     }
 
     public List<Transaction> allTransactions() {
