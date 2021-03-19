@@ -22,8 +22,8 @@ public class TransactionService {
     }
 
     // Note that we don't take the time, it is auto-generated.
-    public void createTransaction(double amount, BigInteger initiatorId, UserType initiatorType, BigInteger showId) {
-        var transaction = new Transaction(amount, initiatorId, showId, initiatorType, LocalDateTime.now());
+    public void createTransaction(double amount, TransactionType type, BigInteger initiatorId, UserType initiatorType, BigInteger showId) {
+        var transaction = new Transaction(amount, type, initiatorId, showId, initiatorType, LocalDateTime.now());
         transactionRepository.save(transaction);
     }
 

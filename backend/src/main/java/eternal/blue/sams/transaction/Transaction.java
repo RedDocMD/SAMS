@@ -19,16 +19,27 @@ public class Transaction {
     private BigInteger showId;
     private UserType initiatorType;
     private LocalDateTime time;
+    private TransactionType type;
 
-    public Transaction(double amount, BigInteger initiatorId, BigInteger showId, UserType initiatorType, LocalDateTime time) {
+    public Transaction(double amount, TransactionType type, BigInteger initiatorId,
+                       BigInteger showId, UserType initiatorType, LocalDateTime time) {
         this.amount = amount;
         this.initiatorId = initiatorId;
         this.showId = showId;
         this.initiatorType = initiatorType;
         this.time = time;
+        this.type = type;
     }
 
     public Transaction() {
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
     }
 
     @Override
@@ -40,6 +51,7 @@ public class Transaction {
                 ", showId=" + showId +
                 ", initiatorType=" + initiatorType +
                 ", time=" + time +
+                ", type=" + type +
                 '}';
     }
 

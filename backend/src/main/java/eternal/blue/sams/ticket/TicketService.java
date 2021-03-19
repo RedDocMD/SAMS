@@ -2,6 +2,7 @@ package eternal.blue.sams.ticket;
 
 import eternal.blue.sams.show.ShowService;
 import eternal.blue.sams.transaction.TransactionService;
+import eternal.blue.sams.transaction.TransactionType;
 import eternal.blue.sams.user.UserType;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +68,7 @@ public class TicketService {
         }
 
         // Do transaction
-        transactionService.createTransaction(ticket.getPrice(), salespersonId, UserType.Salesperson, ticket.getShowId());
+        transactionService.createTransaction(ticket.getPrice(), TransactionType.Credit, salespersonId, UserType.Salesperson, ticket.getShowId());
 
         // Save ticket
         return Optional.of(ticketRepository.save(ticket));
@@ -103,7 +104,7 @@ public class TicketService {
 
         // Do refund
         var refundAmount = price - deductionAmount;
-        transactionService.createTransaction(refundAmount, ticket.getUserId(), UserType.Customer, ticket.getShowId());
+        transactionService.createTransaction(refundAmount, TransactionType.Debit, ticket.getUserId(), UserType.Customer, ticket.getShowId());
 
         // Delete ticket
         ticketRepository.deleteById(id);
