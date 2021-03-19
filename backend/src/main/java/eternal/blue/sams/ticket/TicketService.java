@@ -73,21 +73,21 @@ public class TicketService {
         return Optional.of(ticketRepository.save(ticket));
     }
 
-    public boolean deleteTicket(BigInteger id) {
+    public DeleteResult deleteTicket(BigInteger id) {
         var ticketOpt = getTicket(id);
         if (ticketOpt.isEmpty())
-            return false;
+            return new DeleteResult(0, false);
         var ticket = ticketOpt.get();
         var showOpt = showService.getShow(ticket.getShowId());
         if (showOpt.isEmpty())
-            return false;
+            return new DeleteResult(0, false);
         var show = showOpt.get();
 
         // Check if show is over or not
         var currDateTime = LocalDateTime.now();
         var showDateTime = LocalDateTime.of(show.getDate(), show.getTime());
         if (!currDateTime.isBefore(showDateTime))
-            return false;
+            return new DeleteResult(0, false);
 
         // Calculate days left
         var dayDiff = showDateTime.getDayOfYear() - currDateTime.getDayOfYear();
@@ -107,6 +107,32 @@ public class TicketService {
 
         // Delete ticket
         ticketRepository.deleteById(id);
-        return true;
+        return new DeleteResult(refundAmount, true);
+    }
+
+    public static class DeleteResult {
+        private double refundAmount;
+        private boolean isDeleted;
+
+        public DeleteResult(double refundAmount, boolean isDeleted) {
+            this.refundAmount = refundAmount;
+            this.isDeleted = isDeleted;
+        }
+
+        public double getRefundAmount() {
+            return refundAmount;
+        }
+
+        public void setRefundAmount(double refundAmount) {
+            this.refundAmount = refundAmount;
+        }
+
+        public boolean isDeleted() {
+            return isDeleted;
+        }
+
+        public void setDeleted(boolean deleted) {
+            isDeleted = deleted;
+        }
     }
 }
