@@ -261,37 +261,12 @@ The salesman dashboard serves to book tickets for existing customers
 \subsection{Accounts Clerk dashboard}
 The accounts clerk dashboard serves to add expenditures for a show
 
-$<$Describe the logical characteristics of each interface between the software 
-product and the users. This may include sample screen images, any GUI standards 
-or product family style guides that are to be followed, screen layout 
-constraints, standard buttons and functions (e.g., help) that will appear on 
-every screen, keyboard shortcuts, error message display standards, and so on.  
-Define the software components for which a user interface is needed. Details of 
-the user interface design should be documented in a separate user interface 
-specification.$>$
-
 \section{Hardware Interfaces}
 SAMS consists of two components - a back-end API server, which communicates with the database, and the front-end server, which can be accessed from a browser. These two components need not run on the same computer, and can be even on two separate domains. For interests of time, in the version being delivered, we will be running both components on the same computer on localhost. The back end will be running on an Apache Tomcat server, while the front-end will be running on Serve.
 
-$<$Describe the logical and physical characteristics of each interface between 
-the software product and the hardware components of the system. This may include 
-the supported device types, the nature of the data and control interactions 
-between the software and the hardware, and communication protocols to be 
-used.$>$
-
 \section{Software Interfaces}
-$<$Describe the connections between this product and other specific software 
-components (name and version), including databases, operating systems, tools, 
-libraries, and integrated commercial components. Identify the data items or 
-messages coming into the system and going out and describe the purpose of each.  
-Describe the services needed and the nature of communications. Refer to 
-documents that describe detailed application programming interface protocols.  
-Identify data that will be shared across software components. If the data 
-sharing mechanism must be implemented in a specific way (for example, use of a 
-global data area in a multitasking operating system), specify this as an 
-implementation constraint.$>$
 
-This section describes the API that the bookend exposes. The API is listed in Table \ref{table:api}. Note that the endpoint is the tail of the URL after the base address. Eg: If the end-point is \texttt{/users}, and the base URL is \texttt{http://localhost:8080}, then the actual URL for this end-point is \url{http://localhost:8080/users}.
+This section describes the API that the backend exposes. The API is listed in Table \ref{table:api}. Note that the endpoint is the tail of the URL after the base address. Eg: If the end-point is \texttt{/users}, and the base URL is \texttt{http://localhost:8080}, then the actual URL for this end-point is \url{http://localhost:8080/users}.
 \begin{table}
 	\centering
 	\caption{SAMS API}
@@ -319,7 +294,7 @@ This section describes the API that the bookend exposes. The API is listed in Ta
 		GET & \texttt{/transactions/by\_year/\{yyyy\}} & Get all transactions made in that year \\
 		\midrule
 		GET & \texttt{/expenditures} & Get all expenditures \\
-		POST & \texttt{/expenditures} & Create a expenditure \\
+		POST & \texttt{/expenditures} & Create an expenditure \\
 		GET & \texttt{/expenditures/\{id\}} & Get an expenditure \\
 		GET & \texttt{/expenditures/by\_show/\{id\}} & Get all expenditures of a show \\
 		\midrule
@@ -335,20 +310,9 @@ This section describes the API that the bookend exposes. The API is listed in Ta
 \section{Communications Interfaces}
 The back-end API is to be accessed via the HTTP (Hyper-Text Transfer Protocol). It is to be noted that in the version of SAMS being delivered, TLS (Transport Layer Security) will \emph{not} be used. As a consequence, the API traffic will not be encrypted and it is desirable that the back-end API server and the front-end web-app server run on the same machine and communicate over \texttt{localhost}.
 
-$<$Describe the requirements associated with any communications functions 
-required by this product, including e-mail, web browser, network server 
-communications protocols, electronic forms, and so on. Define any pertinent 
-message formatting. Identify any communication standards that will be used, such 
-as FTP or HTTP. Specify any communication security or encryption issues, data 
-transfer rates, and synchronization mechanisms.$>$
-
 
 \chapter{System Features}
-$<$This template illustrates organizing the functional requirements for the 
-product by system features, the major services provided by the product. You may 
-prefer to organize this section by use case, mode of operation, user class, 
-object class, functional hierarchy, or combinations of these, whatever makes the 
-most logical sense for your product.$>$
+
 
 \section{Login}
 \begin{itemize}
