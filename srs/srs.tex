@@ -266,7 +266,7 @@ SAMS consists of two components - a back-end API server, which communicates with
 
 \section{Software Interfaces}
 
-This section describes the API that the bookend exposes. The API is listed in Table \ref{table:api}. Note that the endpoint is the tail of the URL after the base address. Eg: If the end-point is \texttt{/users}, and the base URL is \texttt{http://localhost:8080}, then the actual URL for this end-point is \url{http://localhost:8080/users}.
+This section describes the API that the backend exposes. The API is listed in Table \ref{table:api}. Note that the endpoint is the tail of the URL after the base address. Eg: If the end-point is \texttt{/users}, and the base URL is \texttt{http://localhost:8080}, then the actual URL for this end-point is \url{http://localhost:8080/users}.
 \begin{table}
 	\centering
 	\caption{SAMS API}
@@ -294,7 +294,7 @@ This section describes the API that the bookend exposes. The API is listed in Ta
 		GET & \texttt{/transactions/by\_year/\{yyyy\}} & Get all transactions made in that year \\
 		\midrule
 		GET & \texttt{/expenditures} & Get all expenditures \\
-		POST & \texttt{/expenditures} & Create a expenditure \\
+		POST & \texttt{/expenditures} & Create an expenditure \\
 		GET & \texttt{/expenditures/\{id\}} & Get an expenditure \\
 		GET & \texttt{/expenditures/by\_show/\{id\}} & Get all expenditures of a show \\
 		\midrule
