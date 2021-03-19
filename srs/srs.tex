@@ -221,6 +221,45 @@ Our dependencies are as follows:
 \chapter{External Interface Requirements}
 
 \section{User Interfaces}
+The user-interface is a browser-based GUI. It begins with a \emph{login page}, where the user logs in with his/her username and password. He is then taken to the correct dashboard, depending on the type of user he/she is. The customer can also signup from the \emph{signup page}.
+
+\subsection{Manager Dashboard}
+From the Manager dashboard, SM can access the following functions:
+\begin{itemize}
+\item Create Show.
+\item Create Accounts Clerk login.
+\item Create Salesperson login.
+\item View Shows. In each show, the SM can do the following:
+\begin{itemize}
+\item View Show sales statistics
+\item View Show balance sheet
+\end{itemize}
+\item View Accounts clerks. For each accounts clerk, the SM can:
+\begin{itemize}
+\item View accountant info
+\item Delete accountant login
+\end{itemize}
+\item View Salespersons. For each salesperson, the SM can:
+\begin{itemize}
+\item View Salesperson info
+\item View the transactions he/she has made and the comission payable there-of
+\end{itemize}
+\item View the annual balance-sheet
+\end{itemize}
+
+\subsection{Customer dashboard}
+From the customer dashboard, customer can:
+\begin{itemize}
+\item View shows, in terms of timing and ticket availability
+\item View tickets booked - can also cancel them
+\end{itemize}
+
+\subsection{Salesperson dashboard}
+The salesman dashboard serves to book tickets for existing customers
+
+\subsection{Accounts Clerk dashboard}
+The accounts clerk dashboard serves to add expenditures for a show
+
 $<$Describe the logical characteristics of each interface between the software 
 product and the users. This may include sample screen images, any GUI standards 
 or product family style guides that are to be followed, screen layout 
@@ -231,6 +270,8 @@ the user interface design should be documented in a separate user interface
 specification.$>$
 
 \section{Hardware Interfaces}
+SAMS consists of two comoponents - a backend API server, which communicates with the database, and the frontend server, which can be accessed from a browser. These two components need not run on the same computer, and can be even on two separate domains. For interests of time, in the version being delivered, we will be running both components on the same computer on localhost. The backend will be running on an Apache Tomcat server, while the frontend will be running on Serve.
+
 $<$Describe the logical and physical characteristics of each interface between 
 the software product and the hardware components of the system. This may include 
 the supported device types, the nature of the data and control interactions 
