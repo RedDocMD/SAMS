@@ -23,17 +23,17 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \hypersetup{
-    bookmarks=false,    % show bookmarks bar?
-    pdftitle={Software Requirement Specification},    % title
-    pdfauthor={Jean-Philippe Eisenbarth},                     % author
-    pdfsubject={TeX and LaTeX},                        % subject of the document
-    pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
+%    bookmarks=false,    % show bookmarks bar?
+%    pdftitle={Software Requirement Specification},    % title
+%    pdfauthor={Jean-Philippe Eisenbarth},                     % author
+%    pdfsubject={TeX and LaTeX},                        % subject of the document
+%    pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
     colorlinks=true,       % false: boxed links; true: colored links
     linkcolor=blue,       % color of internal links
     citecolor=black,       % color of links to bibliography
     filecolor=black,        % color of file links
     urlcolor=blue% color of external links
-    linktoc=page            % only page is linked
+%    linktoc=page            % only page is linked
 }%
 \def\myversion{1.0.0 }
 \date{}
@@ -297,7 +297,7 @@ This section describes the API that the backend exposes. The API is listed in Ta
 	\caption{SAMS API}
 	\label{table:api}
 	\smallskip
-	\begin{tabular}{cll}
+	\makebox[\textwidth][c]{\begin{tabular}{cll}
 		\toprule
 		\textbf{Method} & \textbf{End-point} & \textbf{Function} \\
 		\midrule
@@ -329,7 +329,7 @@ This section describes the API that the backend exposes. The API is listed in Ta
 		GET & \texttt{/users/\{id\}} & Get one user \\
 		DELETE & \texttt{/users/\{id\}} & Delete a user account \\
 		\bottomrule
-	\end{tabular}
+	\end{tabular}}
 \end{table}
 
 \section{Communications Interfaces}
@@ -582,7 +582,7 @@ diagrams.$>$
 It is given in Figure \ref{fig:use-case}.
 \begin{figure}
 	\centering
-	\includegraphics[width=1.2\textwidth]{UseCaseDiagramCrop.png}
+	\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{UseCaseDiagramCrop.png}}
 	\caption{Use-Case Diagram for SAMS}
 	\label{fig:use-case}
 \end{figure}
