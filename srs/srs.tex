@@ -333,6 +333,8 @@ This section describes the API that the backend exposes. The API is listed in Ta
 \end{table}
 
 \section{Communications Interfaces}
+The backend API is to be accessed via the HTTP (Hyper-Text Transfer Protocol). It is to be noted that in the version of SAMS being delivered, TLS (Transport Layer Security) will \emph{not} be used. As a consequence, the API traffic will not be encrypted and it is desirable that the backend API server and the frontend web-app server run on the same machine and communicate over \texttt{localhost}.
+
 $<$Describe the requirements associated with any communications functions 
 required by this product, including e-mail, web browser, network server 
 communications protocols, electronic forms, and so on. Define any pertinent 
