@@ -16,6 +16,7 @@
 %http://www.se.rit.edu/~emUmbrelload/teaching/slides/srs_template_sep14.pdf
 %http://karlwiegers.com
 \documentclass{scrreprt}
+\usepackage{booktabs}
 \usepackage{listings}
 \usepackage{underscore}
 \usepackage[bookmarks=true]{hyperref}
@@ -289,6 +290,45 @@ Identify data that will be shared across software components. If the data
 sharing mechanism must be implemented in a specific way (for example, use of a 
 global data area in a multitasking operating system), specify this as an 
 implementation constraint.$>$
+
+This section describes the API that the backend exposes.
+\begin{table} 
+	\centering
+	\caption{SAMS API}
+	\smallskip
+	\begin{tabular}{cll}
+		\toprule
+		\textbf{Method} & \textbf{End-point} & \textbf{Function} \\
+		\midrule
+		GET & \texttt{/shows} & Returns all shows \\
+		POST & \texttt{/shows} & Create a show \\
+		GET & \texttt{/shows/\{id\}} & Get one show \\
+		\midrule
+		GET & \texttt{/tickets} & Return all tickets \\
+		POST & \texttt{/tickets} & Create (sell) a ticket \\
+		GET & \texttt{/tickets/\{id\}} & Get a particular ticket \\
+		DELETE & \texttt{/tickets/\{id\}} & Cancel a ticket \\
+		GET & \texttt{/tickets/by\_show/\{id\}} & Get tickets sold of a particular show \\
+		GET & \texttt{/tickets/by\_user/\{id\}} & Get tickets sold to a particular user \\
+		\midrule
+		GET & \texttt{/transactions} & Get all transactions \\
+		GET & \texttt{/transactions/\{id\}} & Get one transactions \\
+		GET & \texttt{/transactions/by\_show/\{id\}} & Get all transactions regarding that show \\
+		GET & \texttt{/transactions/by\_salesperson/\{id\}} & Get all transactions done by that salesperson\\
+		GET & \texttt{/transactions/by\_year/\{yyyy\}} & Get all transactions made in that year \\
+		\midrule
+		GET & \texttt{/expenditures} & Get all expenditures \\
+		POST & \texttt{/expenditures} & Create a expenditure \\
+		GET & \texttt{/expenditures/\{id\}} & Get an expenditure \\
+		GET & \texttt{/expenditures/by\_show/\{id\}} & Get all expenditures of a show \\
+		\midrule
+		GET & \texttt{/users/login} & Validate username and password \\
+		GET & \texttt{/users} & Get all users \\
+		POST & \texttt{/users} & Create a user account \\
+		GET & \texttt{/users/\{id\}} & Get one user \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \section{Communications Interfaces}
 $<$Describe the requirements associated with any communications functions 
