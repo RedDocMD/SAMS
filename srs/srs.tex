@@ -488,36 +488,15 @@ The back-end API is to be accessed via the HTTP (Hyper-Text Transfer Protocol). 
 
 \section{Performance Requirements}
 
-For high level of performance during first time setup requires high speed network.Additionally, having more than 4GB RAM will enhance the overall user-experience of the software.
-\section{Safety Requirements}
-$<$Specify those requirements that are concerned with possible loss, damage, or 
-harm that could result from the use of the product. Define any safeguards or 
-actions that must be taken, as well as actions that must be prevented. Refer to 
-any external policies or regulations that state safety issues that affect the 
-product’s design or use. Define any safety certifications that must be 
-satisfied.$>$
-
-\section{Security Requirements}
-$<$Specify any requirements regarding security or privacy issues surrounding use 
-of the product or protection of the data used or created by the product. Define 
-any user identity authentication requirements. Refer to any external policies or 
-regulations containing security issues that affect the product. Define any 
-security or privacy certifications that must be satisfied.$>$
-
-\section{Software Quality Attributes}
-$<$Specify any additional quality characteristics for the product that will be 
-important to either the customers or the developers. Some to consider are: 
-adaptability, availability, correctness, flexibility, interoperability, 
-maintainability, portability, reliability, re-usability, robustness, test-ability, 
-and usability. Write these to be specific, quantitative, and verifiable when 
-possible. At the least, clarify the relative preferences for various attributes, 
-such as ease of use over ease of learning.$>$
+For high level of performance during first time setup requires high speed network. Additionally, having more than 4GB RAM will enhance the overall user-experience of the software.
 
 \section{Business Rules}
-$<$List any operating principles about the product, such as which individuals or 
-roles can perform which functions under specific circumstances. These are not 
-functional requirements in themselves, but they may imply certain functional 
-requirements to enforce the rules.$>$
+\begin{itemize}
+	\item The SM cannot be incapacitated, there must always an SM.
+	\item No one should tamper with the database.
+	\item The API must not be manually tampered with.
+	\item The front-end must not be reloaded or closed down mid-operation -- it provides a warning on trying to do so but cannot prevent it.
+\end{itemize}
 
 
 \chapter{Other Requirements}
