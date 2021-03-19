@@ -16,23 +16,24 @@
 %http://www.se.rit.edu/~emUmbrelload/teaching/slides/srs_template_sep14.pdf
 %http://karlwiegers.com
 \documentclass{scrreprt}
+\usepackage{booktabs}
 \usepackage{listings}
 \usepackage{underscore}
 \usepackage[bookmarks=true]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \hypersetup{
-    bookmarks=false,    % show bookmarks bar?
-    pdftitle={Software Requirement Specification},    % title
-    pdfauthor={Jean-Philippe Eisenbarth},                     % author
-    pdfsubject={TeX and LaTeX},                        % subject of the document
-    pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
+%    bookmarks=false,    % show bookmarks bar?
+%    pdftitle={Software Requirement Specification},    % title
+%    pdfauthor={Jean-Philippe Eisenbarth},                     % author
+%    pdfsubject={TeX and LaTeX},                        % subject of the document
+%    pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
     colorlinks=true,       % false: boxed links; true: colored links
     linkcolor=blue,       % color of internal links
     citecolor=black,       % color of links to bibliography
     filecolor=black,        % color of file links
-    urlcolor=purple,        % color of external links
-    linktoc=page            % only page is linked
+    urlcolor=blue% color of external links
+%    linktoc=page            % only page is linked
 }%
 \def\myversion{1.0.0 }
 \date{}
@@ -79,11 +80,11 @@
 \chapter{Introduction}
 
 \section{Purpose}
-This document is to define the functional and non-functional requirements of the Student Auditorium Management System (SAMS). This software consists of a backend API server and a frontend application, which together allow for efficiently managing shows, selling and refunding tickets and maintaining a balance sheet.
+This document is to define the functional and non-functional requirements of the Student Auditorium Management System (SAMS). This software consists of a back-end API server and a front-end application, which together allow for efficiently managing shows, selling and refunding tickets and maintaining a balance sheet.
 
 \section{Document Conventions}
 
-Following defintions and abbreviations are used in this document:
+Following definitions and abbreviations are used in this document:
 \begin{enumerate}
 	\item SAMS: Students' Auditorium Management System
 	\item SM: Show Manager
@@ -193,14 +194,14 @@ We are testing this to work on the following tech stack- JDK11 and above, MongoD
 	
 	\item SM can not be fired. In other words, there must be a SM present in the auditorium to manage the system.
 	
-	\item Tickets can not be sold by spectators or transfered to others.
+	\item Tickets can not be sold by spectators or transferred to others.
 	
 \end{enumerate}
 
 
 \section{User Documentation}
 
-The frontend of the software will be kept sufficiently intuitive and straight forward for an internet literate person to use.
+The front-end of the software will be kept sufficiently intuitive and straight forward for an internet literate person to use.
 
 \section{Assumptions and Dependencies}
 
@@ -214,13 +215,52 @@ We have assumed the following:
 
 Our dependencies are as follows:
 \begin{itemize}
-	\item The software is being developed in linux operating system.
+	\item The software is being developed in Linux operating system.
 \end{itemize}
 
 
 \chapter{External Interface Requirements}
 
 \section{User Interfaces}
+The user-interface is a browser-based GUI. It begins with a \emph{login page}, where the user logs in with his/her username and password. He is then taken to the correct dashboard, depending on the type of user he/she is. The customer can also sign-up from the \emph{sign-up page}.
+
+\subsection{Manager Dashboard}
+From the Manager dashboard, SM can access the following functions:
+\begin{itemize}
+\item Create Show.
+\item Create Accounts Clerk login.
+\item Create Salesperson login.
+\item View Shows. In each show, the SM can do the following:
+\begin{itemize}
+\item View Show sales statistics
+\item View Show balance sheet
+\end{itemize}
+\item View Accounts clerks. For each accounts clerk, the SM can:
+\begin{itemize}
+\item View accountant info
+\item Delete accountant login
+\end{itemize}
+\item View Salespersons. For each salesperson, the SM can:
+\begin{itemize}
+\item View Salesperson info
+\item View the transactions he/she has made and the commission payable there-of
+\end{itemize}
+\item View the annual balance-sheet
+\end{itemize}
+
+\subsection{Customer dashboard}
+From the customer dashboard, customer can:
+\begin{itemize}
+\item View shows, in terms of timing and ticket availability
+\item View tickets booked - can also cancel them
+\end{itemize}
+
+\subsection{Salesperson dashboard}
+The salesman dashboard serves to book tickets for existing customers
+
+\subsection{Accounts Clerk dashboard}
+The accounts clerk dashboard serves to add expenditures for a show
+
 $<$Describe the logical characteristics of each interface between the software 
 product and the users. This may include sample screen images, any GUI standards 
 or product family style guides that are to be followed, screen layout 
@@ -231,6 +271,8 @@ the user interface design should be documented in a separate user interface
 specification.$>$
 
 \section{Hardware Interfaces}
+SAMS consists of two components - a back-end API server, which communicates with the database, and the front-end server, which can be accessed from a browser. These two components need not run on the same computer, and can be even on two separate domains. For interests of time, in the version being delivered, we will be running both components on the same computer on localhost. The back end will be running on an Apache Tomcat server, while the front-end will be running on Serve.
+
 $<$Describe the logical and physical characteristics of each interface between 
 the software product and the hardware components of the system. This may include 
 the supported device types, the nature of the data and control interactions 
@@ -249,7 +291,50 @@ sharing mechanism must be implemented in a specific way (for example, use of a
 global data area in a multitasking operating system), specify this as an 
 implementation constraint.$>$
 
+This section describes the API that the bookend exposes. The API is listed in Table \ref{table:api}. Note that the endpoint is the tail of the URL after the base address. Eg: If the end-point is \texttt{/users}, and the base URL is \texttt{http://localhost:8080}, then the actual URL for this end-point is \url{http://localhost:8080/users}.
+\begin{table}
+	\centering
+	\caption{SAMS API}
+	\label{table:api}
+	\smallskip
+	\makebox[\textwidth][c]{\begin{tabular}{cll}
+		\toprule
+		\textbf{Method} & \textbf{End-point} & \textbf{Function} \\
+		\midrule
+		GET & \texttt{/shows} & Returns all shows \\
+		POST & \texttt{/shows} & Create a show \\
+		GET & \texttt{/shows/\{id\}} & Get one show \\
+		\midrule
+		GET & \texttt{/tickets} & Return all tickets \\
+		POST & \texttt{/tickets} & Create (sell) a ticket \\
+		GET & \texttt{/tickets/\{id\}} & Get a particular ticket \\
+		DELETE & \texttt{/tickets/\{id\}} & Cancel a ticket \\
+		GET & \texttt{/tickets/by\_show/\{id\}} & Get tickets sold of a particular show \\
+		GET & \texttt{/tickets/by\_user/\{id\}} & Get tickets sold to a particular user \\
+		\midrule
+		GET & \texttt{/transactions} & Get all transactions \\
+		GET & \texttt{/transactions/\{id\}} & Get one transactions \\
+		GET & \texttt{/transactions/by\_show/\{id\}} & Get all transactions regarding that show \\
+		GET & \texttt{/transactions/by\_salesperson/\{id\}} & Get all transactions done by that salesperson\\
+		GET & \texttt{/transactions/by\_year/\{yyyy\}} & Get all transactions made in that year \\
+		\midrule
+		GET & \texttt{/expenditures} & Get all expenditures \\
+		POST & \texttt{/expenditures} & Create a expenditure \\
+		GET & \texttt{/expenditures/\{id\}} & Get an expenditure \\
+		GET & \texttt{/expenditures/by\_show/\{id\}} & Get all expenditures of a show \\
+		\midrule
+		GET & \texttt{/users/login} & Validate username and password \\
+		GET & \texttt{/users} & Get all users \\
+		POST & \texttt{/users} & Create a user account \\
+		GET & \texttt{/users/\{id\}} & Get one user \\
+		DELETE & \texttt{/users/\{id\}} & Delete a user account \\
+		\bottomrule
+	\end{tabular}}
+\end{table}
+
 \section{Communications Interfaces}
+The back-end API is to be accessed via the HTTP (Hyper-Text Transfer Protocol). It is to be noted that in the version of SAMS being delivered, TLS (Transport Layer Security) will \emph{not} be used. As a consequence, the API traffic will not be encrypted and it is desirable that the back-end API server and the front-end web-app server run on the same machine and communicate over \texttt{localhost}.
+
 $<$Describe the requirements associated with any communications functions 
 required by this product, including e-mail, web browser, network server 
 communications protocols, electronic forms, and so on. Define any pertinent 
@@ -332,7 +417,7 @@ most logical sense for your product.$>$
 \item \textbf{Successful End Condition}: Statistics like percentage of seats booked from each category are shown.
 \item \textbf{Failed End Condition}: No fail conditions.
 \item \textbf{Actors}: SM
-\item \textbf{Trigger}: In manager dashboard, there is a button for Showing Stastics of a show already selected.
+\item \textbf{Trigger}: In manager dashboard, there is a button for Showing Statistics of a show already selected.
 \end{itemize}
 
 
@@ -368,14 +453,14 @@ most logical sense for your product.$>$
 \end{itemize}
 
 
-\section{Signup}
+\section{Sign-up}
 \begin{itemize}
 \item \textbf{Goal in Context}: Create an account for the SM
 \item \textbf{Preconditions}: Only one SM account should be created for managing SAMS.
 \item \textbf{Successful End Condition}: A new account is created for an SM. 
 \item \textbf{Failed End Condition}: If one SM already exists, SAMS will not create another account for SM.
 \item \textbf{Actors}: A system admin or the SM. 
-\item \textbf{Trigger}: The system admin will enter details of the SM in a Signup Page and press signup button. 
+\item \textbf{Trigger}: The system admin will enter details of the SM in a Signup Page and press sign-up button. 
 \end{itemize}
 
 
@@ -464,7 +549,7 @@ security or privacy certifications that must be satisfied.$>$
 $<$Specify any additional quality characteristics for the product that will be 
 important to either the customers or the developers. Some to consider are: 
 adaptability, availability, correctness, flexibility, interoperability, 
-maintainability, portability, reliability, reusability, robustness, testability, 
+maintainability, portability, reliability, re-usability, robustness, test-ability, 
 and usability. Write these to be specific, quantitative, and verifiable when 
 possible. At the least, clarify the relative preferences for various attributes, 
 such as ease of use over ease of learning.$>$
@@ -497,7 +582,7 @@ diagrams.$>$
 It is given in Figure \ref{fig:use-case}.
 \begin{figure}
 	\centering
-	\includegraphics[width=1.2\textwidth]{UseCaseDiagramCrop.png}
+	\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{UseCaseDiagramCrop.png}}
 	\caption{Use-Case Diagram for SAMS}
 	\label{fig:use-case}
 \end{figure}
