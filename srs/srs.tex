@@ -80,11 +80,11 @@
 \chapter{Introduction}
 
 \section{Purpose}
-This document is to define the functional and non-functional requirements of the Student Auditorium Management System (SAMS). This software consists of a backend API server and a frontend application, which together allow for efficiently managing shows, selling and refunding tickets and maintaining a balance sheet.
+This document is to define the functional and non-functional requirements of the Student Auditorium Management System (SAMS). This software consists of a back-end API server and a front-end application, which together allow for efficiently managing shows, selling and refunding tickets and maintaining a balance sheet.
 
 \section{Document Conventions}
 
-Following defintions and abbreviations are used in this document:
+Following definitions and abbreviations are used in this document:
 \begin{enumerate}
 	\item SAMS: Students' Auditorium Management System
 	\item SM: Show Manager
@@ -194,14 +194,14 @@ We are testing this to work on the following tech stack- JDK11 and above, MongoD
 	
 	\item SM can not be fired. In other words, there must be a SM present in the auditorium to manage the system.
 	
-	\item Tickets can not be sold by spectators or transfered to others.
+	\item Tickets can not be sold by spectators or transferred to others.
 	
 \end{enumerate}
 
 
 \section{User Documentation}
 
-The frontend of the software will be kept sufficiently intuitive and straight forward for an internet literate person to use.
+The front-end of the software will be kept sufficiently intuitive and straight forward for an internet literate person to use.
 
 \section{Assumptions and Dependencies}
 
@@ -215,14 +215,14 @@ We have assumed the following:
 
 Our dependencies are as follows:
 \begin{itemize}
-	\item The software is being developed in linux operating system.
+	\item The software is being developed in Linux operating system.
 \end{itemize}
 
 
 \chapter{External Interface Requirements}
 
 \section{User Interfaces}
-The user-interface is a browser-based GUI. It begins with a \emph{login page}, where the user logs in with his/her username and password. He is then taken to the correct dashboard, depending on the type of user he/she is. The customer can also signup from the \emph{signup page}.
+The user-interface is a browser-based GUI. It begins with a \emph{login page}, where the user logs in with his/her username and password. He is then taken to the correct dashboard, depending on the type of user he/she is. The customer can also sign-up from the \emph{sign-up page}.
 
 \subsection{Manager Dashboard}
 From the Manager dashboard, SM can access the following functions:
@@ -243,7 +243,7 @@ From the Manager dashboard, SM can access the following functions:
 \item View Salespersons. For each salesperson, the SM can:
 \begin{itemize}
 \item View Salesperson info
-\item View the transactions he/she has made and the comission payable there-of
+\item View the transactions he/she has made and the commission payable there-of
 \end{itemize}
 \item View the annual balance-sheet
 \end{itemize}
@@ -271,7 +271,7 @@ the user interface design should be documented in a separate user interface
 specification.$>$
 
 \section{Hardware Interfaces}
-SAMS consists of two components - a backend API server, which communicates with the database, and the frontend server, which can be accessed from a browser. These two components need not run on the same computer, and can be even on two separate domains. For interests of time, in the version being delivered, we will be running both components on the same computer on localhost. The backend will be running on an Apache Tomcat server, while the frontend will be running on Serve.
+SAMS consists of two components - a back-end API server, which communicates with the database, and the front-end server, which can be accessed from a browser. These two components need not run on the same computer, and can be even on two separate domains. For interests of time, in the version being delivered, we will be running both components on the same computer on localhost. The back end will be running on an Apache Tomcat server, while the front-end will be running on Serve.
 
 $<$Describe the logical and physical characteristics of each interface between 
 the software product and the hardware components of the system. This may include 
@@ -291,7 +291,7 @@ sharing mechanism must be implemented in a specific way (for example, use of a
 global data area in a multitasking operating system), specify this as an 
 implementation constraint.$>$
 
-This section describes the API that the backend exposes. The API is listed in Table \ref{table:api}. Note that the endpoint is the tail of the url after the base address. Eg: If the end-point is \texttt{/users}, and the base URL is \texttt{http://localhost:8080}, then the actual URL for this end-point is \url{http://localhost:8080/users}.
+This section describes the API that the bookend exposes. The API is listed in Table \ref{table:api}. Note that the endpoint is the tail of the URL after the base address. Eg: If the end-point is \texttt{/users}, and the base URL is \texttt{http://localhost:8080}, then the actual URL for this end-point is \url{http://localhost:8080/users}.
 \begin{table}
 	\centering
 	\caption{SAMS API}
@@ -333,7 +333,7 @@ This section describes the API that the backend exposes. The API is listed in Ta
 \end{table}
 
 \section{Communications Interfaces}
-The backend API is to be accessed via the HTTP (Hyper-Text Transfer Protocol). It is to be noted that in the version of SAMS being delivered, TLS (Transport Layer Security) will \emph{not} be used. As a consequence, the API traffic will not be encrypted and it is desirable that the backend API server and the frontend web-app server run on the same machine and communicate over \texttt{localhost}.
+The back-end API is to be accessed via the HTTP (Hyper-Text Transfer Protocol). It is to be noted that in the version of SAMS being delivered, TLS (Transport Layer Security) will \emph{not} be used. As a consequence, the API traffic will not be encrypted and it is desirable that the back-end API server and the front-end web-app server run on the same machine and communicate over \texttt{localhost}.
 
 $<$Describe the requirements associated with any communications functions 
 required by this product, including e-mail, web browser, network server 
@@ -417,7 +417,7 @@ most logical sense for your product.$>$
 \item \textbf{Successful End Condition}: Statistics like percentage of seats booked from each category are shown.
 \item \textbf{Failed End Condition}: No fail conditions.
 \item \textbf{Actors}: SM
-\item \textbf{Trigger}: In manager dashboard, there is a button for Showing Stastics of a show already selected.
+\item \textbf{Trigger}: In manager dashboard, there is a button for Showing Statistics of a show already selected.
 \end{itemize}
 
 
@@ -453,14 +453,14 @@ most logical sense for your product.$>$
 \end{itemize}
 
 
-\section{Signup}
+\section{Sign-up}
 \begin{itemize}
 \item \textbf{Goal in Context}: Create an account for the SM
 \item \textbf{Preconditions}: Only one SM account should be created for managing SAMS.
 \item \textbf{Successful End Condition}: A new account is created for an SM. 
 \item \textbf{Failed End Condition}: If one SM already exists, SAMS will not create another account for SM.
 \item \textbf{Actors}: A system admin or the SM. 
-\item \textbf{Trigger}: The system admin will enter details of the SM in a Signup Page and press signup button. 
+\item \textbf{Trigger}: The system admin will enter details of the SM in a Signup Page and press sign-up button. 
 \end{itemize}
 
 
@@ -549,7 +549,7 @@ security or privacy certifications that must be satisfied.$>$
 $<$Specify any additional quality characteristics for the product that will be 
 important to either the customers or the developers. Some to consider are: 
 adaptability, availability, correctness, flexibility, interoperability, 
-maintainability, portability, reliability, reusability, robustness, testability, 
+maintainability, portability, reliability, re-usability, robustness, test-ability, 
 and usability. Write these to be specific, quantitative, and verifiable when 
 possible. At the least, clarify the relative preferences for various attributes, 
 such as ease of use over ease of learning.$>$
