@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface TicketRepository extends MongoRepository<Ticket, BigInteger> {
     List<Ticket> findByShowId(BigInteger showId);
+
+    List<Ticket> findByUserId(BigInteger userId);
 }

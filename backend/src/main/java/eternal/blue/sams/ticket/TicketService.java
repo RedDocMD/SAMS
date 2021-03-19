@@ -26,12 +26,20 @@ public class TicketService {
         this.showService = showService;
     }
 
+    public Optional<Ticket> getTicket(BigInteger id) {
+        return ticketRepository.findById(id);
+    }
+
     public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();
     }
 
     public List<Ticket> getAllTicketsOfShow(BigInteger showId) {
         return ticketRepository.findByShowId(showId);
+    }
+
+    public List<Ticket> getAllTicketsOfUser(BigInteger userId) {
+        return ticketRepository.findByUserId(userId);
     }
 
     public Optional<Ticket> createTicket(Ticket ticket, BigInteger salespersonId) {
@@ -63,5 +71,42 @@ public class TicketService {
 
         // Save ticket
         return Optional.of(ticketRepository.save(ticket));
+    }
+
+    public boolean deleteTicket(BigInteger id) {
+        var ticketOpt = getTicket(id);
+        if (ticketOpt.isEmpty())
+            return false;
+        var ticket = ticketOpt.get();
+        var showOpt = showService.getShow(ticket.getShowId());
+        if (showOpt.isEmpty())
+            return false;
+        var show = showOpt.get();
+
+        // Check if show is over or not
+        var currDateTime = LocalDateTime.now();
+        var showDateTime = LocalDateTime.of(show.getDate(), show.getTime());
+        if (!currDateTime.isBefore(showDateTime))
+            return false;
+
+        // Calculate days left
+        var dayDiff = showDateTime.getDayOfYear() - currDateTime.getDayOfYear();
+        var type = ticket.getType();
+        var price = ticket.getPrice();
+        double deductionAmount;
+        if (dayDiff >= 3) deductionAmount = 5;
+        else if (dayDiff >= 1) {
+            if (type == TicketType.Regular) deductionAmount = 10;
+            else deductionAmount = 15;
+        } else deductionAmount = 0.5 * price;
+        deductionAmount = Math.min(deductionAmount, price); // For absurdly cheap tickets
+
+        // Do refund
+        var refundAmount = price - deductionAmount;
+        transactionService.createTransaction(refundAmount, ticket.getUserId(), UserType.Customer, ticket.getShowId());
+
+        // Delete ticket
+        ticketRepository.deleteById(id);
+        return true;
     }
 }
