@@ -4,6 +4,9 @@ import org.springframework.data.annotation.Id;
 
 import java.math.BigInteger;
 
+/**
+ * Represents a single Expenditure behind a show.
+ */
 public class Expenditure {
     @Id
     private BigInteger id;
