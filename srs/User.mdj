@@ -21,6 +21,102 @@
 					"defaultDiagram": true,
 					"ownedViews": [
 						{
+							"_type": "UMLPackageView",
+							"_id": "AAAAAAF4SqLslRPCMik=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"model": {
+								"$ref": "AAAAAAF4SqLslBPASTE="
+							},
+							"subViews": [
+								{
+									"_type": "UMLNameCompartmentView",
+									"_id": "AAAAAAF4SqLslRPDbjI=",
+									"_parent": {
+										"$ref": "AAAAAAF4SqLslRPCMik="
+									},
+									"model": {
+										"$ref": "AAAAAAF4SqLslBPASTE="
+									},
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF4SqLslRPEs4k=",
+											"_parent": {
+												"$ref": "AAAAAAF4SqLslRPDbjI="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"height": 13
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF4SqLslRPF84E=",
+											"_parent": {
+												"$ref": "AAAAAAF4SqLslRPDbjI="
+											},
+											"font": "Arial;13;1",
+											"left": 13,
+											"top": 30,
+											"width": 1150,
+											"height": 13,
+											"text": "eternal.blue.sams.user"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF4SqLslRPGu74=",
+											"_parent": {
+												"$ref": "AAAAAAF4SqLslRPDbjI="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"width": 73.67724609375,
+											"height": 13,
+											"text": "(from Model)"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF4SqLslRPHZb0=",
+											"_parent": {
+												"$ref": "AAAAAAF4SqLslRPDbjI="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"height": 13,
+											"horizontalAlignment": 1
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 8,
+									"top": 23,
+									"width": 1160,
+									"height": 25,
+									"stereotypeLabel": {
+										"$ref": "AAAAAAF4SqLslRPEs4k="
+									},
+									"nameLabel": {
+										"$ref": "AAAAAAF4SqLslRPF84E="
+									},
+									"namespaceLabel": {
+										"$ref": "AAAAAAF4SqLslRPGu74="
+									},
+									"propertyLabel": {
+										"$ref": "AAAAAAF4SqLslRPHZb0="
+									}
+								}
+							],
+							"font": "Arial;13;0",
+							"containerChangeable": true,
+							"left": 8,
+							"top": 8,
+							"width": 1160,
+							"height": 824,
+							"nameCompartment": {
+								"$ref": "AAAAAAF4SqLslRPDbjI="
+							}
+						},
+						{
 							"_type": "UMLClassView",
 							"_id": "AAAAAAF4SkZ8JQLm2yQ=",
 							"_parent": {
@@ -3896,6 +3992,14 @@
 							}
 						}
 					]
+				},
+				{
+					"_type": "UMLPackage",
+					"_id": "AAAAAAF4SqLslBPASTE=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "eternal.blue.sams.user"
 				}
 			]
 		}
