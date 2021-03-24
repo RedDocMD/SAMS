@@ -56,4 +56,9 @@ public class UserService {
         userRepository.deleteById(id);
         return exists;
     }
+
+    // For testing purposes
+    void deleteAll() {
+        userRepository.deleteAll();
+    }
 }
