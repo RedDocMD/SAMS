@@ -23,7 +23,7 @@ public class UserTests {
     }
 
     @Test
-    public void createNewUser() {
+    public void createNewUserSuccessful() {
         var user = new User("bob", "the_builder", UserType.Customer);
         var newUserOpt = userService.createUser(user);
         assertTrue(newUserOpt.isPresent());
@@ -32,4 +32,14 @@ public class UserTests {
         assertEquals(newUser.getPassword(), user.getPassword());
         assertEquals(newUser.getType(), user.getType());
     }
+
+    @Test
+    public void createNewUserFailed() {
+        var user = new User("bob", "the_builder", UserType.Customer);
+        userService.createUser(user);
+        var otherUser = new User("bob", "cannot_build", UserType.Accountant);
+        var otherUserOpt = userService.createUser(otherUser);
+        assertTrue(otherUserOpt.isEmpty());
+    }
+
 }
