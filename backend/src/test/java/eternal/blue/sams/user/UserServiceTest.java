@@ -24,7 +24,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createUser_userNotPresent_success() {
+    public void createUserWhenUserNotPresent() {
         when(userRepository.findByUsername("John")).thenReturn(Optional.empty());
         when(userRepository.save(any())).thenReturn(USER);
         Optional<User> user = userService.createUser(USER);
@@ -33,7 +33,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createUser_userPresent_returnsEmpty() {
+    public void createUserWhenUserPresent() {
         when(userRepository.findByUsername("John")).thenReturn(Optional.of(USER));
         Optional<User> user = userService.createUser(USER);
         assertThat(user).isEmpty();
