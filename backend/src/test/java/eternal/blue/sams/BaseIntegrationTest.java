@@ -1,4 +1,4 @@
-package eternal.blue.sams.user;
+package eternal.blue.sams;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @Disabled
-public class BaseTest {
+public class BaseIntegrationTest {
     @Autowired
     public MockMvc mvc;
 }

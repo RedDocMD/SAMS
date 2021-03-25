@@ -2,6 +2,7 @@ package eternal.blue.sams.user;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import eternal.blue.sams.BaseIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,11 @@ import java.math.BigInteger;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class UserIntegrationTest extends BaseTest {
+public class UserIntegrationTest extends BaseIntegrationTest {
 
     Gson gson = new Gson();
     @Autowired
@@ -76,7 +76,7 @@ public class UserIntegrationTest extends BaseTest {
     private User makeGetCall(BigInteger userId) throws Exception {
         String userResponseJson = mvc.perform(
                 get("/users/{id}", userId)
-                .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
@@ -102,7 +102,8 @@ public class UserIntegrationTest extends BaseTest {
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
-        return gson.fromJson(userResponseJson, new TypeToken<List<User>>(){}.getType());
+        return gson.fromJson(userResponseJson, new TypeToken<List<User>>() {
+        }.getType());
     }
 
     private User getUserRequest() {
