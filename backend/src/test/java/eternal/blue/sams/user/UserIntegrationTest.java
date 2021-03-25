@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class UserIntegrationTest extends BaseIntegrationTest {
 
-    Gson gson = new Gson();
+    private final Gson gson = new Gson();
     @Autowired
     private UserService userService;
 
@@ -28,7 +28,7 @@ public class UserIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void createUser_validParams_success() throws Exception {
+    public void createUserValidParams() throws Exception {
         User userRequest = getUserRequest();
         User userResponse = makePostCall(userRequest);
         assertThat(userResponse).usingRecursiveComparison()
@@ -37,7 +37,7 @@ public class UserIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void getUserById_validParams_success() throws Exception {
+    public void getUserByIdValidParams() throws Exception {
         User userRequest = makePostCall(getUserRequest());
         User userResponse = makeGetCall(userRequest.getId());
         assertThat(userResponse).usingRecursiveComparison()
@@ -46,7 +46,7 @@ public class UserIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void getUserByLogin_validParams_success() throws Exception {
+    public void getUserByLoginValidParams() throws Exception {
         User userRequest = makePostCall(getUserRequest());
         User userResponse = makeGetCall(userRequest.getUsername(), userRequest.getPassword());
         assertThat(userResponse).usingRecursiveComparison()
@@ -54,10 +54,10 @@ public class UserIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void getUserAll_validParams_success() throws Exception {
-        User userRequest_1 = makePostCall(new User("aaditya", "pass", UserType.Accountant));
-        User userRequest_2 = makePostCall(new User("deep", "pass", UserType.Manager));
-        User userRequest_3 = makePostCall(new User("bob", "pass", UserType.Customer));
+    public void getUserAllValidParams() throws Exception {
+        makePostCall(new User("aaditya", "pass", UserType.Accountant));
+        makePostCall(new User("deep", "pass", UserType.Manager));
+        makePostCall(new User("bob", "pass", UserType.Customer));
         List<User> userResponse = makeGetCall();
         assertThat(userResponse.size()).isEqualTo(3);
     }
