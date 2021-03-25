@@ -1,6 +1,7 @@
 package eternal.blue.sams.user;
 
 import eternal.blue.sams.SamsApplication;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -35,6 +36,7 @@ public class UserController {
     }
 
     @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
     public User create(@RequestBody User user) {
         return userService.createUser(user).orElse(null);
     }
