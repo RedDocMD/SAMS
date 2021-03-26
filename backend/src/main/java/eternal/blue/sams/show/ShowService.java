@@ -39,9 +39,9 @@ public class ShowService {
         for (var otherShow : showsOnSameDay) {
             var otherShowStart = otherShow.getTime();
             var otherShowEnd = otherShowStart.plus(otherShow.getDuration());
-            if (otherShowStart.compareTo(currShowStart) < 0 && otherShowEnd.compareTo(currShowStart) > 0)
+            if (otherShowStart.compareTo(currShowStart) <= 0 && otherShowEnd.compareTo(currShowStart) >= 0)
                 return true;
-            if (otherShowStart.compareTo(currShowEnd) < 0 && otherShowEnd.compareTo(currShowEnd) > 0)
+            if (otherShowStart.compareTo(currShowEnd) <=0 && otherShowEnd.compareTo(currShowEnd) >= 0)
                 return true;
         }
         return false;
