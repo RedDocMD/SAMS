@@ -1,5 +1,8 @@
 package eternal.blue.sams.show;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import eternal.blue.sams.BaseIntegrationTest;
@@ -23,6 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ShowIntegrationTest extends BaseIntegrationTest {
 
     private final Gson gson = new Gson();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+
 
     @Autowired
     private ShowService showService;
@@ -42,7 +48,7 @@ public class ShowIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    private void getShowByIdValidParamsSuccess() throws Exception {
+    public void getShowByIdValidParamsSuccess() throws Exception {
         Show showPostResponse = makePostCall(getShowRequest());
         Show showGetResponse = makeGetCall(showPostResponse.getId());
         assertThat(showGetResponse).usingRecursiveComparison()
@@ -50,10 +56,10 @@ public class ShowIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    private void getAllShowsValidParamsSuccess() throws Exception {
-        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.now(), Duration.ofMinutes(150), 5, 5, 100.0, 50.0));
-        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.now(), Duration.ofMinutes(150), 5, 5, 100.0, 50.0));
-        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.now(), Duration.ofMinutes(150), 5, 5, 100.0, 50.0));
+    public void getAllShowsValidParamsSuccess() throws Exception {
+        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("10:00:00"), Duration.ofMinutes(100), 5, 5, 100.0, 50.0));
+        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("12:00:00"), Duration.ofMinutes(100), 5, 5, 100.0, 50.0));
+        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("14:00:00"), Duration.ofMinutes(150), 5, 5, 100.0, 50.0));
         List<Show> showListResponse = makeGetAllCall();
         assertThat(showListResponse.size()).isEqualTo(3);
     }
@@ -65,8 +71,7 @@ public class ShowIntegrationTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
-        return gson.fromJson(showResponseJson, new TypeToken<List<Show>>() {
-        }.getType());
+        return OBJECT_MAPPER.readValue(showResponseJson, new TypeReference<List<Show>>() {});
     }
 
     private Show makeGetCall(BigInteger showId) throws Exception {
@@ -76,22 +81,23 @@ public class ShowIntegrationTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
-        return gson.fromJson(showResponseJson, Show.class);
+        return OBJECT_MAPPER.readValue(showResponseJson, Show.class);
     }
 
     private Show makePostCall(Show showRequest) throws Exception {
+
         String showResponseJson = mvc.perform(
                 post("/shows")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(gson.toJson(showRequest)))
+                        .content(OBJECT_MAPPER.writeValueAsString(showRequest)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse().getContentAsString();
-        return gson.fromJson(showResponseJson, Show.class);
+        return OBJECT_MAPPER.readValue(showResponseJson, Show.class);
     }
 
     private Show getShowRequest() {
-        return new Show(LocalDate.parse("2021-01-01"), LocalTime.now(), Duration.ofMinutes(125) , 5, 5, 100.0, 50.0);
+        return new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("10:49:00"), Duration.ofMinutes(125) , 5, 5, 100.0, 50.0);
     }
 
 }

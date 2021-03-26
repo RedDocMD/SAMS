@@ -1,5 +1,14 @@
 package eternal.blue.sams.show;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.DurationDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.DurationSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import org.springframework.data.annotation.Id;
 
 import java.math.BigInteger;
@@ -16,8 +25,19 @@ import java.util.Objects;
 public class Show {
     @Id
     private BigInteger id;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
+
+    @JsonSerialize(using = LocalTimeSerializer.class)
+    @JsonFormat(pattern = "HH:mm:ss")
+    @JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime time;
+
+    @JsonSerialize(using = DurationSerializer.class)
+    @JsonFormat(pattern = "h")
+    @JsonDeserialize(using = DurationDeserializer.class)
     private Duration duration;
     private int balconyTicketCount;
     private int regularTicketCount;
