@@ -21,16 +21,19 @@ public class UserController {
     }
 
     @GetMapping("")
+    @ResponseStatus(HttpStatus.OK)
     public List<User> all() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
     public User login(@RequestParam String username, @RequestParam String password) {
         return userService.getUser(username, password).orElse(null);
     }
 
     @GetMapping("/{id:\\d+}")
+    @ResponseStatus(HttpStatus.OK)
     public User getOne(@PathVariable BigInteger id) {
         return userService.getUser(id).orElse(null);
     }
@@ -42,6 +45,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id:\\d+}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public boolean delete(@PathVariable BigInteger id) {
         return userService.deleteUser(id);
     }

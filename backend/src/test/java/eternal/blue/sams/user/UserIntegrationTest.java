@@ -12,8 +12,8 @@ import java.math.BigInteger;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UserIntegrationTest extends BaseIntegrationTest {
@@ -62,6 +62,14 @@ public class UserIntegrationTest extends BaseIntegrationTest {
         assertThat(userResponse.size()).isEqualTo(3);
     }
 
+    @Test
+    public void deleteUserValidParamsSuccess() throws Exception {
+        User user = makePostCall(getUserRequest());
+        makeDeleteCall(user.getId());
+        User userResponse = makeGetCall(user.getId());
+        assertNull(userResponse);
+    }
+
     private User makePostCall(User user) throws Exception {
         String userResponseJson = mvc.perform(
                 post("/users")
@@ -104,6 +112,13 @@ public class UserIntegrationTest extends BaseIntegrationTest {
                 .getResponse().getContentAsString();
         return gson.fromJson(userResponseJson, new TypeToken<List<User>>() {
         }.getType());
+    }
+
+    private void makeDeleteCall(BigInteger userId) throws Exception {
+        mvc.perform(
+                delete("/users/{id}", userId)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isAccepted());
     }
 
     private User getUserRequest() {

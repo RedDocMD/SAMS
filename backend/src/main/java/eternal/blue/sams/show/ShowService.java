@@ -46,4 +46,9 @@ public class ShowService {
         }
         return false;
     }
+
+    // For testing purposes
+    void deleteAll() {
+        showRepository.deleteAll();
+    }
 }
