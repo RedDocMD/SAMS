@@ -1,6 +1,6 @@
 # Unit Test Plan for SAMS
 
-This document contains the test plan for unit testing the backend of SAMS (which runs on Spring Boot). We would be using JUnit5 and Spring Boot Test Runner for writing the unit tests. The unit tests are organized by the data models and test all the public functions of the Service Layer.
+This document contains the test plan for unit testing the backend of SAMS (which runs on Spring Boot). We would be using JUnit5 and Spring Boot Test Runner for writing the unit tests. The unit tests are organized by the data models and test all the public functions of the Service Layer. To isolate the service layer, the database layer is mocked by Mockito. Assert4J is used to improve readability of assertions.
 
 ## User
 
@@ -241,3 +241,21 @@ Tests the `deleteTicket` method of `TicketService`.
 - Create some tickets with a given user ID
 - Get all tickets of that user ID from service
 - Check whether they were the tickets created
+
+## Transaction
+
+### Create transaction
+
+Tests the `createTransaction` method.
+
+- Create a transaction object
+- Call `createTransaction` with the same parameters.
+- Check that the returned transaction is the same as the original transaction
+
+### Get all transactions
+
+Tests the `allTransactions` method.
+
+- Pre-populate the repository with a list of transactions
+- Call `allTransactions`
+- Check that the transactions  returned is same as the original transactions
