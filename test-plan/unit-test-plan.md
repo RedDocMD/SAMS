@@ -175,3 +175,57 @@ Tests the `deleteTicket` method of `TicketService`.
   - User ID: 100
 - Call `DeleteTicket` by ticket ID.
 - The returned result must have deleted field as *true* and refund amount as 450 * 0.5 = 225.0
+
+#### Unsuccessful delete non-existent ticket
+
+- Use the following Show:
+  - Date: Curr Date + 10 days
+  - Time: 1700 hrs
+  - Duration: 2 hr
+  - Balcony Seats = 100 and price = 1000
+  - Regular Seats = 500 and price = 450
+  - ID: 10
+- Use the following Ticket:
+  - Balcony
+  - Show ID: 10
+  - Price: 450
+  - User ID: 100
+  - ID: 10
+- Call `DeleteTicket` by 11 as ticket ID.
+- The returned result must have deleted field as *false*.
+
+#### Unsuccessful delete ticket with non-existent show
+
+- Use the following Show:
+  - Date: Curr Date + 10days
+  - Time: 1700 hrs
+  - Duration: 2 hr
+  - Balcony Seats = 100 and price = 1000
+  - Regular Seats = 500 and price = 450
+  - ID: 10
+- Use the following Ticket:
+  - Balcony
+  - Show ID: 13
+  - Price: 450
+  - User ID: 100
+  - ID: 10
+- Call `DeleteTicket` by ticket ID.
+- The returned result must have deleted field as *false*.
+
+#### Unsuccessful delete ticket after show is over
+
+- Use the following Show:
+  - Date: Curr Date
+  - Time: Curr Time
+  - Duration: 2 hr
+  - Balcony Seats = 100 and price = 1000
+  - Regular Seats = 500 and price = 450
+  - ID: 10
+- Use the following Ticket:
+  - Balcony
+  - Show ID: 13
+  - Price: 450
+  - User ID: 100
+  - ID: 10
+- Call `DeleteTicket` by ticket ID.
+- The returned result must have deleted field as *false*.

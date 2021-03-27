@@ -290,4 +290,77 @@ public class TicketServiceTest {
         assertThat(result.getRefundAmount()).isEqualTo(show.getRegularTicketPrice() / 2.0);
         assertThat(result.isDeleted()).isTrue();
     }
+
+    @Test
+    public void deleteInvalidTicket() {
+        var currDay = LocalDate.now();
+        var show = new Show(
+                currDay.plus(Period.ofDays(10)),
+                LocalTime.of(17, 0),
+                Duration.ofHours(2),
+                100,
+                500,
+                1000,
+                450);
+        var showId = BigInteger.valueOf(10);
+        var userId = BigInteger.valueOf(100);
+        var ticket = new Ticket(showId, TicketType.Regular, show.getRegularTicketPrice(), userId);
+        var randGen = new Random();
+        var ticketId = BigInteger.valueOf(randGen.nextLong());
+
+        when(showService.getShow(showId)).thenReturn(Optional.of(show));
+        when(ticketRepository.findById(ticketId)).thenReturn(Optional.of(ticket));
+
+        var wrongTicketId = ticketId.subtract(BigInteger.ONE);
+        var result = ticketService.deleteTicket(wrongTicketId);
+        assertThat(result.isDeleted()).isFalse();
+    }
+
+    @Test
+    public void deleteInvalidTicketWithInvalidShow() {
+        var currDay = LocalDate.now();
+        var show = new Show(
+                currDay.plus(Period.ofDays(10)),
+                LocalTime.of(17, 0),
+                Duration.ofHours(2),
+                100,
+                500,
+                1000,
+                450);
+        var showId = BigInteger.valueOf(10);
+        var userId = BigInteger.valueOf(100);
+        var wrongShowId = BigInteger.valueOf(13);
+        var ticket = new Ticket(wrongShowId, TicketType.Regular, show.getRegularTicketPrice(), userId);
+        var randGen = new Random();
+        var ticketId = BigInteger.valueOf(randGen.nextLong());
+
+        when(showService.getShow(showId)).thenReturn(Optional.of(show));
+        when(ticketRepository.findById(ticketId)).thenReturn(Optional.of(ticket));
+
+        var result = ticketService.deleteTicket(ticketId);
+        assertThat(result.isDeleted()).isFalse();
+    }
+
+    @Test
+    public void deleteValidTicketAfterShowStarts() {
+        var show = new Show(
+                LocalDate.now(),
+                LocalTime.now(),
+                Duration.ofHours(2),
+                100,
+                500,
+                1000,
+                450);
+        var showId = BigInteger.valueOf(10);
+        var userId = BigInteger.valueOf(100);
+        var ticket = new Ticket(showId, TicketType.Regular, show.getRegularTicketPrice(), userId);
+        var randGen = new Random();
+        var ticketId = BigInteger.valueOf(randGen.nextLong());
+
+        when(showService.getShow(showId)).thenReturn(Optional.of(show));
+        when(ticketRepository.findById(ticketId)).thenReturn(Optional.of(ticket));
+
+        var result = ticketService.deleteTicket(ticketId);
+        assertThat(result.isDeleted()).isFalse();
+    }
 }
