@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,8 @@ public class ExpenditureServiceTest {
     }
 
     @Test
-    public void createNewExpenditure(){
+    public void createNewExpenditureWithValidShowId(){
+        when(expenditureRepository.findExpenditureByShowId(testShowId)).thenReturn(List.of(testExpenditure));
         when(expenditureRepository.save(any())).thenReturn(testExpenditure);
 
         Expenditure createdExpenditure = expenditureService.createExpenditure(testExpenditure,testAccountantId);
