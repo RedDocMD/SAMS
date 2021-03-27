@@ -1,0 +1,6 @@
+api-test-plan.*
+!api-test-plan.tex
+!api-test-plan.md
+unit-test-plan.*
+!unit-test-plan.tex
+!unit-test-plan.md
