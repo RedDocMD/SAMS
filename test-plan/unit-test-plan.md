@@ -2,6 +2,16 @@
 
 This document contains the test plan for unit testing the backend of SAMS (which runs on Spring Boot). We would be using JUnit5 and Spring Boot Test Runner for writing the unit tests. The unit tests are organized by the data models and test all the public functions of the Service Layer. To isolate the service layer, the database layer is mocked by Mockito. Assert4J is used to improve readability of assertions.
 
+## Authors
+
+Group 13 (Eternal Blue)
+
+Authors:
+
+- Aaditya Agrawal (19CS10003)
+- Debanjan Saha (19CS30014)
+- Deep Majumder (19CS30015)
+
 ## Expenditure
 
 ### Create Expenditure With Valid ShowId

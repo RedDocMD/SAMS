@@ -1,5 +1,15 @@
 # API Test Plan for SAMS
 
+## Authors
+
+Group 13 (Eternal Blue)
+
+Authors:
+
+- Aaditya Agrawal (19CS10003)
+- Debanjan Saha (19CS30014)
+- Deep Majumder (19CS30015)
+
 ## Expenditure
 
 ### POST an Expenditure
