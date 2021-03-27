@@ -16,6 +16,7 @@ import static org.mockito.MockitoAnnotations.openMocks;
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class ExpenditureServiceTest {
     private final BigInteger testShowId = BigInteger.valueOf(404);
@@ -35,7 +36,6 @@ public class ExpenditureServiceTest {
 
     @Test
     public void createNewExpenditure(){
-        when(expenditureService.getExpendituresByShow(testShowId)).thenReturn(List.of(testExpenditure));
         when(expenditureRepository.save(any())).thenReturn(testExpenditure);
 
         Expenditure createdExpenditure = expenditureService.createExpenditure(testExpenditure,testAccountantId);
@@ -48,13 +48,32 @@ public class ExpenditureServiceTest {
     public void getExpenditureByShow(){
         when(expenditureService.getExpendituresByShow(testShowId)).thenReturn(List.of(testExpenditure,testExpenditure2));
         when(expenditureRepository.save(any())).thenReturn(testExpenditure);
-        when(expenditureRepository.save(any())).thenReturn(testExpenditure2);
 
         Expenditure createdExpenditure = expenditureService.createExpenditure(testExpenditure,testAccountantId);
         List<Expenditure> retrievedExpenditureList = expenditureService.getExpendituresByShow(testShowId);
 
         assertThat(retrievedExpenditureList.size()).isEqualTo(2);
-//        assertThat(retrievedExpenditureList.get(0)).isNotEqualTo(createdExpenditure);
+        assertThat(retrievedExpenditureList.get(0)).usingRecursiveComparison().isEqualTo(createdExpenditure);
+    }
+
+    @Test
+    public void getAllExpenditures(){
+        when(expenditureService.getAllExpenditures()).thenReturn(List.of(testExpenditure,testExpenditure2));
+
+        List<Expenditure> allExpenditures = expenditureService.getAllExpenditures();
+        assertThat(allExpenditures.size()).isEqualTo(2);
+        assertThat(allExpenditures).isEqualTo(List.of(testExpenditure,testExpenditure2));
+    }
+
+    @Test
+    public void getExpenditureById(){
+        BigInteger testId = BigInteger.valueOf(10);
+        when(expenditureService.getExpenditure(testId)).thenReturn(Optional.of(testExpenditure));
+
+        Optional<Expenditure> retrievedExpenditure = expenditureService.getExpenditure(testId);
+        assertThat(retrievedExpenditure).isPresent();
+        assertThat(retrievedExpenditure.get()).usingRecursiveComparison()
+                .isEqualTo(testExpenditure);
     }
 
 
