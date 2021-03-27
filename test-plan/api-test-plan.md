@@ -31,3 +31,33 @@ Gets a particular ticket
 - Pass the id as param and perform the request
 - Deserialize the Ticket from the response JSON
 - Compare the ticket obtained to be same as the original ticket
+
+### DELETE - /tickets/{id}
+
+Deletes a particular ticket
+
+- Take the id of a ticket that has been pre-populated
+- Pass the id as param and perform the request
+- Deserialize the response JSON to get DeleteResult
+- Check isDeleted() to be *true* and refundAmount() to be *price - 5*.
+- Call GET /tickets to get all the tickets.
+- Check that the deleted ticket is not present in the list
+
+### GET - /tickets/by_user/{id}
+
+Gets all tickets of a user
+
+- Take the id of the User object whose tickets have been pre-populated
+- Pass the id as params and perform the request
+- Deserialize the response JSON to get the list of Tickets
+- Check that this is same as the orignal list of Tickets
+
+
+### GET - /tickets/by_show/{id}
+
+Gets all tickets of a show
+
+- Take the id of the Show object whose tickets have been pre-populated
+- Pass the id as params and perform the request
+- Deserialize the response JSON to get the list of Tickets
+- Check that this is same as the orignal list of Tickets

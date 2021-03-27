@@ -21,6 +21,7 @@ import java.time.LocalTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -158,5 +159,73 @@ public class TicketIntegrationTest extends BaseIntegrationTest {
         assertThat(returnedTicket).usingRecursiveComparison()
                 .ignoringFields("id")
                 .isEqualTo(ticket);
+    }
+
+    @Test
+    public void deleteATicket() throws Exception {
+        var ticket = tickets.get(0);
+        var id = ticket.getId();
+        assertThat(id).isNotNull();
+        var responseJSON = mvc.perform(
+                delete(BASE + "/{id}", id)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        var deleteResult = gson.fromJson(responseJSON, TicketService.DeleteResult.class);
+        assertThat(deleteResult.isDeleted()).isTrue();
+        assertThat(deleteResult.getRefundAmount()).isEqualTo(ticket.getPrice() - 5);
+        var otherResponseJSON = mvc.perform(
+                get(BASE).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse().getContentAsString();
+        List<Ticket> ticketsList = gson.fromJson(otherResponseJSON,
+                new TypeToken<List<Ticket>>() {
+                }.getType());
+        assertThat(ticketsList.contains(ticket)).isFalse();
+    }
+
+    // Custom deserializer for DeleteResult
+
+    @Test
+    public void getTicketsByUser() throws Exception {
+        var id = customer.getId();
+        assertThat(id).isNotNull();
+        var responseJSON = mvc.perform(
+                get(BASE + "/by_user/{id}", id)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        List<Ticket> ticketsList = gson.fromJson(responseJSON,
+                new TypeToken<List<Ticket>>() {
+                }.getType());
+        var ticketsFromThisUser = tickets.stream()
+                .filter(ticket -> ticket.getUserId().equals(id))
+                .collect(Collectors.toList());
+        assertThat(ticketsList).isEqualTo(ticketsFromThisUser);
+    }
+
+    @Test
+    public void getTicketsByShow() throws Exception {
+        var id = show.getId();
+        assertThat(id).isNotNull();
+        var responseJSON = mvc.perform(
+                get(BASE + "/by_show/{id}", id)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        List<Ticket> ticketsList = gson.fromJson(responseJSON,
+                new TypeToken<List<Ticket>>() {
+                }.getType());
+        var ticketsFromThisShow = tickets.stream()
+                .filter(ticket -> ticket.getShowId().equals(id))
+                .collect(Collectors.toList());
+        assertThat(ticketsList).isEqualTo(ticketsFromThisShow);
     }
 }
