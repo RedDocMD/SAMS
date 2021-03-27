@@ -9,14 +9,16 @@ This document contains the test plan for unit testing the backend of SAMS (which
 Tests the method `createExpenditure`.
 
 Test Data:
-1. Expenditure testobject: 
+
+1. Expenditure testobject:
     - amount: 212.50
     - reason: "Electricity Bill"
     - showId: 404
 
 2. AccountantId: 30014
 
-Successful creation: 
+Successful creation:
+
 - Create an Expenditure object.
 - Save it using `createExpenditure`.
 - The returned Expenditure object **must not** be null.
@@ -27,20 +29,23 @@ Successful creation:
 Tests `getAllExpenditures` method.
 
 Test Data:
-1. Expenditure testobject1: 
+
+1. Expenditure testobject1:
     - amount: 212.50
     - reason: "Electricity Bill"
     - showId: 404
-2. Expenditure testobject2: 
+2. Expenditure testobject2:
     - amount: 1250.00
     - reason: "Software Developer Payment"
     - showId: 404
-2. AccountantId: 30014
+3. AccountantId: 30014
 
 Creation:
+
 - Create two Expenditure objects using test data and `createExpenditure` function and save it.
 
 Successful Retrieval:
+
 - `getAllExpenditures` must return a **non-empty** List of Expenditure of size 2.
 - The returned list must contain two Expenditure objects which should match test data.
 
@@ -49,7 +54,8 @@ Successful Retrieval:
 Tests the method `getExpenditure`.
 
 Test Data:
-1. Expenditure testobject: 
+
+1. Expenditure testobject:
     - amount: 212.50
     - reason: "Electricity Bill"
     - showId: 404
@@ -59,46 +65,51 @@ Test Data:
     - 10 (Valid)
     - 11 (Invalid)
 
-Creation: 
+Creation:
+
 - Create an Expenditure object using test data and save it with the help of `createExpenditure` function.
 
 Successful Retrieval with valid id:
+
 - On calling `getExpenditure` with id 10, it should return an Optional of Expenditure.
 - The returned Optional **must not** be empty.
 - Expenditure object is extracted from returned Optional. The attributes of the extracted object must match the testobject.
 
 Unsuccessful Retrieval with invalid id:
+
 - On calling `getExpenditure` with id 11, it should return an Optional of Expenditure.
 - The returned Optional **must** be empty
-
 
 ### Get Expenditure By Show Id
 
 Tests the method `getExpenditureByShow`.
 
 Test Data:
-1. Expenditure testobject1: 
+
+1. Expenditure testobject1:
     - amount: 212.50
     - reason: "Electricity Bill"
     - showId: 404
-2. Expenditure testobject2: 
+2. Expenditure testobject2:
     - amount: 1250.00
     - reason: "Software Developer Payment"
     - showId: 404
-
 3. Get with showId:
     - 404 (Valid)
     - 101 (Invalid)
 
-Creation: 
+Creation:
+
 - Create an Expenditure object using test data and save it with the help of `createExpenditure` function.
 
 Successful Retrieval with valid showId:
+
 - On calling `getExpenditureByShow` with showId 404, it should return a List of Expenditure.
 - The returned List **must not** be empty and should have size 2.
 - The attributes of each of the objects inside the List must match the testobject1 and testobject2.
 
 Unsuccessful Retrieval with invalid showId:
+
 - On calling `getExpenditureByShow` with showId 101, it should return a List of Expenditure.
 - The returned List **must** be empty.
 - Create a User object.
@@ -321,13 +332,13 @@ Tests the `deleteTicket` method of `TicketService`.
 - Call `DeleteTicket` by ticket ID.
 - The returned result must have deleted field as *false*.
 
-#### Get All Tickets
+### Get All Tickets
 
 - Create some tickets
 - Get all tickets from service
 - Check whether they were the tickets created
 
-#### Get All Tickets of an User
+### Get All Tickets of an User
 
 - Create some tickets with a given user ID
 - Get all tickets of that user ID from service
@@ -376,6 +387,7 @@ Tests the `getTransactionsBySalespersonId` method.
 - Call `getTransactionBySalespersonId` method with a salesperson ID which has transactions.
 - Filter the original list over salesperson ID
 - Check this new list to be identical with the obtained transactions
+
 ## Show
 
 ### Create Show
@@ -383,6 +395,7 @@ Tests the `getTransactionsBySalespersonId` method.
 Tests the `createShow` method.
 
 Test Data:
+
 1. Show Object:
     - date: 2021-01-01 (yyyy-mm-dd)
     - time: 10:49:00 (hh:mm:ss)
@@ -393,6 +406,7 @@ Test Data:
     - regularTicketPrice: 50.0
 
 Successful creation:
+
 - Create a Show object with given test data.
 - Save it using `createShow` function.
 - An `Optional` is returned.
@@ -404,6 +418,7 @@ Successful creation:
 Tests the `getShow` method.
 
 Test Data:
+
 1. Show Object:
     - date: 2021-01-01 (yyyy-mm-dd)
     - time: 10:49:00 (hh:mm:ss)
@@ -414,6 +429,7 @@ Test Data:
     - regularTicketPrice: 50.0
 
 Successful Retrieval:
+
 - Create a Show object with given test data.
 - Save it using `createShow` function.
 - The test method is called with the auto-generated id of the created object.
@@ -421,12 +437,12 @@ Successful Retrieval:
 - The returned `Optional` **must not** be empty.
 - The Show object is extracted. Its attributes **must** match with that of testdata.
 
-
 ### Get All Shows
 
 Tests the `getAll` method.
 
 Test Data:
+
 1. Show Object1:
     - date: 2021-01-01 (yyyy-mm-dd)
     - time: 10:49:00 (hh:mm:ss)
@@ -446,11 +462,11 @@ Test Data:
     - regularTicketPrice: 50.0
 
 Successful Retrieval:
+
 - Create two show objects with given test data.
 - Save them using `createShow` function.
 - On calling `getAll` method, a List of Show is returned.
 - The returned List **must not** be empty and its size must be equal to 2.
-
 
 ## User
 
@@ -459,29 +475,33 @@ Successful Retrieval:
 Tests the `createUser` method.
 
 Test Data:
+
 1. User Object:
     - username: John
     - password: Password
     - type: Customer
 
 Successful creation:
+
 - Create a User object with given test data when already a user with **same username** is present in database.
 - Save it using `createUser` method.
 - An `Optional` is returned.
 - The returned `Optional` **must not** be empty.
-- The extracted User from the `Optional` must have the same attributes as that of test data. 
+- The extracted User from the `Optional` must have the same attributes as that of test data.
 
 ### Create User When User is Present
 
 Tests the `createUser` method.
 
 Test Data:
+
 1. User Object:
     - username: "John"
     - password: "Password"
     - type: Customer
 
 Unsuccessful creation:
+
 - Create a User object with given test data when already a user with **same username** is present in database.
 - Try to save it using `createUser` method.
 - An `Optional` is returned.
@@ -492,6 +512,7 @@ Unsuccessful creation:
 Tests the `getAllUsers` method.
 
 Test Data:
+
 1. User Object1:
     - username: "John"
     - password: "Password"
@@ -503,43 +524,47 @@ Test Data:
     - type: Manager
 
 Successful Retrieval:
+
 - Create two User objects with given test data.
 - Save it using `createUser` method.
 - On calling `getAllUsers`, a List of User is returned.
-- The returned List **must** be of size 2. 
-
+- The returned List **must** be of size 2.
 
 ### Get User By Id
 
 Tests the `getUser` method.
 
 Test Data:
+
 1. User Object:
     - username: "John"
     - password: "Password"
     - type: Customer
 
 Successful Retrieval:
+
 - Create a User object with given test data.
 - Save it using `createUser` method.
 - An `Optional` is returned during creation of object.
 - On calling `getUser` with the id of created object, an `Optional` is returned.
-- The returned `Optional` **must not** be empty. 
-- The extracted User from the `Optional` must have the same attributes as that of test data or it should match with the created object. 
+- The returned `Optional` **must not** be empty.
+- The extracted User from the `Optional` must have the same attributes as that of test data or it should match with the created object.
 
 ### Delete User
 
 Tests the `deleteUser` method.
 
 Test Data:
+
 1. User Object:
     - username: "John"
     - password: "Password"
     - type: Customer
 
 Successful Deletion:
+
 - Create a User object with given test data.
 - Save it using `createUser` method.
 - An `Optional` is returned during creation of object.
 - On calling `deleteUser` with the id of created object, a boolean value is returned.
-- The returned value **must** be `true`. 
+- The returned value **must** be `true`.
