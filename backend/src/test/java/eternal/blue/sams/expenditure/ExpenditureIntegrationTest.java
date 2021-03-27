@@ -53,7 +53,7 @@ public class ExpenditureIntegrationTest extends BaseIntegrationTest {
     @Test
     public void getExpenditureByShowIdValidParams() throws Exception {
         makePostCall(getExpenditureCreationRequest(1212.50,"AC Repairing",testShowId,testAccountantId));
-        makePostCall(getExpenditureCreationRequest(1299.99,"Payment to Software Developer of SAMS",testShowId,testAccountantId));
+        makePostCall(getExpenditureCreationRequest(1299.99,"Payment to Software Developer",testShowId,testAccountantId));
         makePostCall(getExpenditureCreationRequest(1200,"Payment to Artist",BigInteger.valueOf(100),testAccountantId));
 
         List<Expenditure> expenditureResponseList = makeGetByShowCall(testShowId);
@@ -64,7 +64,7 @@ public class ExpenditureIntegrationTest extends BaseIntegrationTest {
     public void getAllExpenditure() throws Exception {
         makePostCall(getExpenditureCreationRequest(testExpenditure,testAccountantId));
         makePostCall(getExpenditureCreationRequest(1500,"AC Repairing",testShowId,testAccountantId));
-        makePostCall(getExpenditureCreationRequest(1299.99,"Payment to Software Developer of SAMS",testShowId,testAccountantId));
+        makePostCall(getExpenditureCreationRequest(1299.99,"Payment to Software Developer",testShowId,testAccountantId));
         makePostCall(getExpenditureCreationRequest(1200,"",BigInteger.valueOf(100),testAccountantId));
 
         List<Expenditure> expenditureResponseList = makeGetAllCall();
