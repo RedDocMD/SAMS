@@ -259,3 +259,29 @@ Tests the `allTransactions` method.
 - Pre-populate the repository with a list of transactions
 - Call `allTransactions`
 - Check that the transactions  returned is same as the original transactions
+
+### Get transaction by id
+
+Tests the `getTransactionById` method.
+
+- Pre-populate the repository with a list of transactions
+- Call `getTransactionById` with the id of the first transaction of the list
+- Check whether the returned transaction is same as the first transaction of the list
+
+### Get transaction by Show id
+
+Tests the `getTransactionsByShowId` method.
+
+- Pre-populate the repository with a list of transactions
+- Call `getTransactionsByShowId` method with a show ID which has transactions.
+- Filter the original list over show ID
+- Check this new list to be identical with the obtained transactions
+
+### Get transaction by Salesperson id
+
+Tests the `getTransactionsBySalespersonId` method.
+
+- Pre-populate the repository with a list of transactions
+- Call `getTransactionBySalespersonId` method with a salesperson ID which has transactions.
+- Filter the original list over salesperson ID
+- Check this new list to be identical with the obtained transactions

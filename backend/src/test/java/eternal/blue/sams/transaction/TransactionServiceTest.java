@@ -10,7 +10,9 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -55,6 +57,54 @@ public class TransactionServiceTest {
 
         var actualTransactions = transactionService.allTransactions();
         assertThat(actualTransactions).isEqualTo(transactions);
+    }
+
+    @Test
+    public void getTransactionById() {
+        var transaction = getSomeTransactions().get(0);
+        var id = BigInteger.valueOf(100);
+        when(transactionRepository.findById(id)).thenReturn(Optional.of(transaction));
+        var actualTransaction = transactionService.getTransactionById(id);
+        assertThat(actualTransaction).isPresent();
+        assertThat(actualTransaction.get()).isEqualTo(transaction);
+    }
+
+    @Test
+    public void getTransactionByShow() {
+        var transactions = getSomeTransactions();
+        var showId = getSomeTransactions().get(0).getShowId();
+        var showTransactions = transactions.stream()
+                .filter(transaction -> transaction.getShowId().equals(showId))
+                .collect(Collectors.toList());
+        when(transactionRepository.findByShowId(showId)).thenReturn(showTransactions);
+        var actualTransactions = transactionService.getTransactionsByShow(showId);
+        assertThat(actualTransactions).isEqualTo(showTransactions);
+    }
+
+    @Test
+    public void getTransactionsBySalesperson() {
+        var transactions = getSomeTransactions();
+        var id = transactions.get(0).getInitiatorId();
+        var salespersonTransactions = transactions.stream()
+                .filter(transaction -> transaction.getInitiatorId().equals(id)
+                && transaction.getInitiatorType() == UserType.Salesperson)
+                .collect(Collectors.toList());
+        when(transactionRepository.findByInitiatorIdAndInitiatorType(id, UserType.Salesperson))
+                .thenReturn(salespersonTransactions);
+        var actualTransactions = transactionService.getTransactionsBySalesperson(id);
+        assertThat(actualTransactions).isEqualTo(salespersonTransactions);
+    }
+
+    @Test
+    public void getTransactionByYear() {
+        var transactions = getSomeTransactions();
+        var year = LocalDateTime.now().getYear();
+        var yearTransactions = transactions.stream()
+                .filter(transaction -> transaction.getTime().getYear() == year)
+                .collect(Collectors.toList());
+        when(transactionRepository.findAll()).thenReturn(transactions);
+        var actualTransactions = transactionService.getTransactionsByYear(year);
+        assertThat(actualTransactions).isEqualTo(yearTransactions);
     }
 
     private List<Transaction> getSomeTransactions() {
