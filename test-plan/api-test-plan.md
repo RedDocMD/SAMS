@@ -52,7 +52,6 @@ Gets all tickets of a user
 - Deserialize the response JSON to get the list of Tickets
 - Check that this is same as the orignal list of Tickets
 
-
 ### GET - /tickets/by_show/{id}
 
 Gets all tickets of a show
@@ -60,4 +59,51 @@ Gets all tickets of a show
 - Take the id of the Show object whose tickets have been pre-populated
 - Pass the id as params and perform the request
 - Deserialize the response JSON to get the list of Tickets
-- Check that this is same as the orignal list of Tickets
+- Check that this is same as the original list of Tickets
+
+## Transaction
+
+### GET - /transactions
+
+Get all transactions
+
+- Pre-populate the repository with transactions
+- Perform the request
+- Deserialize the response JSON to get the list of Transactions
+- Check that this is same as the original list of Transactions 
+
+### GET - /transactions/{id}
+
+Get one particular transactions
+
+- Take the id of a transaction that has been pre-populated
+- Perform the request with the id parameter
+- Deserialize the JSON to get the Transaction
+- Check that this is same as the original Transaction
+
+### GET - /transactions/by_show/{id}
+
+Get all transactions regarding a show
+
+- Pre-populate the repository with some transactions
+- Perform the request with the id of a show whose transaction is present
+- Deserialize the JSON to get the list of Transactions
+- Check that this is the same as the original transactions, filtered over show id
+
+### GET - /transactions/by_salesperson/{id}
+
+Get all transactions initiated by a salesperson
+
+- Pre-populate the repository with some transactions
+- Perform the request with the id of a salesperson who has initiated some transactions
+- Deserialize the JSON to get the list of Transactions
+- Check that this is the same as the original transactions, filtered over initiator id and type as Salesperson
+
+### GET - /transactions/by_year/{year}
+
+Get all transactions of a year
+
+- Pre-populate the repository with some transactions
+- Perform the request with a year whose transaction is present
+- Deserialize the JSON to get the list of Transactions
+- Check that this is the same as the original transactions, filtered over year
