@@ -1,6 +1,7 @@
 package eternal.blue.sams.show;
 
 import eternal.blue.sams.SamsApplication;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -20,16 +21,19 @@ public class ShowController {
     }
 
     @GetMapping("")
+    @ResponseStatus(HttpStatus.OK)
     public List<Show> all() {
         return showService.getAllShows();
     }
 
     @GetMapping("/{id:\\d+}")
+    @ResponseStatus(HttpStatus.OK)
     public Show one(@PathVariable BigInteger id) {
         return showService.getShow(id).orElse(null);
     }
 
     @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
     public Show create(@RequestBody Show show) {
         return showService.createShow(show).orElse(null);
     }
