@@ -1,20 +1,16 @@
 package eternal.blue.sams.expenditure;
 
-import com.google.gson.Gson;
 import eternal.blue.sams.transaction.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigInteger;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,7 +50,7 @@ public class ExpenditureServiceTest {
     }
 
     @Test
-    public void getExpenditureById(){
+    public void getExpenditureByIdWhenExpenditureIsPresent(){
         BigInteger testId = BigInteger.valueOf(10);
         when(expenditureService.getExpenditure(testId)).thenReturn(Optional.of(testExpenditure));
 
@@ -65,7 +61,17 @@ public class ExpenditureServiceTest {
     }
 
     @Test
-    public void getExpenditureByShow(){
+    public void getExpenditureByIdWhenExpenditureIsNotPresent(){
+        BigInteger testId = BigInteger.valueOf(10);
+        BigInteger wrongId = BigInteger.valueOf(11);
+        when(expenditureService.getExpenditure(testId)).thenReturn(Optional.of(testExpenditure));
+
+        Optional<Expenditure> retrievedExpenditure = expenditureService.getExpenditure(wrongId);
+        assertThat(retrievedExpenditure).isNotPresent();
+    }
+
+    @Test
+    public void getExpenditureByShowWhenShowIsPresent(){
         when(expenditureService.getExpendituresByShow(testShowId)).thenReturn(List.of(testExpenditure,testExpenditure2));
         when(expenditureRepository.save(any())).thenReturn(testExpenditure);
 
@@ -75,4 +81,13 @@ public class ExpenditureServiceTest {
     }
 
 
+    @Test
+    public void getExpenditureByShowWhenShowIsNotPresent(){
+        BigInteger wrongShowId = BigInteger.valueOf(101);
+        when(expenditureService.getExpendituresByShow(testShowId)).thenReturn(List.of(testExpenditure,testExpenditure2));
+        when(expenditureRepository.save(any())).thenReturn(testExpenditure);
+
+        List<Expenditure> retrievedExpenditureList = expenditureService.getExpendituresByShow(wrongShowId);
+        assertThat(retrievedExpenditureList.size()).isEqualTo(0);
+    }
 }
