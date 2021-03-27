@@ -11,7 +11,6 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 import java.math.BigInteger;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

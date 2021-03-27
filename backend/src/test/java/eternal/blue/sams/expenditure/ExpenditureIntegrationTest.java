@@ -60,6 +60,9 @@ public class ExpenditureIntegrationTest extends BaseIntegrationTest {
 
         List<Expenditure> expenditureResponseList = makeGetByShowCall(testShowId);
         assertThat(expenditureResponseList.size()).isEqualTo(2);
+
+        expenditureResponseList = makeGetByShowCall(BigInteger.valueOf(100));
+        assertThat(expenditureResponseList.size()).isEqualTo(1);
     }
 
     @Test
@@ -67,10 +70,11 @@ public class ExpenditureIntegrationTest extends BaseIntegrationTest {
         makePostCall(getExpenditureCreationRequest(testExpenditure,testAccountantId));
         makePostCall(getExpenditureCreationRequest(1500,"AC Repairing",testShowId,testAccountantId));
         makePostCall(getExpenditureCreationRequest(1299.99,"Payment to Software Developer",testShowId,testAccountantId));
-        makePostCall(getExpenditureCreationRequest(1200,"",BigInteger.valueOf(100),testAccountantId));
+        makePostCall(getExpenditureCreationRequest(1200,"Payment to Artist",BigInteger.valueOf(100),testAccountantId));
 
         List<Expenditure> expenditureResponseList = makeGetAllCall();
         assertThat(expenditureResponseList.size()).isEqualTo(4);
+    
     }
 
     private Expenditure makePostCall(ExpenditureCreation expenditureCreation) throws Exception {
