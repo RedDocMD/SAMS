@@ -363,4 +363,37 @@ public class TicketServiceTest {
         var result = ticketService.deleteTicket(ticketId);
         assertThat(result.isDeleted()).isFalse();
     }
+
+    @Test
+    public void getAllTickets() {
+        var ticketList = new ArrayList<Ticket>();
+        var ticketCount = 100;
+        var randGen = new Random();
+        for (int i = 0; i < ticketCount; i++) {
+            var ticket = new Ticket(BigInteger.valueOf(randGen.nextLong()),
+                    TicketType.Regular, 100, BigInteger.valueOf(randGen.nextLong()));
+            ticketList.add(ticket);
+        }
+
+        when(ticketRepository.findAll()).thenReturn(ticketList);
+        var fromService = ticketService.getAllTickets();
+        assertThat(fromService).isEqualTo(ticketList);
+    }
+
+    @Test
+    public void getAllTicketsOfUser() {
+        var ticketList = new ArrayList<Ticket>();
+        var ticketCount = 100;
+        var randGen = new Random();
+        var userId = BigInteger.valueOf(randGen.nextLong());
+        for (int i = 0; i < ticketCount; i++) {
+            var ticket = new Ticket(BigInteger.valueOf(randGen.nextLong()),
+                    TicketType.Regular, 100, userId);
+            ticketList.add(ticket);
+        }
+
+        when(ticketRepository.findByUserId(userId)).thenReturn(ticketList);
+        var fromService = ticketService.getAllTicketsOfUser(userId);
+        assertThat(fromService).isEqualTo(ticketList);
+    }
 }

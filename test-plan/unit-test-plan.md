@@ -229,3 +229,15 @@ Tests the `deleteTicket` method of `TicketService`.
   - ID: 10
 - Call `DeleteTicket` by ticket ID.
 - The returned result must have deleted field as *false*.
+
+#### Get All Tickets
+
+- Create some tickets
+- Get all tickets from service
+- Check whether they were the tickets created
+
+#### Get All Tickets of an User
+
+- Create some tickets with a given user ID
+- Get all tickets of that user ID from service
+- Check whether they were the tickets created
