@@ -1,0 +1,1407 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\date{}
+
+\begin{document}
+
+\hypertarget{unit-test-plan-for-sams}{%
+\section{Unit Test Plan for SAMS}\label{unit-test-plan-for-sams}}
+
+This document contains the test plan for unit testing the backend of
+SAMS (which runs on Spring Boot). We would be using JUnit5 and Spring
+Boot Test Runner for writing the unit tests. The unit tests are
+organized by the data models and test all the public functions of the
+Service Layer. To isolate the service layer, the database layer is
+mocked by Mockito. Assert4J is used to improve readability of
+assertions.
+
+\hypertarget{authors}{%
+\subsection{Authors}\label{authors}}
+
+Group 13 (Eternal Blue)
+
+Authors:
+
+\begin{itemize}
+\tightlist
+\item
+  Aaditya Agrawal (19CS10003)
+\item
+  Debanjan Saha (19CS30014)
+\item
+  Deep Majumder (19CS30015)
+\end{itemize}
+
+\hypertarget{expenditure}{%
+\subsection{Expenditure}\label{expenditure}}
+
+\hypertarget{create-expenditure-with-valid-showid}{%
+\subsubsection{Create Expenditure With Valid
+ShowId}\label{create-expenditure-with-valid-showid}}
+
+Tests the method \texttt{createExpenditure}.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Expenditure testobject:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 212.50
+  \item
+    reason: ``Electricity Bill''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  AccountantId: 30014
+\end{enumerate}
+
+Successful creation:
+
+\begin{itemize}
+\tightlist
+\item
+  Create an Expenditure object.
+\item
+  Save it using \texttt{createExpenditure}.
+\item
+  The returned Expenditure object \textbf{must not} be null.
+\item
+  The returned object must match the attributes of test object.
+\end{itemize}
+
+\hypertarget{get-all-expenditure}{%
+\subsubsection{Get All Expenditure}\label{get-all-expenditure}}
+
+Tests \texttt{getAllExpenditures} method.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Expenditure testobject1:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 212.50
+  \item
+    reason: ``Electricity Bill''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  Expenditure testobject2:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 1250.00
+  \item
+    reason: ``Software Developer Payment''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  AccountantId: 30014
+\end{enumerate}
+
+Creation:
+
+\begin{itemize}
+\tightlist
+\item
+  Create two Expenditure objects using test data and
+  \texttt{createExpenditure} function and save it.
+\end{itemize}
+
+Successful Retrieval:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{getAllExpenditures} must return a \textbf{non-empty} List of
+  Expenditure of size 2.
+\item
+  The returned list must contain two Expenditure objects which should
+  match test data.
+\end{itemize}
+
+\hypertarget{get-expenditure-by-id}{%
+\subsubsection{Get Expenditure By Id}\label{get-expenditure-by-id}}
+
+Tests the method \texttt{getExpenditure}.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Expenditure testobject:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 212.50
+  \item
+    reason: ``Electricity Bill''
+  \item
+    showId: 404
+  \item
+    id: 10
+  \end{itemize}
+\item
+  Get with id:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    10 (Valid)
+  \item
+    11 (Invalid)
+  \end{itemize}
+\end{enumerate}
+
+Creation:
+
+\begin{itemize}
+\tightlist
+\item
+  Create an Expenditure object using test data and save it with the help
+  of \texttt{createExpenditure} function.
+\end{itemize}
+
+Successful Retrieval with valid id:
+
+\begin{itemize}
+\tightlist
+\item
+  On calling \texttt{getExpenditure} with id 10, it should return an
+  Optional of Expenditure.
+\item
+  The returned Optional \textbf{must not} be empty.
+\item
+  Expenditure object is extracted from returned Optional. The attributes
+  of the extracted object must match the testobject.
+\end{itemize}
+
+Unsuccessful Retrieval with invalid id:
+
+\begin{itemize}
+\tightlist
+\item
+  On calling \texttt{getExpenditure} with id 11, it should return an
+  Optional of Expenditure.
+\item
+  The returned Optional \textbf{must} be empty
+\end{itemize}
+
+\hypertarget{get-expenditure-by-show-id}{%
+\subsubsection{Get Expenditure By Show
+Id}\label{get-expenditure-by-show-id}}
+
+Tests the method \texttt{getExpenditureByShow}.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Expenditure testobject1:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 212.50
+  \item
+    reason: ``Electricity Bill''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  Expenditure testobject2:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 1250.00
+  \item
+    reason: ``Software Developer Payment''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  Get with showId:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    404 (Valid)
+  \item
+    101 (Invalid)
+  \end{itemize}
+\end{enumerate}
+
+Creation:
+
+\begin{itemize}
+\tightlist
+\item
+  Create an Expenditure object using test data and save it with the help
+  of \texttt{createExpenditure} function.
+\end{itemize}
+
+Successful Retrieval with valid showId:
+
+\begin{itemize}
+\tightlist
+\item
+  On calling \texttt{getExpenditureByShow} with showId 404, it should
+  return a List of Expenditure.
+\item
+  The returned List \textbf{must not} be empty and should have size 2.
+\item
+  The attributes of each of the objects inside the List must match the
+  testobject1 and testobject2.
+\end{itemize}
+
+Unsuccessful Retrieval with invalid showId:
+
+\begin{itemize}
+\tightlist
+\item
+  On calling \texttt{getExpenditureByShow} with showId 101, it should
+  return a List of Expenditure.
+\item
+  The returned List \textbf{must} be empty.
+\item
+  Create a User object.
+\item
+  Save it using \texttt{createUser}.
+\item
+  The returned \texttt{Optional} must \textbf{not} be empty.
+\item
+  The returned User is extracted. It must match with original user on
+  \texttt{getUsername}, \texttt{getPassword} and \texttt{getType}.
+\end{itemize}
+
+\hypertarget{ticket}{%
+\subsection{Ticket}\label{ticket}}
+
+\hypertarget{create-ticket}{%
+\subsubsection{Create ticket}\label{create-ticket}}
+
+Tests the \texttt{createTicket} method.
+
+\hypertarget{successful-creation-of-regular-ticket}{%
+\paragraph{Successful creation of regular
+ticket}\label{successful-creation-of-regular-ticket}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: 2021-10-20
+  \item
+    Time: 1700
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Using UserID = 100, create regular \texttt{Ticket} object
+\item
+  Using SalespersonID = 1000, call create ticket with above ticket
+  object
+\item
+  Check that the returned \texttt{Optional} is \textbf{not} empty.
+\item
+  Check the \texttt{Ticket} extracted from \texttt{Optional} is same as
+  created ticket.
+\end{itemize}
+
+\hypertarget{successful-creation-of-balcony-ticket}{%
+\paragraph{Successful creation of balcony
+ticket}\label{successful-creation-of-balcony-ticket}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: 2021-10-20
+  \item
+    Time: 1700
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Using UserID = 100, and showId 10, create balcony \texttt{Ticket}
+  object
+\item
+  Using SalespersonID = 1000, call create ticket with above ticket
+  object
+\item
+  Check that the returned \texttt{Optional} is \textbf{not} empty.
+\item
+  Check the \texttt{Ticket} extracted from \texttt{Optional} is same as
+  created ticket.
+\end{itemize}
+
+\hypertarget{unsuccessful-creation-of-ticket-with-invalid-show-id}{%
+\paragraph{Unsuccessful creation of ticket with invalid show
+id}\label{unsuccessful-creation-of-ticket-with-invalid-show-id}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: 2021-10-20
+  \item
+    Time: 1700
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Using UserID = 100, and showId 11, create balcony \texttt{Ticket}
+  object
+\item
+  Using SalespersonID = 1000, call create ticket with above ticket
+  object
+\item
+  Check that the returned \texttt{Optional} \textbf{is} empty.
+\end{itemize}
+
+\hypertarget{unsuccessful-creation-of-regular-ticket-when-all-tickets-are-sold-out}{%
+\paragraph{Unsuccessful creation of regular ticket when all tickets are
+sold
+out}\label{unsuccessful-creation-of-regular-ticket-when-all-tickets-are-sold-out}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: 2021-10-20
+  \item
+    Time: 1700
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Save 500 regular tickets for this show.
+\item
+  Using UserID = 100, and showId 10, create regular Ticket` object.
+\item
+  Using SalespersonID = 1000, call create ticket with above ticket
+  object.
+\item
+  Check that the returned \texttt{Optional} \textbf{is} empty.
+\end{itemize}
+
+\hypertarget{unsuccessful-creation-of-balcony-ticket-when-all-tickets-are-sold-out}{%
+\paragraph{Unsuccessful creation of balcony ticket when all tickets are
+sold
+out}\label{unsuccessful-creation-of-balcony-ticket-when-all-tickets-are-sold-out}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: 2021-10-20
+  \item
+    Time: 1700
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Save 100 balcony tickets for this show.
+\item
+  Using UserID = 100, and showId 10, create regular Ticket` object.
+\item
+  Using SalespersonID = 1000, call create ticket with above ticket
+  object.
+\item
+  Check that the returned \texttt{Optional} \textbf{is} empty
+\end{itemize}
+
+\hypertarget{unsuccessful-creation-of-ticket-after-show-has-started}{%
+\paragraph{Unsuccessful creation of ticket after show has
+started}\label{unsuccessful-creation-of-ticket-after-show-has-started}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: Current day
+  \item
+    Time: Current time
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Save 100 balcony tickets for this show.
+\item
+  Using UserID = 100, and showId 10, create regular Ticket` object.
+\item
+  Using SalespersonID = 1000, call create ticket with above ticket
+  object.
+\item
+  Check that the returned \texttt{Optional} \textbf{is} empty
+\end{itemize}
+
+\hypertarget{delete-ticket}{%
+\subsubsection{Delete Ticket}\label{delete-ticket}}
+
+Tests the \texttt{deleteTicket} method of \texttt{TicketService}.
+
+\hypertarget{successful-delete-existing-ticket-more-than-3-days-before}{%
+\paragraph{Successful delete existing ticket more than 3 days
+before}\label{successful-delete-existing-ticket-more-than-3-days-before}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: Curr Date + 10 days
+  \item
+    Time: 1700hrs
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Use the following Ticket:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Regular
+  \item
+    Show ID: 10
+  \item
+    Price 450
+  \item
+    User ID: 100
+  \end{itemize}
+\item
+  Call \texttt{DeleteTicket} by ticket ID.
+\item
+  The returned result must have deleted field as \emph{true} and refund
+  amount as 450 - 5 = 445
+\end{itemize}
+
+\hypertarget{successful-delete-existing-regular-ticket-less-than-3-days-and-before-1-days}{%
+\paragraph{Successful delete existing regular ticket less than 3 days
+and before 1
+days}\label{successful-delete-existing-regular-ticket-less-than-3-days-and-before-1-days}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: Curr Date + 2 days
+  \item
+    Time: 1700hrs
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Use the following Ticket:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Regular
+  \item
+    Show ID: 10
+  \item
+    Price 450
+  \item
+    User ID: 100
+  \end{itemize}
+\item
+  Call \texttt{DeleteTicket} by ticket ID.
+\item
+  The returned result must have deleted field as \emph{true} and refund
+  amount as 450 - 10 = 440
+\end{itemize}
+
+\hypertarget{successful-delete-existing-balcony-ticket-less-than-3-days-and-before-1-days}{%
+\paragraph{Successful delete existing balcony ticket less than 3 days
+and before 1
+days}\label{successful-delete-existing-balcony-ticket-less-than-3-days-and-before-1-days}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: Curr Date + 2 days
+  \item
+    Time: 1700hrs
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Use the following Ticket:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Balcony
+  \item
+    Show ID: 10
+  \item
+    Price: 1000
+  \item
+    User ID: 100
+  \end{itemize}
+\item
+  Call \texttt{DeleteTicket} by ticket ID.
+\item
+  The returned result must have deleted field as \emph{true} and refund
+  amount as 1000 - 15 = 985
+\end{itemize}
+
+\hypertarget{successful-delete-existing-balcony-ticket-on-day-of-show}{%
+\paragraph{Successful delete existing balcony ticket on day of
+show}\label{successful-delete-existing-balcony-ticket-on-day-of-show}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: Curr Date
+  \item
+    Time: 2359 hrs
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Use the following Ticket:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Balcony
+  \item
+    Show ID: 10
+  \item
+    Price: 450
+  \item
+    User ID: 100
+  \end{itemize}
+\item
+  Call \texttt{DeleteTicket} by ticket ID.
+\item
+  The returned result must have deleted field as \emph{true} and refund
+  amount as 450 * 0.5 = 225.0
+\end{itemize}
+
+\hypertarget{unsuccessful-delete-non-existent-ticket}{%
+\paragraph{Unsuccessful delete non-existent
+ticket}\label{unsuccessful-delete-non-existent-ticket}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: Curr Date + 10 days
+  \item
+    Time: 1700 hrs
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Use the following Ticket:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Balcony
+  \item
+    Show ID: 10
+  \item
+    Price: 450
+  \item
+    User ID: 100
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Call \texttt{DeleteTicket} by 11 as ticket ID.
+\item
+  The returned result must have deleted field as \emph{false}.
+\end{itemize}
+
+\hypertarget{unsuccessful-delete-ticket-with-non-existent-show}{%
+\paragraph{Unsuccessful delete ticket with non-existent
+show}\label{unsuccessful-delete-ticket-with-non-existent-show}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: Curr Date + 10days
+  \item
+    Time: 1700 hrs
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Use the following Ticket:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Balcony
+  \item
+    Show ID: 13
+  \item
+    Price: 450
+  \item
+    User ID: 100
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Call \texttt{DeleteTicket} by ticket ID.
+\item
+  The returned result must have deleted field as \emph{false}.
+\end{itemize}
+
+\hypertarget{unsuccessful-delete-ticket-after-show-is-over}{%
+\paragraph{Unsuccessful delete ticket after show is
+over}\label{unsuccessful-delete-ticket-after-show-is-over}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the following Show:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Date: Curr Date
+  \item
+    Time: Curr Time
+  \item
+    Duration: 2 hr
+  \item
+    Balcony Seats = 100 and price = 1000
+  \item
+    Regular Seats = 500 and price = 450
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Use the following Ticket:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Balcony
+  \item
+    Show ID: 13
+  \item
+    Price: 450
+  \item
+    User ID: 100
+  \item
+    ID: 10
+  \end{itemize}
+\item
+  Call \texttt{DeleteTicket} by ticket ID.
+\item
+  The returned result must have deleted field as \emph{false}.
+\end{itemize}
+
+\hypertarget{get-all-tickets}{%
+\subsubsection{Get All Tickets}\label{get-all-tickets}}
+
+\begin{itemize}
+\tightlist
+\item
+  Create some tickets
+\item
+  Get all tickets from service
+\item
+  Check whether they were the tickets created
+\end{itemize}
+
+\hypertarget{get-all-tickets-of-an-user}{%
+\subsubsection{Get All Tickets of an
+User}\label{get-all-tickets-of-an-user}}
+
+\begin{itemize}
+\tightlist
+\item
+  Create some tickets with a given user ID
+\item
+  Get all tickets of that user ID from service
+\item
+  Check whether they were the tickets created
+\end{itemize}
+
+\hypertarget{transaction}{%
+\subsection{Transaction}\label{transaction}}
+
+\hypertarget{create-transaction}{%
+\subsubsection{Create transaction}\label{create-transaction}}
+
+Tests the \texttt{createTransaction} method.
+
+\begin{itemize}
+\tightlist
+\item
+  Create a transaction object
+\item
+  Call \texttt{createTransaction} with the same parameters.
+\item
+  Check that the returned transaction is the same as the original
+  transaction
+\end{itemize}
+
+\hypertarget{get-all-transactions}{%
+\subsubsection{Get all transactions}\label{get-all-transactions}}
+
+Tests the \texttt{allTransactions} method.
+
+\begin{itemize}
+\tightlist
+\item
+  Pre-populate the repository with a list of transactions
+\item
+  Call \texttt{allTransactions}
+\item
+  Check that the transactions returned is same as the original
+  transactions
+\end{itemize}
+
+\hypertarget{get-transaction-by-id}{%
+\subsubsection{Get transaction by id}\label{get-transaction-by-id}}
+
+Tests the \texttt{getTransactionById} method.
+
+\begin{itemize}
+\tightlist
+\item
+  Pre-populate the repository with a list of transactions
+\item
+  Call \texttt{getTransactionById} with the id of the first transaction
+  of the list
+\item
+  Check whether the returned transaction is same as the first
+  transaction of the list
+\end{itemize}
+
+\hypertarget{get-transaction-by-show-id}{%
+\subsubsection{Get transaction by Show
+id}\label{get-transaction-by-show-id}}
+
+Tests the \texttt{getTransactionsByShowId} method.
+
+\begin{itemize}
+\tightlist
+\item
+  Pre-populate the repository with a list of transactions
+\item
+  Call \texttt{getTransactionsByShowId} method with a show ID which has
+  transactions.
+\item
+  Filter the original list over show ID
+\item
+  Check this new list to be identical with the obtained transactions
+\end{itemize}
+
+\hypertarget{get-transaction-by-salesperson-id}{%
+\subsubsection{Get transaction by Salesperson
+id}\label{get-transaction-by-salesperson-id}}
+
+Tests the \texttt{getTransactionsBySalespersonId} method.
+
+\begin{itemize}
+\tightlist
+\item
+  Pre-populate the repository with a list of transactions
+\item
+  Call \texttt{getTransactionBySalespersonId} method with a salesperson
+  ID which has transactions.
+\item
+  Filter the original list over salesperson ID
+\item
+  Check this new list to be identical with the obtained transactions
+\end{itemize}
+
+\hypertarget{show}{%
+\subsection{Show}\label{show}}
+
+\hypertarget{create-show}{%
+\subsubsection{Create Show}\label{create-show}}
+
+Tests the \texttt{createShow} method.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Show Object:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    date: 2021-01-01 (yyyy-mm-dd)
+  \item
+    time: 10:49:00 (hh:mm:ss)
+  \item
+    duration: 125 (minutes)
+  \item
+    balconyTicketCount: 5
+  \item
+    regularTicketCount: 5
+  \item
+    balconyTicketPrice: 100.0
+  \item
+    regularTicketPrice: 50.0
+  \end{itemize}
+\end{enumerate}
+
+Successful creation:
+
+\begin{itemize}
+\tightlist
+\item
+  Create a Show object with given test data.
+\item
+  Save it using \texttt{createShow} function.
+\item
+  An \texttt{Optional} is returned.
+\item
+  The returned \texttt{Optional} \textbf{must not} be empty.
+\item
+  The Show object is extracted. Its attributes \textbf{must} match with
+  that of testdata.
+\end{itemize}
+
+\hypertarget{get-show-by-id}{%
+\subsubsection{Get Show By Id}\label{get-show-by-id}}
+
+Tests the \texttt{getShow} method.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Show Object:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    date: 2021-01-01 (yyyy-mm-dd)
+  \item
+    time: 10:49:00 (hh:mm:ss)
+  \item
+    duration: 125 (minutes)
+  \item
+    balconyTicketCount: 5
+  \item
+    regularTicketCount: 5
+  \item
+    balconyTicketPrice: 100.0
+  \item
+    regularTicketPrice: 50.0
+  \end{itemize}
+\end{enumerate}
+
+Successful Retrieval:
+
+\begin{itemize}
+\tightlist
+\item
+  Create a Show object with given test data.
+\item
+  Save it using \texttt{createShow} function.
+\item
+  The test method is called with the auto-generated id of the created
+  object.
+\item
+  On calling \texttt{getShow} method, an \texttt{Optional} is returned.
+\item
+  The returned \texttt{Optional} \textbf{must not} be empty.
+\item
+  The Show object is extracted. Its attributes \textbf{must} match with
+  that of testdata.
+\end{itemize}
+
+\hypertarget{get-all-shows}{%
+\subsubsection{Get All Shows}\label{get-all-shows}}
+
+Tests the \texttt{getAll} method.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Show Object1:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    date: 2021-01-01 (yyyy-mm-dd)
+  \item
+    time: 10:49:00 (hh:mm:ss)
+  \item
+    duration: 125 (minutes)
+  \item
+    balconyTicketCount: 5
+  \item
+    regularTicketCount: 5
+  \item
+    balconyTicketPrice: 100.0
+  \item
+    regularTicketPrice: 50.0
+  \end{itemize}
+\item
+  Show Object2:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    date: 2021-01-02 (yyyy-mm-dd)
+  \item
+    time: 07:49:00 (hh:mm:ss)
+  \item
+    duration: 150 (minutes)
+  \item
+    balconyTicketCount: 5
+  \item
+    regularTicketCount: 5
+  \item
+    balconyTicketPrice: 100.0
+  \item
+    regularTicketPrice: 50.0
+  \end{itemize}
+\end{enumerate}
+
+Successful Retrieval:
+
+\begin{itemize}
+\tightlist
+\item
+  Create two show objects with given test data.
+\item
+  Save them using \texttt{createShow} function.
+\item
+  On calling \texttt{getAll} method, a List of Show is returned.
+\item
+  The returned List \textbf{must not} be empty and its size must be
+  equal to 2.
+\end{itemize}
+
+\hypertarget{user}{%
+\subsection{User}\label{user}}
+
+\hypertarget{create-user-when-user-is-not-present}{%
+\subsubsection{Create User When User is Not
+Present}\label{create-user-when-user-is-not-present}}
+
+Tests the \texttt{createUser} method.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  User Object:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    username: John
+  \item
+    password: Password
+  \item
+    type: Customer
+  \end{itemize}
+\end{enumerate}
+
+Successful creation:
+
+\begin{itemize}
+\tightlist
+\item
+  Create a User object with given test data when already a user with
+  \textbf{same username} is present in database.
+\item
+  Save it using \texttt{createUser} method.
+\item
+  An \texttt{Optional} is returned.
+\item
+  The returned \texttt{Optional} \textbf{must not} be empty.
+\item
+  The extracted User from the \texttt{Optional} must have the same
+  attributes as that of test data.
+\end{itemize}
+
+\hypertarget{create-user-when-user-is-present}{%
+\subsubsection{Create User When User is
+Present}\label{create-user-when-user-is-present}}
+
+Tests the \texttt{createUser} method.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  User Object:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    username: ``John''
+  \item
+    password: ``Password''
+  \item
+    type: Customer
+  \end{itemize}
+\end{enumerate}
+
+Unsuccessful creation:
+
+\begin{itemize}
+\tightlist
+\item
+  Create a User object with given test data when already a user with
+  \textbf{same username} is present in database.
+\item
+  Try to save it using \texttt{createUser} method.
+\item
+  An \texttt{Optional} is returned.
+\item
+  The returned \texttt{Optional} \textbf{must} be empty.
+\end{itemize}
+
+\hypertarget{get-all-users}{%
+\subsubsection{Get All Users}\label{get-all-users}}
+
+Tests the \texttt{getAllUsers} method.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  User Object1:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    username: ``John''
+  \item
+    password: ``Password''
+  \item
+    type: Customer
+  \end{itemize}
+\item
+  User Object2:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    username: ``aaditya''
+  \item
+    password: ``pass''
+  \item
+    type: Manager
+  \end{itemize}
+\end{enumerate}
+
+Successful Retrieval:
+
+\begin{itemize}
+\tightlist
+\item
+  Create two User objects with given test data.
+\item
+  Save it using \texttt{createUser} method.
+\item
+  On calling \texttt{getAllUsers}, a List of User is returned.
+\item
+  The returned List \textbf{must} be of size 2.
+\end{itemize}
+
+\hypertarget{get-user-by-id}{%
+\subsubsection{Get User By Id}\label{get-user-by-id}}
+
+Tests the \texttt{getUser} method.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  User Object:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    username: ``John''
+  \item
+    password: ``Password''
+  \item
+    type: Customer
+  \end{itemize}
+\end{enumerate}
+
+Successful Retrieval:
+
+\begin{itemize}
+\tightlist
+\item
+  Create a User object with given test data.
+\item
+  Save it using \texttt{createUser} method.
+\item
+  An \texttt{Optional} is returned during creation of object.
+\item
+  On calling \texttt{getUser} with the id of created object, an
+  \texttt{Optional} is returned.
+\item
+  The returned \texttt{Optional} \textbf{must not} be empty.
+\item
+  The extracted User from the \texttt{Optional} must have the same
+  attributes as that of test data or it should match with the created
+  object.
+\end{itemize}
+
+\hypertarget{delete-user}{%
+\subsubsection{Delete User}\label{delete-user}}
+
+Tests the \texttt{deleteUser} method.
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  User Object:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    username: ``John''
+  \item
+    password: ``Password''
+  \item
+    type: Customer
+  \end{itemize}
+\end{enumerate}
+
+Successful Deletion:
+
+\begin{itemize}
+\tightlist
+\item
+  Create a User object with given test data.
+\item
+  Save it using \texttt{createUser} method.
+\item
+  An \texttt{Optional} is returned during creation of object.
+\item
+  On calling \texttt{deleteUser} with the id of created object, a
+  boolean value is returned.
+\item
+  The returned value \textbf{must} be \texttt{true}.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,690 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\date{}
+
+\begin{document}
+
+\hypertarget{api-test-plan-for-sams}{%
+\section{API Test Plan for SAMS}\label{api-test-plan-for-sams}}
+
+\hypertarget{authors}{%
+\subsection{Authors}\label{authors}}
+
+Group 13 (Eternal Blue)
+
+Authors:
+
+\begin{itemize}
+\tightlist
+\item
+  Aaditya Agrawal (19CS10003)
+\item
+  Debanjan Saha (19CS30014)
+\item
+  Deep Majumder (19CS30015)
+\end{itemize}
+
+\hypertarget{expenditure}{%
+\subsection{Expenditure}\label{expenditure}}
+
+\hypertarget{post-an-expenditure}{%
+\subsubsection{POST an Expenditure}\label{post-an-expenditure}}
+
+Tests the POST method at API endpoint:
+\texttt{http://localhost:8080/expenditures/}
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Expenditure testObject:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 212.50
+  \item
+    reason: ``Electricity Bill''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  AccountantId: 30014
+\end{enumerate}
+
+Successful \texttt{POST}:
+
+\begin{itemize}
+\tightlist
+\item
+  An object of ExpenditureCreation is created from testObject and
+  AccountantId and a \texttt{POST} call is made.
+\item
+  A new expenditure is created and saved in the database and it returns
+  an Expenditure object.
+\item
+  The returned object \textbf{must not} be null.
+\item
+  The returned object must have the same attributes as that of given
+  testObject.
+\end{itemize}
+
+\hypertarget{get-all-expenditures}{%
+\subsubsection{GET all Expenditures}\label{get-all-expenditures}}
+
+Tests the GET method at API endpoint:
+\texttt{http://localhost:8080/expenditures/}
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Expenditure testObject1:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 212.50
+  \item
+    reason: ``Electricity Bill''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  Expenditure testObject2:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 1500.00
+  \item
+    reason: ``AC Repairing''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  Expenditure testObject3:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 1299.99
+  \item
+    reason: ``Payment to Software Developer''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  Expenditure testObject4:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 1200.00
+  \item
+    reason: ``Payment to Artist''
+  \item
+    showId: 100
+  \end{itemize}
+\item
+  AccountantId: 30014
+\end{enumerate}
+
+Successful \texttt{GET}:
+
+\begin{itemize}
+\tightlist
+\item
+  4 objects of ExpenditureCreation are created from testObjects and
+  AccountantId and 4 \texttt{POST} calls are made.
+\item
+  On \texttt{GET} call, a List of Expenditure is returned.
+\item
+  The returned list \textbf{must not} be empty and should have size = 4.
+\end{itemize}
+
+\hypertarget{get-expenditure-by-id}{%
+\subsubsection{GET Expenditure by Id}\label{get-expenditure-by-id}}
+
+Tests the GET method at API endpoint:
+\texttt{http://localhost:8080/expenditures/\{id\}}
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Expenditure testObject:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 212.50
+  \item
+    reason: ``Electricity Bill''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  AccountantId: 30014
+\end{enumerate}
+
+Successful \texttt{GET}:
+
+\begin{itemize}
+\tightlist
+\item
+  An objects of ExpenditureCreation is created from testObjects and
+  AccountantId and a \texttt{POST} call is made.
+\item
+  On \texttt{GET} call with the id of the object returned from the
+  \texttt{POST} call, another object of Expenditure is returned.
+\item
+  The returned object \textbf{must not} be null.
+\item
+  The objects returned from \texttt{POST} and \texttt{GET} calls must
+  have same attributes as given in test data.
+\end{itemize}
+
+\hypertarget{get-expenditure-by-show-id}{%
+\subsubsection{GET Expenditure by Show
+Id}\label{get-expenditure-by-show-id}}
+
+Tests the GET method at API endpoint:
+\texttt{http://localhost:8080/expenditures/by\_show/\{showId\}}
+
+Test Data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Expenditure testObject1:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 1212.50
+  \item
+    reason: ``AC Repairing''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  Expenditure testObject2:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 1299.99
+  \item
+    reason: ``Payment to Software Developer''
+  \item
+    showId: 404
+  \end{itemize}
+\item
+  Expenditure testObject3:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    amount: 1200.00
+  \item
+    reason: ``Payment to Artist''
+  \item
+    showId: 100
+  \end{itemize}
+\item
+  AccountantId: 30014
+\end{enumerate}
+
+Successful \texttt{GET}:
+
+\begin{itemize}
+\tightlist
+\item
+  3 objects of ExpenditureCreation are created from testObjects and
+  AccountantId and 3 \texttt{POST} calls are made.
+\item
+  On \texttt{GET} call with the showId 404, a List of Expenditure is
+  returned.
+\item
+  The returned object \textbf{must not} be empty and should have size 2
+  as two testObjects have showId = 404.
+\item
+  On \texttt{GET} call with the showId 100, another List of Expenditure
+  is returned.
+\item
+  The returned object \textbf{must not} be empty and should have size 1
+  as only one testObject has showId = 100.
+\end{itemize}
+
+\hypertarget{ticket}{%
+\subsection{Ticket}\label{ticket}}
+
+\hypertarget{get---tickets}{%
+\subsubsection{GET - /tickets}\label{get---tickets}}
+
+Get all the tickets.
+
+\begin{itemize}
+\tightlist
+\item
+  The database is pre-populated with some ticket instances.
+\item
+  The request is performed
+\item
+  The response status must be 200
+\item
+  The tickets are deserialized from the response JSON.
+\item
+  The obtained list and the original list is compared to be same.
+\end{itemize}
+
+\hypertarget{post---tickets}{%
+\subsubsection{POST - /tickets}\label{post---tickets}}
+
+Create a new ticket.
+
+\begin{itemize}
+\tightlist
+\item
+  A new Ticket object is created
+\item
+  Combined with salesperson ID, a TicketCreation object is created
+\item
+  Using the above object, the request is performed
+\item
+  The response status must be 200
+\item
+  The created ticket is deserialized from the response JSON
+\item
+  The obtained ticket is compared to be same as the original ticket
+\end{itemize}
+
+\hypertarget{get---ticketsid}{%
+\subsubsection{GET - /tickets/\{id\}}\label{get---ticketsid}}
+
+Gets a particular ticket
+
+\begin{itemize}
+\tightlist
+\item
+  Take the id of a ticket that has been pre-populated
+\item
+  Pass the id as param and perform the request
+\item
+  Deserialize the Ticket from the response JSON
+\item
+  Compare the ticket obtained to be same as the original ticket
+\end{itemize}
+
+\hypertarget{delete---ticketsid}{%
+\subsubsection{DELETE - /tickets/\{id\}}\label{delete---ticketsid}}
+
+Deletes a particular ticket
+
+\begin{itemize}
+\tightlist
+\item
+  Take the id of a ticket that has been pre-populated
+\item
+  Pass the id as param and perform the request
+\item
+  Deserialize the response JSON to get DeleteResult
+\item
+  Check isDeleted() to be \emph{true} and refundAmount() to be
+  \emph{price - 5}.
+\item
+  Call GET /tickets to get all the tickets.
+\item
+  Check that the deleted ticket is not present in the list
+\end{itemize}
+
+\hypertarget{get---ticketsby_userid}{%
+\subsubsection{GET -
+/tickets/by\_user/\{id\}}\label{get---ticketsby_userid}}
+
+Gets all tickets of a user
+
+\begin{itemize}
+\tightlist
+\item
+  Take the id of the User object whose tickets have been pre-populated
+\item
+  Pass the id as params and perform the request
+\item
+  Deserialize the response JSON to get the list of Tickets
+\item
+  Check that this is same as the orignal list of Tickets
+\end{itemize}
+
+\hypertarget{get---ticketsby_showid}{%
+\subsubsection{GET -
+/tickets/by\_show/\{id\}}\label{get---ticketsby_showid}}
+
+Gets all tickets of a show
+
+\begin{itemize}
+\tightlist
+\item
+  Take the id of the Show object whose tickets have been pre-populated
+\item
+  Pass the id as params and perform the request
+\item
+  Deserialize the response JSON to get the list of Tickets
+\item
+  Check that this is same as the original list of Tickets
+\end{itemize}
+
+\hypertarget{transaction}{%
+\subsection{Transaction}\label{transaction}}
+
+\hypertarget{get---transactions}{%
+\subsubsection{GET - /transactions}\label{get---transactions}}
+
+Get all transactions
+
+\begin{itemize}
+\tightlist
+\item
+  Pre-populate the repository with transactions
+\item
+  Perform the request
+\item
+  Deserialize the response JSON to get the list of Transactions
+\item
+  Check that this is same as the original list of Transactions
+\end{itemize}
+
+\hypertarget{get---transactionsid}{%
+\subsubsection{GET - /transactions/\{id\}}\label{get---transactionsid}}
+
+Get one particular transactions
+
+\begin{itemize}
+\tightlist
+\item
+  Take the id of a transaction that has been pre-populated
+\item
+  Perform the request with the id parameter
+\item
+  Deserialize the JSON to get the Transaction
+\item
+  Check that this is same as the original Transaction
+\end{itemize}
+
+\hypertarget{get---transactionsby_showid}{%
+\subsubsection{GET -
+/transactions/by\_show/\{id\}}\label{get---transactionsby_showid}}
+
+Get all transactions regarding a show
+
+\begin{itemize}
+\tightlist
+\item
+  Pre-populate the repository with some transactions
+\item
+  Perform the request with the id of a show whose transaction is present
+\item
+  Deserialize the JSON to get the list of Transactions
+\item
+  Check that this is the same as the original transactions, filtered
+  over show id
+\end{itemize}
+
+\hypertarget{get---transactionsby_salespersonid}{%
+\subsubsection{GET -
+/transactions/by\_salesperson/\{id\}}\label{get---transactionsby_salespersonid}}
+
+Get all transactions initiated by a salesperson
+
+\begin{itemize}
+\tightlist
+\item
+  Pre-populate the repository with some transactions
+\item
+  Perform the request with the id of a salesperson who has initiated
+  some transactions
+\item
+  Deserialize the JSON to get the list of Transactions
+\item
+  Check that this is the same as the original transactions, filtered
+  over initiator id and type as Salesperson
+\end{itemize}
+
+\hypertarget{get---transactionsby_yearyear}{%
+\subsubsection{GET -
+/transactions/by\_year/\{year\}}\label{get---transactionsby_yearyear}}
+
+Get all transactions of a year
+
+\begin{itemize}
+\tightlist
+\item
+  Pre-populate the repository with some transactions
+\item
+  Perform the request with a year whose transaction is present
+\item
+  Deserialize the JSON to get the list of Transactions
+\item
+  Check that this is the same as the original transactions, filtered
+  over year
+\end{itemize}
+
+\hypertarget{user}{%
+\subsection{User}\label{user}}
+
+Before every test is run, the database is cleared.
+
+\hypertarget{post-an-user}{%
+\subsubsection{POST an User}\label{post-an-user}}
+
+Tests the POST method at endpoint \texttt{http://localhost:8080/users/}
+
+This accepts an user and stores it in the database.
+
+\begin{itemize}
+\tightlist
+\item
+  An instance of user is created and a \texttt{POST} call is made.
+\item
+  The controller layer returns the instance back if user was
+  successfully saved in the DataBase.
+\item
+  The returned user is extracted. Their corresponding fields must match.
+\end{itemize}
+
+\hypertarget{get-an-user-by-id}{%
+\subsubsection{GET an User by Id}\label{get-an-user-by-id}}
+
+Tests the GET method at endpoint
+\texttt{http://localhost:8080/users/\{userId\}}
+
+This accepts an user id and returns the instance of user if it exists.
+
+\begin{itemize}
+\tightlist
+\item
+  An instance of user is created and a \texttt{POST} call is made.
+\item
+  The repository is queried, by doing a \texttt{GET} call, for an user
+  instance having the same id as that of the instance which was POSTed.
+\item
+  The returned user is extracted. The corresponding fields must match.
+\end{itemize}
+
+\hypertarget{get-an-user-by-login-detail---userslogin}{%
+\subsubsection{GET an User by login detail -
+/users/login}\label{get-an-user-by-login-detail---userslogin}}
+
+Tests the GET method at endpoint
+\texttt{http://localhost:8080/users/login}
+
+This takes username and password of an user, and returns the instance of
+user if it exists.
+
+\begin{itemize}
+\tightlist
+\item
+  An instance of user is created and a \texttt{POST} call is made.
+\item
+  The repository is queried, by doing a \texttt{GET} call, for an user
+  instance having the same username and password as that of the instance
+  which was POSTed.
+\item
+  The returned user is extracted. The corresponding fields must match.
+\end{itemize}
+
+\hypertarget{get-all-users}{%
+\subsubsection{GET all Users}\label{get-all-users}}
+
+Tests the GET method at endpoint \texttt{http://localhost:8080/users}
+
+This returns list of all the users from the databases.
+
+\begin{itemize}
+\tightlist
+\item
+  A few users are added to the database by doing \texttt{POST} calls.
+\item
+  A \texttt{GET} call is made to retrieve list of all users and then
+  size of list of users is verified.
+\end{itemize}
+
+\hypertarget{delete-user-by-id}{%
+\subsubsection{DELETE user By Id}\label{delete-user-by-id}}
+
+Tests the DELETE method at endpoint
+\texttt{http://localhost:8080/users/\{userId\}}
+
+This accepts an user id and deletes the user from the database.
+
+\begin{itemize}
+\tightlist
+\item
+  An user is added to the database by doing a \texttt{POST} call.
+\item
+  A \texttt{DELETE} call is made to the database with the id of the user
+  just created.
+\item
+  A \texttt{GET} call is made to make sure that user doesn't exist
+  anymore.
+\end{itemize}
+
+\hypertarget{shows}{%
+\subsection{Shows}\label{shows}}
+
+Before every test is run, the database is cleared.
+
+\hypertarget{post-a-show}{%
+\subsubsection{POST a Show}\label{post-a-show}}
+
+Tests the POST method at endpoint \texttt{http://localhost:8080/shows}
+
+This accepts an show and stores it in the database.
+
+\begin{itemize}
+\tightlist
+\item
+  An instance of show is created and a \texttt{POST} call is made.
+\item
+  The controller layer returns the instance back if show was
+  successfully saved in the DataBase.
+\item
+  The returned show is extracted. Their corresponding fields must match.
+\end{itemize}
+
+\hypertarget{get-a-show-by-id}{%
+\subsubsection{GET a show by Id}\label{get-a-show-by-id}}
+
+Tests the GET method at endpoint
+\texttt{http://localhost:8080/shows/\{showId\}}
+
+This accepts a show id and returns the instance of show if it exists.
+
+\begin{itemize}
+\tightlist
+\item
+  An instance of show is created and a \texttt{POST} call is made.
+\item
+  The repository is queried, by doing a \texttt{GET} call, for a show
+  instance having the same id as that of the instance which was POSTed.
+\item
+  The returned show is extracted. The corresponding fields must match.
+\end{itemize}
+
+\hypertarget{get-all-shows}{%
+\subsubsection{GET all Shows}\label{get-all-shows}}
+
+Tests the GET method at endpoint \texttt{http://localhost:8080/shows}
+
+This returns list of all the shows from the databases.
+
+\begin{itemize}
+\tightlist
+\item
+  A few shows are added to the database by doing \texttt{POST} calls.
+\item
+  A \texttt{GET} call is made to retrieve list of all shows and then
+  size of list of shows is verified.
+\end{itemize}
+
+\end{document}
