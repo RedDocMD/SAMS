@@ -28,11 +28,11 @@ Test Data:
 
 1. Expenditure testObject1: 
     - amount: 212.50
-    - reason: "AC Repairing"
+    - reason: "Electricity Bill"
     - showId: 404
 
 2. Expenditure testObject2: 
-    - amount: 1500
+    - amount: 1500.00
     - reason: "AC Repairing"
     - showId: 404
 
@@ -42,7 +42,7 @@ Test Data:
     - showId: 404
 
 4. Expenditure testObject4: 
-    - amount: 1200
+    - amount: 1200.00
     - reason: "Payment to Artist"
     - showId: 100
 
@@ -73,7 +73,7 @@ Successful `GET`:
 
 ### GET Expenditure by Show Id
 
-Tests the GET method at API endpoint: `http://localhost:8080/expenditures/{id}`
+Tests the GET method at API endpoint: `http://localhost:8080/expenditures/by_show/{showId}`
 
 Test Data:
 1. Expenditure testObject1: 
@@ -82,14 +82,15 @@ Test Data:
     - showId: 404
 
 2. Expenditure testObject2: 
-    - amount: 1200
-    - reason: "Payment to Artist"
-    - showId: 100
-
-3. Expenditure testObject3: 
     - amount: 1299.99
     - reason: "Payment to Software Developer"
     - showId: 404
+
+3. Expenditure testObject3: 
+    - amount: 1200.00
+    - reason: "Payment to Artist"
+    - showId: 100
+
 
 4. AccountantId: 30014
 

@@ -18,7 +18,7 @@ public class ExpenditureServiceTest {
     private final BigInteger testShowId = BigInteger.valueOf(404);
     private final BigInteger testAccountantId = BigInteger.valueOf(30014);
     private final Expenditure testExpenditure = new Expenditure(212.50,"Electricity Bill",testShowId);
-    private final Expenditure testExpenditure2 = new Expenditure(1250,"Software Developer Payment",testShowId);
+    private final Expenditure testExpenditure2 = new Expenditure(1250.00,"Software Developer Payment",testShowId);
 
     ExpenditureService expenditureService;
     @Mock ExpenditureRepository expenditureRepository;
