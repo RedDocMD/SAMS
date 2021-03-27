@@ -20,6 +20,8 @@ import static org.mockito.MockitoAnnotations.openMocks;
 
 class ShowServiceTest {
     private static final Show SHOW = new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("10:49:00"), Duration.ofMinutes(125) , 5, 5, 100.0, 50.0);
+    private static final Show SHOW2 = new Show(LocalDate.parse("2021-01-02"), LocalTime.parse("07:49:00"), Duration.ofMinutes(150) , 5, 5, 100.0, 50.0);
+    
     @Mock private ShowRepository showRepository;
     private ShowService showService;
 
@@ -40,7 +42,7 @@ class ShowServiceTest {
 
     @Test
     public void getAll() {
-        when(showRepository.findAll()).thenReturn(Arrays.asList(SHOW, SHOW));
+        when(showRepository.findAll()).thenReturn(Arrays.asList(SHOW, SHOW2));
         List<Show> shows = showService.getAllShows();
         assertThat(shows.size()).isEqualTo(2);
     }
