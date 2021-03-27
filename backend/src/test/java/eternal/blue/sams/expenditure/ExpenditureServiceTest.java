@@ -45,18 +45,6 @@ public class ExpenditureServiceTest {
     }
 
     @Test
-    public void getExpenditureByShow(){
-        when(expenditureService.getExpendituresByShow(testShowId)).thenReturn(List.of(testExpenditure,testExpenditure2));
-        when(expenditureRepository.save(any())).thenReturn(testExpenditure);
-
-        Expenditure createdExpenditure = expenditureService.createExpenditure(testExpenditure,testAccountantId);
-        List<Expenditure> retrievedExpenditureList = expenditureService.getExpendituresByShow(testShowId);
-
-        assertThat(retrievedExpenditureList.size()).isEqualTo(2);
-        assertThat(retrievedExpenditureList.get(0)).usingRecursiveComparison().isEqualTo(createdExpenditure);
-    }
-
-    @Test
     public void getAllExpenditures(){
         when(expenditureService.getAllExpenditures()).thenReturn(List.of(testExpenditure,testExpenditure2));
 
@@ -74,6 +62,16 @@ public class ExpenditureServiceTest {
         assertThat(retrievedExpenditure).isPresent();
         assertThat(retrievedExpenditure.get()).usingRecursiveComparison()
                 .isEqualTo(testExpenditure);
+    }
+
+    @Test
+    public void getExpenditureByShow(){
+        when(expenditureService.getExpendituresByShow(testShowId)).thenReturn(List.of(testExpenditure,testExpenditure2));
+        when(expenditureRepository.save(any())).thenReturn(testExpenditure);
+
+        List<Expenditure> retrievedExpenditureList = expenditureService.getExpendituresByShow(testShowId);
+        assertThat(retrievedExpenditureList.size()).isEqualTo(2);
+        assertThat(retrievedExpenditureList).usingRecursiveComparison().isEqualTo(List.of(testExpenditure,testExpenditure2));
     }
 
 

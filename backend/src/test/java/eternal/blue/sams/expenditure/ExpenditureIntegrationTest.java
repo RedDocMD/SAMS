@@ -36,6 +36,7 @@ public class ExpenditureIntegrationTest extends BaseIntegrationTest {
     public void createExpenditureValidParams() throws Exception {
         ExpenditureCreation expenditureCreationRequest = getExpenditureCreationRequest(testExpenditure,testAccountantId);
         Expenditure expenditureResponse = makePostCall(expenditureCreationRequest);
+        assertThat(expenditureResponse).isNotNull();
         assertThat(expenditureResponse).usingRecursiveComparison()
                 .ignoringFields("id")
                 .isEqualTo(expenditureCreationRequest.getExpenditure());
@@ -45,11 +46,12 @@ public class ExpenditureIntegrationTest extends BaseIntegrationTest {
     public void getExpenditureByIdValidParams() throws Exception {
         Expenditure expenditureRequest = makePostCall(getExpenditureCreationRequest(testExpenditure,testAccountantId));
         Expenditure expenditureResponse = makeGetOneCall(expenditureRequest.getId());
+        assertThat(expenditureResponse).isNotNull();
         assertThat(expenditureResponse).usingRecursiveComparison()
                 .isEqualTo(expenditureRequest);
 
     }
-//
+
     @Test
     public void getExpenditureByShowIdValidParams() throws Exception {
         makePostCall(getExpenditureCreationRequest(1212.50,"AC Repairing",testShowId,testAccountantId));
