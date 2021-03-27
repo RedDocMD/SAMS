@@ -49,7 +49,6 @@ public class ExpenditureIntegrationTest extends BaseIntegrationTest {
         assertThat(expenditureResponse).isNotNull();
         assertThat(expenditureResponse).usingRecursiveComparison()
                 .isEqualTo(expenditureRequest);
-
     }
 
     @Test

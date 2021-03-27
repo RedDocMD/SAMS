@@ -14,7 +14,8 @@ Successful creation:
 - Save it using `createUser`.
 - The returned `Optional` must **not** be empty.
 - The returned User is extracted. It must match with original user on `getUsername`, `getPassword` and `getType`.
----
+
+
 
 ## Expenditure
 
@@ -115,5 +116,5 @@ Successful Retrieval with valid showId:
 Unsuccessful Retrieval with invalid showId:
 - On calling `getExpenditureByShow` with showId 101, it should return a List of Expenditure.
 - The returned List **must** be empty.
----
+
 

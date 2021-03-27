@@ -98,4 +98,4 @@ Successful `GET`:
 - On `GET` call with the showId 404, a List of Expenditure is returned.
 - The returned object **must not** be empty and should have size 2 as two testObjects have showId = 404.
 - On `GET` call with the showId 100, another List of Expenditure is returned.
-- The returned object **must not** be empty and should have size 1 as only one testObject have showId = 100.
+- The returned object **must not** be empty and should have size 1 as only one testObject has showId = 100.
