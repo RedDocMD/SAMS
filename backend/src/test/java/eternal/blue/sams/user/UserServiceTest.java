@@ -17,6 +17,7 @@ import static org.mockito.MockitoAnnotations.openMocks;
 
 public class UserServiceTest {
     private static final User USER = new User("John", "Password", UserType.Customer);
+    private static final User USER2 = new User("aaditya", "pass", UserType.Manager);
 
     UserService userService;
     @Mock UserRepository userRepository;
@@ -45,7 +46,7 @@ public class UserServiceTest {
 
     @Test
     public void getUserAll() {
-        when(userRepository.findAll()).thenReturn(Arrays.asList(USER, USER));
+        when(userRepository.findAll()).thenReturn(Arrays.asList(USER, USER2));
         List<User> users = userService.getAllUsers();
         assertThat(users.size()).isEqualTo(2);
     }

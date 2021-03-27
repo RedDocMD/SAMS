@@ -43,7 +43,7 @@ Successful Retrieval:
 - Create a Show object with given test data.
 - Save it using `createShow` function.
 - The test method is called with the auto-generated id of the created object.
-- An `Optional` is returned.
+- On calling `getShow` method, an `Optional` is returned.
 - The returned `Optional` **must not** be empty.
 - The Show object is extracted. Its attributes **must** match with that of testdata.
 
@@ -74,7 +74,7 @@ Test Data:
 Successful Retrieval:
 - Create two show objects with given test data.
 - Save them using `createShow` function.
-- The test method returns a List of Show.
+- On calling `getAll` method, a List of Show is returned.
 - The returned List **must not** be empty and its size must be equal to 2.
 
 
@@ -91,7 +91,7 @@ Test Data:
 - type: Customer
 
 Successful creation:
-- Create a Show object with given test data when already a user with **same username** is present in database.
+- Create a User object with given test data when already a user with **same username** is present in database.
 - Save it using `createUser` method.
 - An `Optional` is returned.
 - The returned `Optional` **must not** be empty.
@@ -103,12 +103,58 @@ Tests the `createUser` method.
 
 Test Data:
 1. User Object:
-- username: John
-- password: Password
+- username: "John"
+- password: "Password"
 - type: Customer
 
 Unsuccessful creation:
-- Create a Show object with given test data when already a user with **same username** is present in database.
+- Create a User object with given test data when already a user with **same username** is present in database.
 - Try to save it using `createUser` method.
 - An `Optional` is returned.
 - The returned `Optional` **must** be empty.
+
+### Get All Users
+
+Tests the `getAllUsers` method.
+
+Test Data:
+1. User Object1:
+- username: "John"
+- password: "Password"
+- type: Customer
+
+2. User Object2:
+- username: "aaditya"
+- password: "pass"
+- type: Manager
+
+Successful creation:
+- Create two User objects with given test data.
+- Save it using `createUser` method.
+- On calling `getAllUsers`, a List of User is returned.
+- The returned List **must** be of size 2. 
+
+
+### Get User By Id
+
+Tests the `getUser` method.
+
+Test Data:
+1. User Object:
+- username: "John"
+- password: "Password"
+- type: Customer
+
+Successful creation:
+- Create a User object with given test data.
+- Save it using `createUser` method.
+- An `Optional` is returned during creation of object.
+- On calling `getUser` with the id of created object, an `Optional` is returned.
+- The returned `Optional` must not be empty. 
+- The extracted User from the `Optional` must have the same attributes as that of test data or it should match with the created object. 
+
+### Delete User
+
+Tests the `deleteUser` method.
+
+
