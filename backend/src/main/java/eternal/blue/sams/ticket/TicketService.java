@@ -136,4 +136,8 @@ public class TicketService {
             isDeleted = deleted;
         }
     }
+
+    void deleteAll() {
+        ticketRepository.deleteAll();
+    }
 }
