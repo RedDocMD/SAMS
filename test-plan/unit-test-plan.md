@@ -103,3 +103,41 @@ Tests the `createTicket` method.
 - Using UserID = 100, and showId 10, create regular Ticket` object.
 - Using SalespersonID = 1000, call create ticket with above ticket object.
 - Check that the returned `Optional` **is** empty
+
+### Delete Ticket
+
+Tests the `deleteTicket` method of `TicketService`.
+
+#### Successful delete existing ticket more than 3 days before
+
+- Use the following Show:
+  - Date: Curr Date + 10 days
+  - Time: 1700hrs
+  - Duration: 2 hr
+  - Balcony Seats = 100 and price = 1000
+  - Regular Seats = 500 and price = 450
+  - ID: 10
+- Use the following Ticket:
+  - Regular
+  - Show ID: 10
+  - Price 450
+  - User ID: 100
+- Call `DeleteTicket` by ticket ID.
+- The returned result must have deleted field as *true* and refund amount as 450 - 5 = 445
+
+#### Successful delete existing ticket less than 3 days and before 1 days
+
+- Use the following Show:
+  - Date: Curr Date + 2 days
+  - Time: 1700hrs
+  - Duration: 2 hr
+  - Balcony Seats = 100 and price = 1000
+  - Regular Seats = 500 and price = 450
+  - ID: 10
+- Use the following Ticket:
+  - Regular
+  - Show ID: 10
+  - Price 450
+  - User ID: 100
+- Call `DeleteTicket` by ticket ID.
+- The returned result must have deleted field as *true* and refund amount as 450 - 10 = 440

@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
@@ -188,5 +189,55 @@ public class TicketServiceTest {
 
         var returnedTicket = ticketService.createTicket(ticket, salespersonId);
         assertThat(returnedTicket).isEmpty();
+    }
+
+    @Test
+    public void deleteValidTicketOfValidShowBeforeThreeDays() {
+        var currDay = LocalDate.now();
+        var show = new Show(
+                currDay.plus(Period.ofDays(10)),
+                LocalTime.of(17, 0),
+                Duration.ofHours(2),
+                100,
+                500,
+                1000,
+                450);
+        var showId = BigInteger.valueOf(10);
+        var userId = BigInteger.valueOf(100);
+        var ticket = new Ticket(showId, TicketType.Regular, show.getRegularTicketPrice(), userId);
+        var randGen = new Random();
+        var ticketId = BigInteger.valueOf(randGen.nextLong());
+
+        when(showService.getShow(showId)).thenReturn(Optional.of(show));
+        when(ticketRepository.findById(ticketId)).thenReturn(Optional.of(ticket));
+
+        var result = ticketService.deleteTicket(ticketId);
+        assertThat(result.getRefundAmount()).isEqualTo(show.getRegularTicketPrice() - 5);
+        assertThat(result.isDeleted()).isTrue();
+    }
+
+    @Test
+    public void deleteValidTicketOfValidShowAfterThreeDaysBeforeOneDay() {
+        var currDay = LocalDate.now();
+        var show = new Show(
+                currDay.plus(Period.ofDays(2)),
+                LocalTime.of(17, 0),
+                Duration.ofHours(2),
+                100,
+                500,
+                1000,
+                450);
+        var showId = BigInteger.valueOf(10);
+        var userId = BigInteger.valueOf(100);
+        var ticket = new Ticket(showId, TicketType.Regular, show.getRegularTicketPrice(), userId);
+        var randGen = new Random();
+        var ticketId = BigInteger.valueOf(randGen.nextLong());
+
+        when(showService.getShow(showId)).thenReturn(Optional.of(show));
+        when(ticketRepository.findById(ticketId)).thenReturn(Optional.of(ticket));
+
+        var result = ticketService.deleteTicket(ticketId);
+        assertThat(result.getRefundAmount()).isEqualTo(show.getRegularTicketPrice() - 10);
+        assertThat(result.isDeleted()).isTrue();
     }
 }
