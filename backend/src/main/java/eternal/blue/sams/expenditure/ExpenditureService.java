@@ -41,4 +41,9 @@ public class ExpenditureService {
     public List<Expenditure> getExpendituresByShow(BigInteger showId) {
         return expenditureRepository.findExpenditureByShowId(showId);
     }
+
+    //Clear Database For Testing only
+    public void deleteAll(){
+        expenditureRepository.deleteAll();
+    }
 }

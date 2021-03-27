@@ -1,6 +1,7 @@
 package eternal.blue.sams.expenditure;
 
 import eternal.blue.sams.SamsApplication;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -22,6 +23,7 @@ public class ExpenditureController {
     }
 
     @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
     public Expenditure create(@RequestBody ExpenditureCreation expenditureCreation) {
         return expenditureService.createExpenditure(expenditureCreation.getExpenditure(), expenditureCreation.getAccountantId());
     }
