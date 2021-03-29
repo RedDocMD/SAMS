@@ -1,4 +1,5 @@
 import Login from "./Login";
+import ManagerDashboard from './ManagerDashboard';
 import { AppBar, Box, Button, Toolbar, Typography } from "@material-ui/core";
 import { useState } from "react";
 
@@ -39,6 +40,7 @@ function App(props) {
     };
 
     let loginView = <Login loginCallback={loginUser} baseURL={baseURL} />;
+    let managerDashboardView = <ManagerDashboard baseURL={baseURL}></ManagerDashboard>
 
     let currView;
     switch (currState) {
@@ -46,7 +48,7 @@ function App(props) {
             currView = loginView;
             break;
         case StateEnum.managerDashboard:
-            currView = <Button variant="contained" color="secondary">Manager</Button>
+            currView = managerDashboardView
             break;
         case StateEnum.accountantDashboard:
             currView = <Box>Accountant</Box>
