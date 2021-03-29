@@ -1,6 +1,6 @@
 import Login from "./Login";
-import {AppBar, Box, Toolbar, Typography} from "@material-ui/core";
-import {useState} from "react";
+import { AppBar, Box, Button, Toolbar, Typography } from "@material-ui/core";
+import { useState } from "react";
 
 let StateEnum = Object.freeze({
     "toLogin": 1,
@@ -9,6 +9,8 @@ let StateEnum = Object.freeze({
     "userDashboard": 4,
     "accountantDashboard": 5
 });
+
+const baseURL = 'http://localhost:8080';
 
 function App(props) {
     let [currId, setCurrId] = useState("");
@@ -36,7 +38,7 @@ function App(props) {
         }
     };
 
-    let loginView = <Login loginCallback={loginUser} />;
+    let loginView = <Login loginCallback={loginUser} baseURL={baseURL} />;
 
     let currView;
     switch (currState) {
@@ -44,7 +46,7 @@ function App(props) {
             currView = loginView;
             break;
         case StateEnum.managerDashboard:
-            currView = <Box>Manager</Box>
+            currView = <Button variant="contained" color="secondary">Manager</Button>
             break;
         case StateEnum.accountantDashboard:
             currView = <Box>Accountant</Box>

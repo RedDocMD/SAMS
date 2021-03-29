@@ -8,7 +8,7 @@ function LoginPage(props) {
     let [userNotFoundError, setUserNotFoundError] = useState(false);
 
     let loginButtonAction = () => {
-        let url = `http://localhost:8080/users/login?username=${username}&password=${password}`;
+        let url = `${props.baseURL}/users/login?username=${username}&password=${password}`;
         axios.get(url)
             .then((response) => {
                 let data = response.data;
