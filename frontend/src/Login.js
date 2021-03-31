@@ -65,8 +65,8 @@ function LoginPage(props) {
 }
 
 LoginPage.propTypes = {
-    baseURL: PropTypes.string.required,
-    loginCallback: PropTypes.func.required
+    baseURL: PropTypes.string.isRequired,
+    loginCallback: PropTypes.func.isRequired
 }
 
 export default LoginPage

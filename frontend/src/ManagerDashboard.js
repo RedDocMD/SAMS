@@ -7,7 +7,7 @@ let ManagerDashboardEnum = Object.freeze({
     'createAccount': 2,
 })
 
-function ManagerDashboard(props) {
+function ManagerDashboard(_props) {
     let [viewState, setViewState] = useState(1)
     let createAccountHandler = () => {
         setViewState(ManagerDashboardEnum.createAccount)
@@ -32,7 +32,7 @@ function ManagerDashboard(props) {
             </Grid>
         </Grid>
     </Container>)
-    let createAccountView = <CreateAccount callback={createAccountCallback}></CreateAccount>
+    let createAccountView = <CreateAccount callback={createAccountCallback}/>
 
     let currView
     switch (viewState) {
