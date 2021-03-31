@@ -1,36 +1,37 @@
-import React, { useState } from 'react';
-import { Box, Button, Container, Grid, TextField, Typography } from "@material-ui/core";
-import axios from 'axios';
+import React, { useState } from 'react'
+import { Box, Button, Container, Grid, TextField, Typography } from '@material-ui/core'
+import axios from 'axios'
+import PropTypes from 'prop-types'
 
 function LoginPage(props) {
-    let [username, setUsername] = useState("");
-    let [password, setPassword] = useState("");
-    let [userNotFoundError, setUserNotFoundError] = useState(false);
+    let [username, setUsername] = useState('')
+    let [password, setPassword] = useState('')
+    let [userNotFoundError, setUserNotFoundError] = useState(false)
 
     let loginButtonAction = () => {
-        let url = `${props.baseURL}/users/login?username=${username}&password=${password}`;
+        let url = `${props.baseURL}/users/login?username=${username}&password=${password}`
         axios.get(url)
             .then((response) => {
-                let data = response.data;
+                let data = response.data
                 if (data) {
-                    setUserNotFoundError(false);
-                    let id = data["id"];
-                    let type = data["type"];
-                    props.loginCallback(id, type);
+                    setUserNotFoundError(false)
+                    let id = data['id']
+                    let type = data['type']
+                    props.loginCallback(id, type)
                 } else {
-                    setUserNotFoundError(true);
+                    setUserNotFoundError(true)
                 }
-            });
-    };
-    let usernameChanged = ev => setUsername(ev.target.value);
-    let passwordChanged = ev => setPassword(ev.target.value);
+            })
+    }
+    let usernameChanged = ev => setUsername(ev.target.value)
+    let passwordChanged = ev => setPassword(ev.target.value)
 
-    let userTextField;
+    let userTextField
     if (userNotFoundError) {
         userTextField = <TextField id="username" label="Username" helperText="Username or password is incorrect"
-            error fullWidth onChange={usernameChanged} />;
+            error fullWidth onChange={usernameChanged} />
     } else {
-        userTextField = <TextField id="username" label="Username" fullWidth onChange={usernameChanged} />;
+        userTextField = <TextField id="username" label="Username" fullWidth onChange={usernameChanged} />
     }
 
     return (
@@ -63,4 +64,9 @@ function LoginPage(props) {
     )
 }
 
-export default LoginPage;
+LoginPage.propTypes = {
+    baseURL: PropTypes.string.required,
+    loginCallback: PropTypes.func.required
+}
+
+export default LoginPage

@@ -34,11 +34,6 @@
             "error",
             "never"
         ],
-        "no-unused-vars": [
-            "warning",
-            {
-                "args": "none"
-            }
-        ]
+        "no-unused-vars": ["warn", { "vars": "all", "args": "none", "ignoreRestSiblings": false }]
     }
 }

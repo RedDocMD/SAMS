@@ -1,15 +1,14 @@
-
 import CreateAccount from './CreateAccount'
-import { Box, Button, Container, Grid, TextField, Typography } from "@material-ui/core"
-import { useState } from 'react'
+import { Box, Button, Container, Grid, Typography } from '@material-ui/core'
+import React, { useState } from 'react'
 
 let ManagerDashboardEnum = Object.freeze({
-    "default": 1,
-    "createAccount": 2,
+    'default': 1,
+    'createAccount': 2,
 })
 
 function ManagerDashboard(props) {
-    let [viewState, setViewState] = useState(1);
+    let [viewState, setViewState] = useState(1)
     let createAccountHandler = () => {
         setViewState(ManagerDashboardEnum.createAccount)
     }
@@ -23,7 +22,7 @@ function ManagerDashboard(props) {
                 <Box>
                     <Typography variant="h3" align="center">
                         Manager Dashboard
-                        </Typography>
+                    </Typography>
                 </Box>
             </Grid>
             <Grid item xs={3}>
@@ -32,22 +31,22 @@ function ManagerDashboard(props) {
                 </Button>
             </Grid>
         </Grid>
-    </Container>);
+    </Container>)
     let createAccountView = <CreateAccount callback={createAccountCallback}></CreateAccount>
 
-    let currView;
+    let currView
     switch (viewState) {
-        case ManagerDashboardEnum.default:
-            currView = dashboard
-            break
-        case ManagerDashboardEnum.createAccount:
-            currView = createAccountView
-            break
-        default:
-            throw Error("Invalid state in Manager Dashboard")
+    case ManagerDashboardEnum.default:
+        currView = dashboard
+        break
+    case ManagerDashboardEnum.createAccount:
+        currView = createAccountView
+        break
+    default:
+        throw Error('Invalid state in Manager Dashboard')
     }
 
-    return currView;
+    return currView
 }
 
-export default ManagerDashboard;
+export default ManagerDashboard
