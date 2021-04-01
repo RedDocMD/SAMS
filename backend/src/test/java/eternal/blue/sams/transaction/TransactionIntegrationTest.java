@@ -18,6 +18,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.cartesianProduct;
 import static com.google.common.collect.Lists.newArrayList;
@@ -43,10 +44,10 @@ public class TransactionIntegrationTest extends BaseIntegrationTest {
         var randGen = new Random();
         var amounts = newArrayList(500.0, 1000.0, 5000.0);
         var types = newArrayList(TransactionType.Credit, TransactionType.Debit);
-        var initiatorIds = newArrayList(BigInteger.valueOf(randGen.nextLong()),
-                BigInteger.valueOf(randGen.nextLong()), BigInteger.valueOf(randGen.nextLong()));
-        var showIds = newArrayList(BigInteger.valueOf(randGen.nextLong()),
-                BigInteger.valueOf(randGen.nextLong()), BigInteger.valueOf(randGen.nextLong()));
+        var initiatorIds = newArrayList(BigInteger.valueOf(Math.abs(randGen.nextLong())),
+                BigInteger.valueOf(Math.abs(randGen.nextLong())), BigInteger.valueOf(Math.abs(randGen.nextLong())));
+        var showIds = newArrayList(BigInteger.valueOf(Math.abs(randGen.nextLong())),
+                BigInteger.valueOf(Math.abs(randGen.nextLong())), BigInteger.valueOf(Math.abs(randGen.nextLong())));
         var initiatorTypes = newArrayList(UserType.Customer, UserType.Salesperson, UserType.Accountant);
         var times = newArrayList(
                 LocalDateTime.now(), LocalDateTime.now().plus(Period.ofYears(1)));
@@ -86,6 +87,69 @@ public class TransactionIntegrationTest extends BaseIntegrationTest {
         var allTransactions = gson.fromJson(responseJSON, new TypeToken<List<Transaction>>() {
         }.getType());
         assertThat(allTransactions).isEqualTo(transactions);
+    }
+
+    @Test
+    public void one() throws Exception {
+        var randGen = new Random();
+        var transIdx = randGen.nextInt(transactions.size());
+        var myTransaction = transactions.get(transIdx);
+        var responseJSON = mvc.perform(
+                get(BASE + "/{id}", myTransaction.getId()).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse().getContentAsString();
+        var obtainedTransaction = gson.fromJson(responseJSON, Transaction.class);
+        assertThat(obtainedTransaction).isEqualTo(myTransaction);
+    }
+
+    @Test
+    public void allOfShow() throws Exception {
+        var showId = transactions.get(0).getShowId();
+        var responseJSON = mvc.perform(
+                get(BASE + "/by_show/{id}", showId).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse().getContentAsString();
+        var allTransactions = gson.fromJson(responseJSON, new TypeToken<List<Transaction>>() {
+        }.getType());
+        var showTransactions = transactions.stream()
+                .filter(transaction -> transaction.getShowId().equals(showId))
+                .collect(Collectors.toList());
+        assertThat(allTransactions).isEqualTo(showTransactions);
+    }
+
+    @Test
+    public void allOfSalesperson() throws Exception {
+        var salespersonId = transactions.get(0).getInitiatorId();
+        var responseJSON = mvc.perform(
+                get(BASE + "/by_salesperson/{id}", salespersonId).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse().getContentAsString();
+        var allTransactions = gson.fromJson(responseJSON, new TypeToken<List<Transaction>>() {
+        }.getType());
+        var salespersonTransactions = transactions.stream()
+                .filter(transaction -> transaction.getInitiatorId().equals(salespersonId)
+                        && transaction.getInitiatorType() == UserType.Salesperson)
+                .collect(Collectors.toList());
+        assertThat(allTransactions).isEqualTo(salespersonTransactions);
+    }
+
+    @Test
+    public void allOfYear() throws Exception {
+        var year = LocalDateTime.now().getYear();
+        var responseJSON = mvc.perform(
+                get(BASE + "/by_year/{year}", year).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse().getContentAsString();
+        var allTransactions = gson.fromJson(responseJSON, new TypeToken<List<Transaction>>() {
+        }.getType());
+        var yearTransactions = transactions.stream()
+                .filter(transaction -> transaction.getTime().getYear() == year)
+                .collect(Collectors.toList());
+        assertThat(allTransactions).isEqualTo(yearTransactions);
     }
 
     private static class LocalDateTimeDeserializer implements JsonDeserializer<LocalDateTime> {
