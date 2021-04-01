@@ -49,6 +49,12 @@
             <artifactId>guava</artifactId>
             <version>30.1.1-jre</version>
         </dependency>
+        <dependency>
+            <groupId>org.openclover</groupId>
+            <artifactId>clover-maven-plugin</artifactId>
+            <version>4.4.1</version>
+            <type>maven-plugin</type>
+        </dependency>
     </dependencies>
 
     <build>
