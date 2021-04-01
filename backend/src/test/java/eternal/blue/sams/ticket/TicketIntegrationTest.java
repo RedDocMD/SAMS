@@ -194,7 +194,7 @@ public class TicketIntegrationTest extends BaseIntegrationTest {
         assertThat(ticketsList.contains(ticket)).isFalse();
     }
 
-    private class DeleteResultDeserializer implements JsonDeserializer<TicketService.DeleteResult> {
+    private static class DeleteResultDeserializer implements JsonDeserializer<TicketService.DeleteResult> {
         @Override
         public TicketService.DeleteResult deserialize(JsonElement jsonElement,
                                                       Type type,
