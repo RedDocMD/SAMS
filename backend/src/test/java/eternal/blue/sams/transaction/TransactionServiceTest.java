@@ -37,8 +37,8 @@ public class TransactionServiceTest {
        var randGen = new Random();
        var amount = randGen.nextDouble() * 5000;
        var type = TransactionType.Credit;
-       var initiatorId = BigInteger.valueOf(randGen.nextLong());
-       var showId = BigInteger.valueOf(randGen.nextLong());
+       var initiatorId = BigInteger.valueOf(Math.abs(randGen.nextLong()));
+       var showId = BigInteger.valueOf(Math.abs(randGen.nextLong()));
        var initiatorType = UserType.Salesperson;
        var time = LocalDateTime.now();
 
@@ -111,10 +111,10 @@ public class TransactionServiceTest {
         var randGen = new Random();
         var amounts = newArrayList(500.0, 1000.0, 5000.0);
         var types = newArrayList(TransactionType.Credit, TransactionType.Debit);
-        var initiatorIds =  newArrayList(BigInteger.valueOf(randGen.nextLong()),
-                BigInteger.valueOf(randGen.nextLong()), BigInteger.valueOf(randGen.nextLong()));
-        var showIds =  newArrayList(BigInteger.valueOf(randGen.nextLong()),
-                BigInteger.valueOf(randGen.nextLong()), BigInteger.valueOf(randGen.nextLong()));
+        var initiatorIds =  newArrayList(BigInteger.valueOf(Math.abs(randGen.nextLong())),
+                BigInteger.valueOf(Math.abs(randGen.nextLong())), BigInteger.valueOf(Math.abs(randGen.nextLong())));
+        var showIds =  newArrayList(BigInteger.valueOf(Math.abs(randGen.nextLong())),
+                BigInteger.valueOf(Math.abs(randGen.nextLong())), BigInteger.valueOf(Math.abs(randGen.nextLong())));
         var initiatorTypes = newArrayList(UserType.Customer, UserType.Salesperson, UserType.Accountant);
         var times = newArrayList(
                 LocalDateTime.now(), LocalDateTime.now().plus(Period.ofYears(1)));
