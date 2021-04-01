@@ -1,6 +1,6 @@
 package eternal.blue.sams.ticket;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import eternal.blue.sams.BaseIntegrationTest;
 import eternal.blue.sams.show.Show;
@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.lang.reflect.Type;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TicketIntegrationTest extends BaseIntegrationTest {
     private static final String BASE = "/tickets";
-    private final Gson gson = new Gson();
+    private final Gson gson;
     private final List<Ticket> tickets = new ArrayList<>();
     @Autowired
     private TicketService ticketService;
@@ -44,6 +45,12 @@ public class TicketIntegrationTest extends BaseIntegrationTest {
     private Show show;
     private User customer;
     private User salesperson;
+
+    TicketIntegrationTest() {
+       var builder = new GsonBuilder();
+       builder.registerTypeAdapter(TicketService.DeleteResult.class, new DeleteResultDeserializer());
+       this.gson = builder.create();
+    }
 
     @BeforeEach
     public void setup() {
@@ -187,7 +194,17 @@ public class TicketIntegrationTest extends BaseIntegrationTest {
         assertThat(ticketsList.contains(ticket)).isFalse();
     }
 
-    // Custom deserializer for DeleteResult
+    private class DeleteResultDeserializer implements JsonDeserializer<TicketService.DeleteResult> {
+        @Override
+        public TicketService.DeleteResult deserialize(JsonElement jsonElement,
+                                                      Type type,
+                                                      JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            var obj = jsonElement.getAsJsonObject();
+            var amt = obj.get("refundAmount").getAsDouble();
+            var isDel = obj.get("deleted").getAsBoolean();
+            return new TicketService.DeleteResult(amt, isDel);
+        }
+    }
 
     @Test
     public void getTicketsByUser() throws Exception {
