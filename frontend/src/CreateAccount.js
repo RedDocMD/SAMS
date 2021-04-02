@@ -1,13 +1,12 @@
 import {
     Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl,
     Grid,
-    InputLabel, Menu,
+    InputLabel,
     MenuItem, Select,
     TextField,
     Typography,
 } from '@material-ui/core'
 import React, {useState} from 'react'
-import ConfirmCreateAccount from './ConfirmCreateAccount'
 import axios from 'axios'
 import { Alert } from '@material-ui/lab'
 
@@ -39,8 +38,6 @@ function createAccount(props) {
             password : password,
             type : type
         }
-
-        
         axios.post(`${props.baseURL}/users`,data)
             .then((response) =>{
                 console.log(response)
