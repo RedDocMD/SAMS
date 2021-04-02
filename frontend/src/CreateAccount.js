@@ -1,5 +1,5 @@
 import {
-    Button, Container, FormControl, FormHelperText,
+    Button, Container, FormControl,
     Grid,
     InputLabel, Menu,
     MenuItem, Select,
@@ -7,6 +7,13 @@ import {
     Typography
 } from '@material-ui/core'
 import React, {useState} from 'react'
+import ConfirmCreateAccount from './ConfirmCreateAccount'
+
+const StateEnum = Object.freeze({
+    'CreateAccountPage': 1,
+    'ConfirmationPage': 2,
+})
+
 
 function createAccount(props) {
 
@@ -17,13 +24,22 @@ function createAccount(props) {
     let [username,setUsername] = useState('')
     let [password,setPassword] = useState('')
     let [type,setType] = useState('')
+    let [currentView,setCurrentView] = useState(1)
 
     let changeUsername = callerEvent => setUsername(callerEvent.target.value)
     let changePassword = callerEvent => setPassword(callerEvent.target.value)
     let changeType = callerEvent => setType(callerEvent.target.value)
 
+    let handleCreate = () => {
+        setCurrentView(StateEnum.ConfirmationPage)
+    }
 
-    return (
+    let CreateAccountCallBack = () => {
+        setCurrentView(StateEnum.CreateAccountPage)
+    }
+
+
+    let CreateAccountView =  (
 
         <Container>
             <Grid container spacing={6} alignItems="center">
@@ -71,13 +87,12 @@ function createAccount(props) {
                 </Grid>
                 <Grid item xs={2} />
 
-
                 <Grid item xs={4} />
                 <Grid item xs={2}>
-                    <Button variant="contained" color="primary" onClick={returnHandler}>Go back</Button>
+                    <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Go back</Button>
                 </Grid>
                 <Grid item xs={2}>
-                    <Button variant="contained" color="primary" onClick={returnHandler}>Create</Button>
+                    <Button size="large" variant="contained" color="primary" onClick={handleCreate}>Create</Button>
                 </Grid>
                 <Grid item xs={4} />
 
@@ -87,6 +102,22 @@ function createAccount(props) {
             </Grid>
         </Container>
     )
+
+    let ConfirmAccountView = <ConfirmCreateAccount callback={CreateAccountCallBack} />
+
+    let viewPage
+    switch(currentView){
+    case StateEnum.CreateAccountPage:
+        viewPage = CreateAccountView
+        break
+    case StateEnum.ConfirmationPage:
+        viewPage = ConfirmAccountView
+        break
+    default:
+        throw Error('Invalid State in Create Account View')
+    }
+
+    return viewPage
 }
 
 export default createAccount

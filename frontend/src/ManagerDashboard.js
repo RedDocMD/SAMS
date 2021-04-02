@@ -7,7 +7,7 @@ let ManagerDashboardEnum = Object.freeze({
     'createAccount': 2,
 })
 
-function ManagerDashboard(_props) {
+function ManagerDashboard(props) {
     let [viewState, setViewState] = useState(1)
     let createAccountHandler = () => {
         setViewState(ManagerDashboardEnum.createAccount)
