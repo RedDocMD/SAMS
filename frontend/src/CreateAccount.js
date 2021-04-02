@@ -9,6 +9,7 @@ import {
 import React, {useState} from 'react'
 import ConfirmCreateAccount from './ConfirmCreateAccount'
 import axios from 'axios'
+import { Alert } from '@material-ui/lab'
 
 function createAccount(props) {
 
@@ -20,7 +21,7 @@ function createAccount(props) {
     let [password,setPassword] = useState('')
     let [type,setType] = useState('')
     let [open, setOpen] = useState(false)
-    let [alertMessage,setAlertMessage] = useState('')
+    let [message,setMessage] = useState(0)
 
     let changeUsername = callerEvent => setUsername(callerEvent.target.value)
     let changePassword = callerEvent => setPassword(callerEvent.target.value)
@@ -29,6 +30,8 @@ function createAccount(props) {
     const handleClickOpen = () => {
         setOpen(true)
     }
+
+
 
     const submitAndClose = () => {
         let data = {
@@ -42,12 +45,12 @@ function createAccount(props) {
             .then((response) =>{
                 console.log(response)
                 if(response.data !== '' )
-                    setAlertMessage(`Successfully created Account with username : ${username}` )
+                    setMessage(1)
                 else
-                    setAlertMessage('Invalid Data or Username already exists.')
+                    setMessage(2)
             }).catch((error)=>{
                 console.log(error)
-                setAlertMessage('Invalid Data or Username already exists.')
+                setMessage(2)
             })
 
         setOpen(false)
@@ -55,6 +58,25 @@ function createAccount(props) {
 
     const handleClose = () => {
         setOpen(false)
+    }
+
+    let alertMessage
+    switch (message){
+    case 0:
+        alertMessage = ''
+        break
+    case 1:
+        alertMessage = <Alert variant="filled" severity="success">
+            Successfully created Account
+        </Alert>
+        break
+    case 2:
+        alertMessage = <Alert variant="filled" severity="error">
+            Invalid Data or Username already exists.
+        </Alert>
+        break
+    default:
+        throw Error('Invalid Data')
     }
 
     return(
@@ -134,11 +156,12 @@ function createAccount(props) {
                 </Grid>
                 <Grid item xs={4} />
 
-                <Grid item xs={12} >
-                    <Typography variant="h6" align="center">
-                        {alertMessage}
-                    </Typography>
+                <Grid item xs={4} />
+                <Grid item xs={4} >
+                    {alertMessage}
                 </Grid>
+                <Grid item xs={4} />
+
             </Grid>
         </Container>
     )
