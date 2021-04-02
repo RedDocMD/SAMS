@@ -26,24 +26,31 @@ function createAccount(props) {
     return (
 
         <Container>
-            <Grid container spacing={6}>
+            <Grid container spacing={6} alignItems="center">
                 <Grid item xs={12}>
                     <Typography variant="h3" align="center">Create Account</Typography>
                 </Grid>
 
-                <Grid item xs={3} />
-                <Grid item xs={6}>
+                <Grid item xs={4}>
+                    <Typography variant="h6" align="right">Enter New Username : </Typography>
+                </Grid>
+
+                <Grid item xs={6} >
                     <TextField fullWidth id="outlined-basic" label="Username" variant="outlined" onChange={changeUsername}/>
                 </Grid>
-                <Grid item xs={3} />
+                <Grid item xs={2} />
 
-                <Grid item xs={3} />
+                <Grid item xs={4}>
+                    <Typography variant="h6" align="right">Enter New Password : </Typography>
+                </Grid>
                 <Grid item xs={6}>
                     <TextField fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={changePassword}/>
                 </Grid>
-                <Grid item xs={3} />
+                <Grid item xs={2} />
 
-                <Grid item xs={3} />
+                <Grid item xs={4}>
+                    <Typography variant="h6" align="right">Select Account Type : </Typography>
+                </Grid>
                 <Grid item xs={6}>
                     <FormControl variant="outlined" fullWidth>
                         <InputLabel id="demo-simple-select-outlined-label">Account Type</InputLabel>
@@ -60,10 +67,10 @@ function createAccount(props) {
                             <MenuItem value={'Accountant'}>Accountant</MenuItem>
                             <MenuItem value={'Salesman'}>Salesman</MenuItem>
                         </Select>
-                        <FormHelperText>Required</FormHelperText>
                     </FormControl>
                 </Grid>
-                <Grid item xs={3} />
+                <Grid item xs={2} />
+
 
                 <Grid item xs={4} />
                 <Grid item xs={2}>
@@ -74,9 +81,8 @@ function createAccount(props) {
                 </Grid>
                 <Grid item xs={4} />
 
-
-
                 <Grid item xs={12}>
+                    {/*Success/Failure Message*/}
                 </Grid>
             </Grid>
         </Container>
