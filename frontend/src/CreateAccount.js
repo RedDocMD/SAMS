@@ -1,19 +1,14 @@
 import {
-    Button, Container, FormControl,
+    Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl,
     Grid,
     InputLabel, Menu,
     MenuItem, Select,
     TextField,
-    Typography
+    Typography,
 } from '@material-ui/core'
 import React, {useState} from 'react'
 import ConfirmCreateAccount from './ConfirmCreateAccount'
-
-const StateEnum = Object.freeze({
-    'CreateAccountPage': 1,
-    'ConfirmationPage': 2,
-})
-
+import axios from 'axios'
 
 function createAccount(props) {
 
@@ -24,23 +19,45 @@ function createAccount(props) {
     let [username,setUsername] = useState('')
     let [password,setPassword] = useState('')
     let [type,setType] = useState('')
-    let [currentView,setCurrentView] = useState(1)
+    let [open, setOpen] = useState(false)
+    let [alertMessage,setAlertMessage] = useState('')
 
     let changeUsername = callerEvent => setUsername(callerEvent.target.value)
     let changePassword = callerEvent => setPassword(callerEvent.target.value)
     let changeType = callerEvent => setType(callerEvent.target.value)
 
-    let handleCreate = () => {
-        setCurrentView(StateEnum.ConfirmationPage)
+    const handleClickOpen = () => {
+        setOpen(true)
     }
 
-    let CreateAccountCallBack = () => {
-        setCurrentView(StateEnum.CreateAccountPage)
+    const submitAndClose = () => {
+        let data = {
+            username : username,
+            password : password,
+            type : type
+        }
+
+        
+        axios.post(`${props.baseURL}/users`,data)
+            .then((response) =>{
+                console.log(response)
+                if(response.data !== '' )
+                    setAlertMessage(`Successfully created Account with username : ${username}` )
+                else
+                    setAlertMessage('Invalid Data or Username already exists.')
+            }).catch((error)=>{
+                console.log(error)
+                setAlertMessage('Invalid Data or Username already exists.')
+            })
+
+        setOpen(false)
     }
 
+    const handleClose = () => {
+        setOpen(false)
+    }
 
-    let CreateAccountView =  (
-
+    return(
         <Container>
             <Grid container spacing={6} alignItems="center">
                 <Grid item xs={12}>
@@ -81,7 +98,7 @@ function createAccount(props) {
                                 <em>Select One</em>
                             </MenuItem>
                             <MenuItem value={'Accountant'}>Accountant</MenuItem>
-                            <MenuItem value={'Salesman'}>Salesman</MenuItem>
+                            <MenuItem value={'Salesperson'}>Salesperson</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -92,32 +109,41 @@ function createAccount(props) {
                     <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Go back</Button>
                 </Grid>
                 <Grid item xs={2}>
-                    <Button size="large" variant="contained" color="primary" onClick={handleCreate}>Create</Button>
+                    <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Create</Button>
+                    <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{'Are you sure?'}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                               Please confirm that you want to create this account.
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose} color="primary">
+                                No, Take me Back
+                            </Button>
+                            <Button onClick={submitAndClose} color="primary" autoFocus>
+                                Yes, I want to create
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </Grid>
                 <Grid item xs={4} />
 
-                <Grid item xs={12}>
-                    {/*Success/Failure Message*/}
+                <Grid item xs={12} >
+                    <Typography variant="h6" align="center">
+                        {alertMessage}
+                    </Typography>
                 </Grid>
             </Grid>
         </Container>
     )
 
-    let ConfirmAccountView = <ConfirmCreateAccount callback={CreateAccountCallBack} />
 
-    let viewPage
-    switch(currentView){
-    case StateEnum.CreateAccountPage:
-        viewPage = CreateAccountView
-        break
-    case StateEnum.ConfirmationPage:
-        viewPage = ConfirmAccountView
-        break
-    default:
-        throw Error('Invalid State in Create Account View')
-    }
-
-    return viewPage
 }
 
 export default createAccount

@@ -32,7 +32,7 @@ function ManagerDashboard(props) {
             </Grid>
         </Grid>
     </Container>)
-    let createAccountView = <CreateAccount callback={createAccountCallback}/>
+    let createAccountView = <CreateAccount callback={createAccountCallback} baseURL={props.baseURL}/>
 
     let currView
     switch (viewState) {
