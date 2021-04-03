@@ -6,6 +6,8 @@ import {
 } from '@material-ui/core'
 import axios from 'axios'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import * as JSONbigNative from '@babel/core'
+import * as JSONbig from '@babel/core'
 
 function viewAccountants(props){
 
@@ -17,7 +19,21 @@ function viewAccountants(props){
         try{
             let url =  `${props.baseURL}/users`
             setUsers([])
-            const response = await axios.get(url, {transformResponse : axios.defaults.transformResponse})
+            const response = await axios.get(url, {transformResponse :  axios.defaults.transformResponse})
+
+            // (data)=> 
+            // {
+            //     // Do whatever you want to transform the data
+            //     data = JSONbig.parse(data)
+            //     console.log(data)
+            //
+            //     // for(let i=0;i<data.length;i++) {
+            //     //     data[i].id = JSONbigNative.parse(data[i].id)
+            //     //     console.log(data[i])
+            //     // }
+            //     return data
+            console.log(response.data)
+
             setUsers(response.data)
         }catch (e){
             setUsers([])
@@ -43,37 +59,37 @@ function viewAccountants(props){
     },[])
 
     let getElement = (user) => {
-        console.log(user.name)
+        console.log(JSONbig.parse(user.id.toString()))
 
         return (
-            <Grid item xs={4} key={user.id}>
+            <Grid item xs={3} key={user.id}>
 
-                <Card  variant="outlined">
+                <Card  variant="outlined" style={{backgroundColor: 'black'}}>
                     <CardContent>
                         <Grid container spacing={1} alignItems="center">
-                            <Grid item xs={2}>
-                                <AccountCircleIcon style={{fontSize:50, color:'blue'}}/>
+                            <Grid item xs={4}>
+                                <AccountCircleIcon style={{fontSize:50, color:'white'}}/>
                             </Grid>
-                            <Grid item xs ={10}>
-                                <Typography style={{fontSize:17}}>
-                                Username: {user.username}
+                            <Grid item xs ={8}>
+                                <Typography style={{fontSize:17,color:'white'}}>
+                                    Username: {user.username}
                                 </Typography>
                             </Grid>
                         </Grid>
-
                     </CardContent>
-                    <CardActions>
-                        {console.log(BigInt(user.id))}
-                        <Button variant="contained" color="secondary" size="small" onClick={() => handleDelete((user.id))} >Delete Account </Button>
+                    <Grid item xs={12}>
+                        <CardActions >
+                            {console.log(BigInt(user.id))}
+                            <Button variant="contained" color="secondary" size="small" onClick={() => handleDelete((user.id))} >Delete Account </Button>
 
-                    </CardActions>
-
+                        </CardActions >
+                    </Grid>
                 </Card>
             </Grid>
         )
     }
 
-    console.log(users[0])
+    console.log(users)
 
     let listView = users.filter( (user) => {
         return user.type.toString() === 'Accountant'
