@@ -6,8 +6,16 @@ import {
 } from '@material-ui/core'
 import axios from 'axios'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import * as JSONbigNative from '@babel/core'
-import * as JSONbig from '@babel/core'
+import JSONbig from 'json-bigint'
+
+const bigIntToString = num => {
+    const parts = num.c
+    let res = ''
+    for (const part of parts) {
+        res = res.concat(part.toString())
+    }
+    return res
+}
 
 function viewAccountants(props){
 
@@ -19,22 +27,9 @@ function viewAccountants(props){
         try{
             let url =  `${props.baseURL}/users`
             setUsers([])
-            const response = await axios.get(url, {transformResponse :  axios.defaults.transformResponse})
-
-            // (data)=> 
-            // {
-            //     // Do whatever you want to transform the data
-            //     data = JSONbig.parse(data)
-            //     console.log(data)
-            //
-            //     // for(let i=0;i<data.length;i++) {
-            //     //     data[i].id = JSONbigNative.parse(data[i].id)
-            //     //     console.log(data[i])
-            //     // }
-            //     return data
-            console.log(response.data)
-
-            setUsers(response.data)
+            const response = await axios.get(url, {transformResponse : data => data })
+            const json = JSONbig.parse(response.data)
+            setUsers(json)
         }catch (e){
             setUsers([])
         }
@@ -42,12 +37,11 @@ function viewAccountants(props){
 
     let handleDelete = async (id) => {
         let url = `${props.baseURL}/users/${id}`
-        console.log(BigInt(id))
         console.log(url)
 
         await axios.delete(url,{headers: {'Access-Control-Allow-Origin': '*'}})
             .then((response) => {
-                console.log(response.data)
+                fetchAllUsers()
             } )
 
     }
@@ -59,10 +53,10 @@ function viewAccountants(props){
     },[])
 
     let getElement = (user) => {
-        console.log(JSONbig.parse(user.id.toString()))
+        console.log(bigIntToString(user.id))
 
         return (
-            <Grid item xs={3} key={user.id}>
+            <Grid item xs={3} key={bigIntToString(user.id)}>
 
                 <Card  variant="outlined" style={{backgroundColor: 'black'}}>
                     <CardContent>
@@ -79,9 +73,7 @@ function viewAccountants(props){
                     </CardContent>
                     <Grid item xs={12}>
                         <CardActions >
-                            {console.log(BigInt(user.id))}
                             <Button variant="contained" color="secondary" size="small" onClick={() => handleDelete((user.id))} >Delete Account </Button>
-
                         </CardActions >
                     </Grid>
                 </Card>
@@ -90,7 +82,6 @@ function viewAccountants(props){
     }
 
     console.log(users)
-
     let listView = users.filter( (user) => {
         return user.type.toString() === 'Accountant'
     }).map( (user) => getElement(user))
