@@ -5,13 +5,14 @@ import {
     MenuItem, Select,
     TextField,
     Typography,
+    Box
 } from '@material-ui/core'
 import React, {useState} from 'react'
 import axios from 'axios'
 import { Alert } from '@material-ui/lab'
+import PropTypes from 'prop-types'
 
-function createAccount(props) {
-
+function CreateAccount(props) {
     let returnHandler = () => {
         props.callback()
     }
@@ -38,8 +39,6 @@ function createAccount(props) {
     const handleClickOpen = () => {
         setOpen(true)
     }
-
-
 
     const submitAndClose = () => {
         let data = {
@@ -89,7 +88,9 @@ function createAccount(props) {
         <Container>
             <Grid container spacing={6} alignItems="center">
                 <Grid item xs={12}>
-                    <Typography variant="h3" align="center">Create Account</Typography>
+                    <Box mt={3}>
+                        <Typography variant="h3" align="center">Create Account</Typography>
+                    </Box>
                 </Grid>
 
                 <Grid item xs={4}>
@@ -105,7 +106,7 @@ function createAccount(props) {
                     <Typography variant="h6" align="right">Enter New Password : </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <TextField fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={changePassword}/>
+                    <TextField type='password' fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={changePassword}/>
                 </Grid>
                 <Grid item xs={2} />
 
@@ -137,7 +138,7 @@ function createAccount(props) {
                     <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Go back</Button>
                 </Grid>
                 <Grid item xs={2}>
-                    <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Create</Button>
+                    <Button size="large" variant="contained" color="warning" onClick={handleClickOpen}>Create</Button>
                     <Dialog
                         open={open}
                         onClose={handleClose}
@@ -154,7 +155,7 @@ function createAccount(props) {
                             <Button variant="contained" onClick={handleClose} color="primary">
                                 No, Take me Back
                             </Button>
-                            <Button variant="contained" onClick={submitAndClose} color="primary" autoFocus>
+                            <Button variant="contained" onClick={submitAndClose} color="warning" autoFocus>
                                 Yes, I want to create
                             </Button>
                         </DialogActions>
@@ -175,4 +176,9 @@ function createAccount(props) {
 
 }
 
-export default createAccount
+CreateAccount.propTypes = {
+    baseURL: PropTypes.string.isRequired,
+    callback: PropTypes.func.isRequired
+}
+
+export default CreateAccount

@@ -3,7 +3,7 @@ import {
     Avatar,
     Button, Card, CardActions, CardContent,
     Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid,
-    Typography
+    Typography, Box
 } from '@material-ui/core'
 import axios from 'axios'
 import JSONbig from 'json-bigint'
@@ -100,8 +100,8 @@ function viewAccountants(props){
                                     <Button variant="contained" onClick={handleClose} color="primary">
                                         No, Take me Back
                                     </Button>
-                                    <Button variant="contained" onClick={() => handleDelete(user.id)} color="primary" autoFocus>
-                                        Yes, I want to create
+                                    <Button variant="contained" onClick={() => handleDelete(user.id)} color="secondary" autoFocus>
+                                        Yes, I want to delete
                                     </Button>
                                 </DialogActions>
                             </Dialog>
@@ -121,7 +121,9 @@ function viewAccountants(props){
         <Container>
             <Grid container spacing={6} alignItems="center">
                 <Grid item xs={12}>
-                    <Typography variant="h3" align="center">Accountants</Typography>
+                    <Box mt={3}>
+                        <Typography variant="h3" align="center">Accountants</Typography>
+                    </Box>
                 </Grid>
                 { listView }
                 <Grid item xs={12} />
