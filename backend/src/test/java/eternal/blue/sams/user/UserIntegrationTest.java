@@ -3,6 +3,7 @@ package eternal.blue.sams.user;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import eternal.blue.sams.BaseIntegrationTest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,6 +26,11 @@ public class UserIntegrationTest extends BaseIntegrationTest {
 
     @BeforeEach
     public void setup() {
+        userService.deleteAll();
+    }
+
+    @AfterEach
+    public void teardown() {
         userService.deleteAll();
     }
 
@@ -65,7 +72,8 @@ public class UserIntegrationTest extends BaseIntegrationTest {
     @Test
     public void deleteUserValidParamsSuccess() throws Exception {
         User user = makePostCall(getUserRequest());
-        makeDeleteCall(user.getId());
+        var deleted = makeDeleteCall(user.getId());
+        assertTrue(deleted);
         User userResponse = makeGetCall(user.getId());
         assertNull(userResponse);
     }
@@ -114,11 +122,14 @@ public class UserIntegrationTest extends BaseIntegrationTest {
         }.getType());
     }
 
-    private void makeDeleteCall(BigInteger userId) throws Exception {
-        mvc.perform(
+    private boolean makeDeleteCall(BigInteger userId) throws Exception {
+        String responseJson = mvc.perform(
                 delete("/users/{id}", userId)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isAccepted());
+                .andExpect(status().isAccepted())
+                .andReturn()
+                .getResponse().getContentAsString();
+        return gson.fromJson(responseJson, Boolean.class);
     }
 
     private User getUserRequest() {
