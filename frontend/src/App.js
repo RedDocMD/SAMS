@@ -1,7 +1,10 @@
 import Login from './Login'
-import ManagerDashboard from './ManagerDashboard'
 import {AppBar, Box, Toolbar, Typography} from '@material-ui/core'
 import React, {useState} from 'react'
+
+import ManagerDashboard from './ManagerDashboard'
+import BookTicket from './BookTicket'
+import AddExpenditure from './AddExpenditure'
 
 const StateEnum = Object.freeze({
     'toLogin': 1,
@@ -13,14 +16,16 @@ const StateEnum = Object.freeze({
 
 const baseURL = 'http://localhost:8080'
 
-function App(_props) {
+function App() {
     const [currId, setCurrId] = useState('')
+    const [currUserName,setCurrUserName] = useState('')
     const [currUserType, setCurrUserType] = useState('')
     const [currState, setCurrState] = useState(StateEnum.toLogin)
 
-    const loginUser = (id, type) => {
+    const loginUser = (id, type, name) => {
         setCurrId(id)
         setCurrUserType(type)
+        setCurrUserName(name)
         switch (type) {
         case 'Manager':
             setCurrState(StateEnum.managerDashboard)
@@ -41,6 +46,8 @@ function App(_props) {
 
     const loginView = <Login loginCallback={loginUser} baseURL={baseURL} />
     const managerDashboardView = <ManagerDashboard baseURL={baseURL}/>
+    const salespersonDashboardView = <BookTicket baseURL = {baseURL} callback={()=>setCurrState(1)} salesmanId = {currId} name = {currUserName}/>
+    const accountantDashboardView = <AddExpenditure baseURL = {baseURL} callback={()=>setCurrState(1)} accountantId = {currId} name = {currUserName} />
 
     let currView
     switch (currState) {
@@ -51,10 +58,10 @@ function App(_props) {
         currView = managerDashboardView
         break
     case StateEnum.accountantDashboard:
-        currView = <Box>Accountant</Box>
+        currView = accountantDashboardView
         break
     case StateEnum.salesmanDashboard:
-        currView = <Box>Salesman</Box>
+        currView = salespersonDashboardView
         break
     case StateEnum.userDashboard:
         currView = <Box>Regular</Box>

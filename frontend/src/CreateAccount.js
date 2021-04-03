@@ -22,9 +22,18 @@ function createAccount(props) {
     let [open, setOpen] = useState(false)
     let [message,setMessage] = useState(0)
 
-    let changeUsername = callerEvent => setUsername(callerEvent.target.value)
-    let changePassword = callerEvent => setPassword(callerEvent.target.value)
-    let changeType = callerEvent => setType(callerEvent.target.value)
+    let changeUsername = callerEvent => {
+        setUsername(callerEvent.target.value)
+        setMessage(0)
+    }
+    let changePassword = callerEvent => {
+        setPassword(callerEvent.target.value)
+        setMessage(0)
+    }
+    let changeType = callerEvent => {
+        setType(callerEvent.target.value)
+        setMessage(0)
+    }
 
     const handleClickOpen = () => {
         setOpen(true)
@@ -73,7 +82,7 @@ function createAccount(props) {
         </Alert>
         break
     default:
-        throw Error('Invalid Data')
+        throw Error('Invalid state in Create Account')
     }
 
     return(

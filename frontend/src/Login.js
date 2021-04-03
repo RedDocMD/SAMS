@@ -2,27 +2,41 @@ import React, { useState } from 'react'
 import { Box, Button, Container, Grid, TextField, Typography } from '@material-ui/core'
 import axios from 'axios'
 import PropTypes from 'prop-types'
+import JSONbig from 'json-bigint'
+
+const bigIntToString = num => {
+    const parts = num.c
+    let res = ''
+    for (const part of parts) {
+        res = res.concat(part.toString())
+    }
+    return res
+}
+
+
 
 function LoginPage(props) {
     let [username, setUsername] = useState('')
     let [password, setPassword] = useState('')
     let [userNotFoundError, setUserNotFoundError] = useState(false)
 
-    let loginButtonAction = () => {
+    let loginButtonAction = async () => {
         let url = `${props.baseURL}/users/login?username=${username}&password=${password}`
-        axios.get(url)
-            .then((response) => {
-                let data = response.data
-                if (data) {
-                    setUserNotFoundError(false)
-                    let id = data['id']
-                    let type = data['type']
-                    props.loginCallback(id, type)
-                } else {
-                    setUserNotFoundError(true)
-                }
-            })
+        const response = await axios.get(url, {transformResponse: data => data})
+
+        let data = response.data
+        if (data) {
+            let json = JSONbig.parse(data)
+            setUserNotFoundError(false)
+            let name = json.username
+            let id = bigIntToString(json.id)
+            let type = json.type
+            props.loginCallback(id, type, name)
+        } else {
+            setUserNotFoundError(true)
+        }
     }
+
     let usernameChanged = ev => setUsername(ev.target.value)
     let passwordChanged = ev => setPassword(ev.target.value)
 
