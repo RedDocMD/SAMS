@@ -70,7 +70,9 @@ function LoginPage(props) {
                 <Grid item xs={3} />
                 <Grid item xs={5} />
                 <Grid item xs={2} mt={3}>
-                    <Button align = 'center' variant="contained" color="primary" onClick={loginButtonAction}>Login</Button>
+                    <Box display='flex' justifyContent='center'>
+                        <Button variant="contained" color="primary" onClick={loginButtonAction}>Login</Button>
+                    </Box>
                 </Grid>
                 <Grid item xs={5} />
             </Grid>

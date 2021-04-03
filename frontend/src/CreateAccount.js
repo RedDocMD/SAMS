@@ -89,7 +89,7 @@ function CreateAccount(props) {
             <Grid container spacing={6} alignItems="center">
                 <Grid item xs={12}>
                     <Box mt={3}>
-                        <Typography variant="h3" align="center">Create Account</Typography>
+                        <Typography variant="h4" align="center">Create Account</Typography>
                     </Box>
                 </Grid>
 

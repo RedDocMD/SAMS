@@ -41,7 +41,7 @@ function ManagerDashboard(props) {
     const dashboardCallback = () => {
         setViewState(ManagerDashboardEnum.default)
     }
-    let viewShowsHandler = () => {
+    const viewShowsHandler = () => {
         setViewState(ManagerDashboardEnum.viewShows)
     }
     const showAccountantHandler = () => {
@@ -79,7 +79,7 @@ function ManagerDashboard(props) {
                                     </ListItemIcon>
                                     <ListItemText primary="Create Show" />
                                 </ListItem>
-                                <ListItem button className={classes.nested}>
+                                <ListItem button className={classes.nested} onClick={viewShowsHandler}>
                                     <ListItemIcon>
                                         <ListIcon />
                                     </ListItemIcon>

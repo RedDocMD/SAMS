@@ -35,7 +35,6 @@ function ViewShows(props) {
 
     let [viewState, setViewState] = useState(1)
     let [shows, setShows] = useState([])
-    let [showId, setShowId] = useState(0)
     let [show, setShow] = useState('')
 
     let goBackHandler = () => {
@@ -131,8 +130,8 @@ function ViewShows(props) {
                     {listOfShows}
                     <Grid item xs={5} />
                     <Grid item xs={2} mt={3}>
-                        <Box mt={3}>
-                            <Button fullWidth variant="contained" color="primary" onClick={goBackHandler}>Go Back</Button>
+                        <Box mt={3} display='flex' justifyContent='center'>
+                            <Button variant="contained" color="primary" onClick={goBackHandler}>Go Back</Button>
                         </Box>
                     </Grid>
                     <Grid item xs={5} mt = {3}/>
