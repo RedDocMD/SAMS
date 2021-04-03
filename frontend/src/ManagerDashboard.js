@@ -54,7 +54,7 @@ function ManagerDashboard(props) {
     </Container>)
     let createAccountView = <CreateAccount callback={dashboardCallback} baseURL = {props.baseURL} />
     let showAccountantView = <ViewAccountants callback={dashboardCallback} baseURL = {props.baseURL} />
-    let viewShowsView = <ViewShows callback = {dashboardCallback} baseURL = {_props.baseURL}/>
+    let viewShowsView = <ViewShows callback = {dashboardCallback} baseURL = {props.baseURL}/>
 
     let currView
     switch (viewState) {
