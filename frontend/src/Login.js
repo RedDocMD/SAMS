@@ -54,11 +54,11 @@ function LoginPage(props) {
                     <TextField id="password" label="Password" type="Password" fullWidth onChange={passwordChanged} />
                 </Grid>
                 <Grid item xs={3} />
-                <Grid item xs={3} />
-                <Grid item xs={6} mt={3}>
-                    <Button variant="contained" color="primary" onClick={loginButtonAction}>Login</Button>
+                <Grid item xs={5} />
+                <Grid item xs={2} mt={3}>
+                    <Button align = 'center' variant="contained" color="primary" onClick={loginButtonAction}>Login</Button>
                 </Grid>
-                <Grid item xs={3} />
+                <Grid item xs={5} />
             </Grid>
         </Container>
     )

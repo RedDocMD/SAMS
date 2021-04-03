@@ -1,3 +1,4 @@
+import ViewShows from './ViewShows'
 import { Box, Button, Container, Grid, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 
@@ -8,6 +9,7 @@ let ManagerDashboardEnum = Object.freeze({
     'default': 1,
     'createAccount': 2,
     'showAccountants': 3,
+    'viewShows': 4,
 })
 
 function ManagerDashboard(props) {
@@ -18,9 +20,13 @@ function ManagerDashboard(props) {
     let dashboardCallback = () => {
         setViewState(ManagerDashboardEnum.default)
     }
+    let viewShowsHandler = () => {
+        setViewState(ManagerDashboardEnum.viewShows)
+    }
     let showAccountantHandle = () => {
         setViewState(ManagerDashboardEnum.showAccountants)
     }
+
 
     let dashboard = (<Container>
         <Grid container spacing={3}>
@@ -40,11 +46,15 @@ function ManagerDashboard(props) {
                 <Button variant="contained" color="primary" onClick={showAccountantHandle}>
                     Show Accountant
                 </Button>
+                <Button variant="contained" color="primary" onClick={viewShowsHandler}>
+                    View Shows
+                </Button>
             </Grid>
         </Grid>
     </Container>)
     let createAccountView = <CreateAccount callback={dashboardCallback} baseURL = {props.baseURL} />
     let showAccountantView = <ViewAccountants callback={dashboardCallback} baseURL = {props.baseURL} />
+    let viewShowsView = <ViewShows callback = {dashboardCallback} baseURL = {props.baseURL}/>
 
     let currView
     switch (viewState) {
@@ -56,6 +66,9 @@ function ManagerDashboard(props) {
         break
     case ManagerDashboardEnum.showAccountants:
         currView = showAccountantView
+        break
+    case ManagerDashboardEnum.viewShows:
+        currView = viewShowsView
         break
     default:
         throw Error('Invalid state in Manager Dashboard')
