@@ -3,6 +3,7 @@ import {AppBar, Box, Toolbar, Typography} from '@material-ui/core'
 import React, {useState} from 'react'
 
 import ManagerDashboard from './ManagerDashboard'
+import UserDashboard from './UserDashboard'
 import BookTicket from './BookTicket'
 import AddExpenditure from './AddExpenditure'
 
@@ -48,6 +49,7 @@ function App() {
     const managerDashboardView = <ManagerDashboard baseURL={baseURL}/>
     const salespersonDashboardView = <BookTicket baseURL = {baseURL} callback={()=>setCurrState(1)} salesmanId = {currId} name = {currUserName}/>
     const accountantDashboardView = <AddExpenditure baseURL = {baseURL} callback={()=>setCurrState(1)} accountantId = {currId} name = {currUserName} />
+    const userDashboardView = <UserDashboard baseURL = {baseURL}/>
 
     let currView
     switch (currState) {
@@ -64,7 +66,7 @@ function App() {
         currView = salespersonDashboardView
         break
     case StateEnum.userDashboard:
-        currView = <Box>Regular</Box>
+        currView = userDashboardView
         break
     default:
         throw new Error()
