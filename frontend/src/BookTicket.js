@@ -1,16 +1,21 @@
+import React, {useState} from 'react'
 import {
-    Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl,
+    Box,
+    Button,
+    Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+    FormControl,
     Grid,
     InputLabel,
-    MenuItem, Select,
+    MenuItem,
+    Select,
     TextField,
-    Typography,
+    Typography
 } from '@material-ui/core'
-import React, {useState} from 'react'
 import axios from 'axios'
-import { Alert } from '@material-ui/lab'
+import {Alert} from '@material-ui/lab'
 
-function createAccount(props) {
+
+function bookTicket(props){
 
     let returnHandler = () => {
         props.callback()
@@ -73,23 +78,24 @@ function createAccount(props) {
         break
     case 1:
         alertMessage = <Alert variant="filled" severity="success">
-            Successfully created Account
+                Successfully created Account
         </Alert>
         break
     case 2:
         alertMessage = <Alert variant="filled" severity="error">
-            Invalid Data or Username already exists.
+                Invalid Data or Username already exists.
         </Alert>
         break
     default:
         throw Error('Invalid state in Create Account')
     }
 
+
     return(
         <Container>
             <Grid container spacing={6} alignItems="center">
                 <Grid item xs={12}>
-                    <Typography variant="h3" align="center">Create Account</Typography>
+                    <Typography variant="h3" align="center">Book Ticket</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
@@ -134,7 +140,7 @@ function createAccount(props) {
 
                 <Grid item xs={4} />
                 <Grid item xs={2}>
-                    <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Go back</Button>
+                    <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Log Out</Button>
                 </Grid>
                 <Grid item xs={2}>
                     <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Create</Button>
@@ -147,7 +153,7 @@ function createAccount(props) {
                         <DialogTitle id="alert-dialog-title">{'Are you sure?'}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                               Please confirm that you want to create this account.
+                                Please confirm that you want to create this account.
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
@@ -175,4 +181,5 @@ function createAccount(props) {
 
 }
 
-export default createAccount
+export default bookTicket
+

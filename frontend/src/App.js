@@ -1,7 +1,9 @@
 import Login from './Login'
-import ManagerDashboard from './ManagerDashboard'
 import {AppBar, Box, Toolbar, Typography} from '@material-ui/core'
 import React, {useState} from 'react'
+
+import ManagerDashboard from './ManagerDashboard'
+import BookTicket from './BookTicket'
 
 const StateEnum = Object.freeze({
     'toLogin': 1,
@@ -41,6 +43,7 @@ function App(_props) {
 
     const loginView = <Login loginCallback={loginUser} baseURL={baseURL} />
     const managerDashboardView = <ManagerDashboard baseURL={baseURL}/>
+    const salespersonDashboardView = <BookTicket baseURL = {baseURL} callback={()=>setCurrState(1)} salesmanId = {currId}/>
 
     let currView
     switch (currState) {
@@ -54,7 +57,7 @@ function App(_props) {
         currView = <Box>Accountant</Box>
         break
     case StateEnum.salesmanDashboard:
-        currView = <Box>Salesman</Box>
+        currView = salespersonDashboardView
         break
     case StateEnum.userDashboard:
         currView = <Box>Regular</Box>
