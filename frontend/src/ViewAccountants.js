@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {
     Button, Card, CardActions, CardContent,
-    Container, Grid,
+    Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid,
     Typography
 } from '@material-ui/core'
 import axios from 'axios'
@@ -29,22 +29,32 @@ function viewAccountants(props){
             setUsers([])
             const response = await axios.get(url, {transformResponse : data => data })
             const json = JSONbig.parse(response.data)
-            setUsers(response.data)
+            setUsers(json)
         }catch (e){
             setUsers([])
         }
     }
 
     let handleDelete = async (id) => {
-        let url = `${props.baseURL}/users/${bigIntToString(id)}`
-        console.log(url)
+        let url = `${props.baseURL}/users/`
+        url  = url.concat(bigIntToString(id))
+
         await axios.delete(url)
             .then((response) => {
-                console.log(response.data)
                 fetchAllUsers()
             } )
+        setOpen(false)
     }
 
+    let [open, setOpen] = useState(false)
+
+    const handleClickOpen = () => {
+        setOpen(true)
+    }
+
+    const handleClose = () => {
+        setOpen(false)
+    }
 
     let [users,setUsers] = useState([])
 
@@ -53,8 +63,6 @@ function viewAccountants(props){
     },[])
 
     let getElement = (user) => {
-        console.log(bigIntToString(user.id))
-
         return (
             <Grid item xs={3} key={bigIntToString(user.id)}>
 
@@ -73,7 +81,28 @@ function viewAccountants(props){
                     </CardContent>
                     <Grid item xs={12}>
                         <CardActions >
-                            <Button variant="contained" color="secondary" size="small" onClick={() => handleDelete((user.id))} >Delete Account </Button>
+                            <Button variant="contained" color="secondary" size="small" onClick={handleClickOpen} >Delete Account </Button>
+                            <Dialog
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="alert-dialog-title"
+                                aria-describedby="alert-dialog-description"
+                            >
+                                <DialogTitle id="alert-dialog-title">{'Are you sure?'}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText id="alert-dialog-description">
+                                        Please confirm that you want to delete this account.
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button variant="contained" onClick={handleClose} color="primary">
+                                        No, Take me Back
+                                    </Button>
+                                    <Button variant="contained" onClick={() => handleDelete(user.id)} color="primary" autoFocus>
+                                        Yes, I want to create
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
                         </CardActions >
                     </Grid>
                 </Card>
@@ -81,17 +110,9 @@ function viewAccountants(props){
         )
     }
 
-    console.log(users)
     let listView = users.filter( (user) => {
         return user.type.toString() === 'Accountant'
     }).map( (user) => getElement(user))
-
-    // console.log(users.length)
-    // for(let i=0;i<users.length;i++){
-    //     if(users[i].type === 'Accountant') {
-    //         listView.push(getElement(users[i]))
-    //     }
-    // }
 
 
     return(
