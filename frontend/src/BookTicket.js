@@ -22,21 +22,29 @@ function bookTicket(props){
     }
 
     let [username,setUsername] = useState('')
-    let [password,setPassword] = useState('')
-    let [type,setType] = useState('')
+    let [showname,setShowname] = useState('')
+    let [numTickets,setNumTickets] = useState(0)
+    let [ticketType,setTicketType] = useState('')
     let [open, setOpen] = useState(false)
     let [message,setMessage] = useState(0)
+
+
+    let changeShowname = callerEvent => {
+        setShowname(callerEvent.target.value)
+        setMessage(0)
+    }
 
     let changeUsername = callerEvent => {
         setUsername(callerEvent.target.value)
         setMessage(0)
     }
-    let changePassword = callerEvent => {
-        setPassword(callerEvent.target.value)
+    let changeNumTickets = callerEvent => {
+        setNumTickets(parseInt(callerEvent.target.value))
         setMessage(0)
+
     }
-    let changeType = callerEvent => {
-        setType(callerEvent.target.value)
+    let changeTicketType = callerEvent => {
+        setTicketType(callerEvent.target.value)
         setMessage(0)
     }
 
@@ -47,22 +55,22 @@ function bookTicket(props){
 
 
     const submitAndClose = () => {
-        let data = {
-            username : username,
-            password : password,
-            type : type
-        }
-        axios.post(`${props.baseURL}/users`,data)
-            .then((response) =>{
-                console.log(response)
-                if(response.data !== '' )
-                    setMessage(1)
-                else
-                    setMessage(2)
-            }).catch((error)=>{
-                console.log(error)
-                setMessage(2)
-            })
+        // let data = {
+        //     username : username,
+        //     password : password,
+        //     type : ticketType
+        // }
+        // axios.post(`${props.baseURL}/users`,data)
+        //     .then((response) =>{
+        //         console.log(response)
+        //         if(response.data !== '' )
+        //             setMessage(1)
+        //         else
+        //             setMessage(2)
+        //     }).catch((error)=>{
+        //         console.log(error)
+        //         setMessage(2)
+        //     })
 
         setOpen(false)
     }
@@ -95,44 +103,83 @@ function bookTicket(props){
         <Container>
             <Grid container spacing={6} alignItems="center">
                 <Grid item xs={12}>
-                    <Typography variant="h3" align="center">Book Ticket</Typography>
+                    <Typography variant="h3" align="center">Book A Ticket</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
-                    <Typography variant="h6" align="right">Enter New Username : </Typography>
+                    <Typography variant="h6" align="right">Select a show: </Typography>
                 </Grid>
 
                 <Grid item xs={6} >
-                    <TextField fullWidth id="outlined-basic" label="Username" variant="outlined" onChange={changeUsername}/>
-                </Grid>
-                <Grid item xs={2} />
-
-                <Grid item xs={4}>
-                    <Typography variant="h6" align="right">Enter New Password : </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                    <TextField fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={changePassword}/>
-                </Grid>
-                <Grid item xs={2} />
-
-                <Grid item xs={4}>
-                    <Typography variant="h6" align="right">Select Account Type : </Typography>
-                </Grid>
-                <Grid item xs={6}>
                     <FormControl variant="outlined" fullWidth>
-                        <InputLabel id="demo-simple-select-outlined-label">Account Type</InputLabel>
+                        <InputLabel id="demo-simple-select-outlined-label">Shows</InputLabel>
                         <Select
                             labelId="demo-simple-select-outlined-label"
                             id="demo-simple-select-outlined"
-                            value={type}
-                            onChange={changeType}
-                            label="Account Type"
+                            value={showname}
+                            onChange={changeShowname}
+                            label="Shows"
+                        >
+                            <MenuItem value="">
+                                <em>Select One Show</em>
+                            </MenuItem>
+                            <MenuItem value={'a'}>a</MenuItem>
+                            <MenuItem value={'b'}>b</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={2} />
+
+                <Grid item xs={4}>
+                    <Typography variant="h6" align="right">Select Customer: </Typography>
+                </Grid>
+
+                <Grid item xs={6} >
+                    <FormControl variant="outlined" fullWidth>
+                        <InputLabel id="demo-simple-select-outlined-label">Select Customer</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={username}
+                            onChange={changeUsername}
+                            label="Select Customer"
+                        >
+                            <MenuItem value="">
+                                <em>Select One Show</em>
+                            </MenuItem>
+                            <MenuItem value={'a'}>a</MenuItem>
+                            <MenuItem value={'b'}>b</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={2} />
+
+                <Grid item xs={4}>
+                    <Typography variant="h6" align="right">Enter Number of Tickets : </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField fullWidth id="outlined-basic" label="Number of Tickets" variant="outlined" onChange={changeNumTickets}/>
+                </Grid>
+                <Grid item xs={2} />
+
+                <Grid item xs={4}>
+                    <Typography variant="h6" align="right">Select your Seat choice : </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <FormControl variant="outlined" fullWidth>
+                        <InputLabel id="demo-simple-select-outlined-label">Ticket Type</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={ticketType}
+                            onChange={changeTicketType}
+                            label="Ticket Type"
                         >
                             <MenuItem value="">
                                 <em>Select One</em>
                             </MenuItem>
-                            <MenuItem value={'Accountant'}>Accountant</MenuItem>
-                            <MenuItem value={'Salesperson'}>Salesperson</MenuItem>
+                            <MenuItem value={'Regular'}>Regular</MenuItem>
+                            <MenuItem value={'Balcony'}>Balcony</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -143,7 +190,7 @@ function bookTicket(props){
                     <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Log Out</Button>
                 </Grid>
                 <Grid item xs={2}>
-                    <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Create</Button>
+                    <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Book</Button>
                     <Dialog
                         open={open}
                         onClose={handleClose}
