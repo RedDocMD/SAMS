@@ -4,6 +4,10 @@ import React, { useState } from 'react'
 import MovieIcon from '@material-ui/icons/Movie'
 import AddIcon from '@material-ui/icons/Add'
 import ListIcon from '@material-ui/icons/List'
+import AccountBoxIcon from '@material-ui/icons/AccountBox'
+import ShowChartIcon from '@material-ui/icons/ShowChart'
+import TrendingDownIcon from '@material-ui/icons/TrendingDown'
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
 
 import CreateAccount from './CreateAccount'
 import ViewAccountants from './ViewAccountants'
@@ -40,14 +44,14 @@ function ManagerDashboard(props) {
     let viewShowsHandler = () => {
         setViewState(ManagerDashboardEnum.viewShows)
     }
-    let showAccountantHandle = () => {
+    const showAccountantHandler = () => {
         setViewState(ManagerDashboardEnum.showAccountants)
     }
 
     const [showsOpen, setShowsOpen] = useState(false)
     const [accountsOpen, setAccountsOpen] = useState(false)
 
-    let dashboard = (
+    const dashboard = (
         <Container>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
@@ -83,9 +87,43 @@ function ManagerDashboard(props) {
                             </List>
                         </Collapse>
                         <ListItem button onClick={() => setAccountsOpen(!accountsOpen)}>
-                            <ListItemIcon></ListItemIcon>
+                            <ListItemIcon>
+                                <AccountBoxIcon />
+                            </ListItemIcon>
                             <ListItemText primary="Accounts" />
                             {accountsOpen ? <ExpandLess /> : <ExpandMore />}
+                        </ListItem>
+                        <Collapse in={accountsOpen} timeout="auto" unmountOnExit>
+                            <List disablePadding>
+                                <ListItem button className={classes.nested} onClick={createAccountHandler}>
+                                    <ListItemIcon>
+                                        <AddIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Create Account" />
+                                </ListItem>
+                            </List>
+                            <List disablePadding>
+                                <ListItem button className={classes.nested}>
+                                    <ListItemIcon>
+                                        <ShowChartIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Show Salesperson" />
+                                </ListItem>
+                            </List>
+                            <List disablePadding>
+                                <ListItem button className={classes.nested} onClick={showAccountantHandler}>
+                                    <ListItemIcon>
+                                        <TrendingDownIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Show Accountant" />
+                                </ListItem>
+                            </List>
+                        </Collapse>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <AccountBalanceIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Yearly Balance Sheet"/>
                         </ListItem>
                     </List>
                 </Grid>
