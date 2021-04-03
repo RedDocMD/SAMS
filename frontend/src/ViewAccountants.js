@@ -29,22 +29,22 @@ function viewAccountants(props){
             setUsers([])
             const response = await axios.get(url, {transformResponse : data => data })
             const json = JSONbig.parse(response.data)
-            setUsers(json)
+            setUsers(response.data)
         }catch (e){
             setUsers([])
         }
     }
 
     let handleDelete = async (id) => {
-        let url = `${props.baseURL}/users/${id}`
+        let url = `${props.baseURL}/users/${bigIntToString(id)}`
         console.log(url)
-
-        await axios.delete(url,{headers: {'Access-Control-Allow-Origin': '*'}})
+        await axios.delete(url)
             .then((response) => {
+                console.log(response.data)
                 fetchAllUsers()
             } )
-
     }
+
 
     let [users,setUsers] = useState([])
 
