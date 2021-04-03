@@ -85,6 +85,12 @@ function addExpenditure(props){
     },[])
 
     const submitAndClose = () => {
+        setOpen(false)
+        if(showid === '' || amount === 0.0 || reason === '') {
+            setMessage(2)
+            return
+        }
+
         let data = {
             expenditure: {
                 amount: amount,
@@ -107,7 +113,6 @@ function addExpenditure(props){
                 setMessage(2)
             })
 
-        setOpen(false)
     }
 
     let getElement = (show)=>{
@@ -189,7 +194,7 @@ function addExpenditure(props){
                             onChange={changeShowName}
                             label="Shows"
                         >
-                            <MenuItem value="" name="">
+                            <MenuItem value="">
                                 <em>Select One Show</em>
                             </MenuItem>
                             {menuOfShows}
