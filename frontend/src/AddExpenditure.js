@@ -44,7 +44,7 @@ function addExpenditure(props){
             let datetime = show.date.concat('T').concat(show.time)
             // console.log(datetime)
             // console.log(callerEvent.target.value)
-            if(datetime === callerEvent.target.value){
+            if(callerEvent.target.value.toString().includes(new Date(datetime).toString())){
                 setShowid(bigIntToString(show.id))
                 break
             }
@@ -83,7 +83,7 @@ function addExpenditure(props){
 
     const submitAndClose = () => {
         setOpen(false)
-        if(showid === '' || amount === 0.0 || reason === '') {
+        if(showid.length === 0 || amount === 0.0 || reason.length === 0) {
             setMessage(2)
             return
         }
@@ -92,7 +92,7 @@ function addExpenditure(props){
             expenditure: {
                 amount: amount,
                 reason: reason,
-                showId: (showid)
+                showId: showid
             },
             accountantId: props.accountantId,
         }
@@ -117,11 +117,12 @@ function addExpenditure(props){
 
     let getElement = (show)=>{
         let uKey = bigIntToString(show.id)
-        // console.log(uKey)
         let datetime = show.date.concat('T').concat(show.time)
+        // console.log(uKey)
+        let showString = `${show.name} on ${new Date(datetime).toString()}`
         return(
-            <MenuItem value={datetime} key={uKey}>
-                {datetime}
+            <MenuItem value={showString} key={uKey}>
+                {showString}
             </MenuItem>
         )
     }
