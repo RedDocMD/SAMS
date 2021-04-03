@@ -65,9 +65,9 @@ function bookTicket(props){
     }
 
     let changeUsername = callerEvent => {
-        setUsername(callerEvent.target.value)
+        setUsername(callerEvent.target.value.toString())
         for(let user of users){
-            if(callerEvent.target.value.toString() === user.name){
+            if(callerEvent.target.value.toString() === user.username){
                 setUserId(bigIntToString(user.id))
                 return
             }
@@ -154,7 +154,7 @@ function bookTicket(props){
                 showId: showId,
                 type: ticketType,
                 price: selectedTicketPrice,
-                userId: props.userId
+                userId: userId
             },
             salespersonId: props.salespersonId
         }
@@ -162,7 +162,6 @@ function bookTicket(props){
         {
             axios.post(`${props.baseURL}/tickets`,data)
                 .then((response) =>{
-                    console.log(response)
                     if(response.data !== '' )
                         setMessage(1)
                     else
@@ -187,12 +186,12 @@ function bookTicket(props){
         break
     case 1:
         alertMessage = <Alert variant="filled" severity="success">
-                Successfully created Account
+                Successfully generated ticket.
         </Alert>
         break
     case 2:
         alertMessage = <Alert variant="filled" severity="error">
-                Invalid Data or Username already exists.
+                Either Tickets are sold out or invalid request.
         </Alert>
         break
     default:
@@ -323,7 +322,7 @@ function bookTicket(props){
                         <DialogTitle id="alert-dialog-title">{'Are you sure?'}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Please confirm that you want to book?
+                                Please confirm that you want to book? It will cost you Rs.{selectedTicketPrice*numTickets}
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
