@@ -25,11 +25,11 @@ function viewAccountants(props){
     }
 
     let handleDelete = async (id) => {
-        let url = `${props.baseURL}/users/${id}`
+        let url = `${props.baseURL}/users/${BigInt(id)}`
         console.log(BigInt(id))
         console.log(url)
 
-        await axios.delete(url,{headers: {'Access-Control-Allow-Origin': '*'}})
+        await axios.delete(url)
             .then((response) => {
                 console.log(response.data)
             } )
