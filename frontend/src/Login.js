@@ -28,9 +28,10 @@ function LoginPage(props) {
         if (data) {
             let json = JSONbig.parse(data)
             setUserNotFoundError(false)
+            let name = json.username
             let id = bigIntToString(json.id)
             let type = json.type
-            props.loginCallback(id, type)
+            props.loginCallback(id, type, name)
         } else {
             setUserNotFoundError(true)
         }

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {
+    Avatar,
     Button, Card, CardActions, CardContent,
     Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid,
     Typography
 } from '@material-ui/core'
 import axios from 'axios'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import JSONbig from 'json-bigint'
 
 const bigIntToString = num => {
@@ -69,10 +69,10 @@ function viewAccountants(props){
                 <Card  variant="outlined" style={{backgroundColor: 'black'}}>
                     <CardContent>
                         <Grid container spacing={1} alignItems="center">
-                            <Grid item xs={4}>
-                                <AccountCircleIcon style={{fontSize:50, color:'white'}}/>
+                            <Grid item xs={3}>
+                                <Avatar style={{backgroundColor:'blue'}}>{user.username[0].toUpperCase()}</Avatar>
                             </Grid>
-                            <Grid item xs ={8}>
+                            <Grid item xs ={9}>
                                 <Typography style={{fontSize:17,color:'white'}}>
                                     Username: {user.username}
                                 </Typography>

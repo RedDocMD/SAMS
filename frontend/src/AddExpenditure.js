@@ -14,16 +14,15 @@ import axios from 'axios'
 import {Alert, AlertTitle} from '@material-ui/lab'
 
 
-function bookTicket(props){
+function addExpenditure(props){
     //dummy
     let returnHandler = () => {
         props.callback()
     }
 
-    let [username,setUsername] = useState('')
     let [showName,setShowName] = useState('')
-    let [numTickets,setNumTickets] = useState(0)
-    let [ticketType,setTicketType] = useState('')
+    let [amount,setAmount] = useState(0)
+    let [reason,setReason] = useState('')
     let [open, setOpen] = useState(false)
     let [message,setMessage] = useState(0)
 
@@ -33,19 +32,16 @@ function bookTicket(props){
         setMessage(0)
     }
 
-    let changeUsername = callerEvent => {
-        setUsername(callerEvent.target.value)
+    let changeReason = callerEvent => {
+        setReason(callerEvent.target.value)
         setMessage(0)
     }
-    let changeNumTickets = callerEvent => {
-        setNumTickets(parseInt(callerEvent.target.value))
+    let changeAmount = callerEvent => {
+        setAmount(parseInt(callerEvent.target.value))
         setMessage(0)
 
     }
-    let changeTicketType = callerEvent => {
-        setTicketType(callerEvent.target.value)
-        setMessage(0)
-    }
+    
 
     const handleClickOpen = () => {
         setOpen(true)
@@ -100,20 +96,23 @@ function bookTicket(props){
 
     return(
         <Container>
-            <Grid container spacing={6} alignItems="center">
+            <Grid container spacing={5} alignItems="center">
                 <Grid item xs={3}>
                     <Alert severity="success">
                         <AlertTitle>
-                            <Typography variant="h5" align="center">Welcome, {props.name}</Typography>
+                            <Typography  variant="h5" >Welcome, {props.name}</Typography>
                         </AlertTitle>
                     </Alert>
                 </Grid>
 
+
                 <Grid item xs={6}>
-                    <Typography variant="h3" align="center">Book a Ticket</Typography>
+                    <Typography variant="h3" align="center">Add an Expenditure</Typography>
                 </Grid>
 
                 <Grid item xs={3}/>
+
+
 
 
                 <Grid item xs={4}>
@@ -141,66 +140,28 @@ function bookTicket(props){
                 <Grid item xs={2} />
 
                 <Grid item xs={4}>
-                    <Typography variant="h6" align="right">Select A Customer: </Typography>
+                    <Typography variant="h6" align="right">Enter Amount : </Typography>
                 </Grid>
-
-                <Grid item xs={6} >
-                    <FormControl variant="outlined" fullWidth>
-                        <InputLabel id="demo-simple-select-outlined-label">Select Customer</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value={username}
-                            onChange={changeUsername}
-                            label="Select Customer"
-                        >
-                            <MenuItem value="">
-                                <em>Select One Cutomer</em>
-                            </MenuItem>
-                            <MenuItem value={'a'}>a</MenuItem>
-                            <MenuItem value={'b'}>b</MenuItem>
-                        </Select>
-                    </FormControl>
+                <Grid item xs={6}>
+                    <TextField fullWidth id="outlined-basic" label="Amount" variant="outlined" onChange={changeAmount}/>
                 </Grid>
                 <Grid item xs={2} />
 
                 <Grid item xs={4}>
-                    <Typography variant="h6" align="right">Enter Number of Tickets : </Typography>
+                    <Typography variant="h6" align="right">Give Reason : </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <TextField fullWidth id="outlined-basic" label="Number of Tickets" variant="outlined" onChange={changeNumTickets}/>
+                    <TextField fullWidth id="outlined-basic" label="Reason" variant="outlined" onChange={changeReason}/>
                 </Grid>
                 <Grid item xs={2} />
 
-                <Grid item xs={4}>
-                    <Typography variant="h6" align="right">Select your Seat choice : </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                    <FormControl variant="outlined" fullWidth>
-                        <InputLabel id="demo-simple-select-outlined-label">Ticket Type</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value={ticketType}
-                            onChange={changeTicketType}
-                            label="Ticket Type"
-                        >
-                            <MenuItem value="">
-                                <em>Select One</em>
-                            </MenuItem>
-                            <MenuItem value={'Regular'}>Regular</MenuItem>
-                            <MenuItem value={'Balcony'}>Balcony</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={2} />
 
                 <Grid item xs={4} />
                 <Grid item xs={2}>
                     <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Log Out</Button>
                 </Grid>
                 <Grid item xs={2}>
-                    <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Book</Button>
+                    <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Add</Button>
                     <Dialog
                         open={open}
                         onClose={handleClose}
@@ -238,5 +199,5 @@ function bookTicket(props){
 
 }
 
-export default bookTicket
+export default addExpenditure
 
