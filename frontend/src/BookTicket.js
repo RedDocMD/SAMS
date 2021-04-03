@@ -29,21 +29,49 @@ function bookTicket(props){
         props.callback()
     }
 
-    let [username,setUsername] = useState('')
+    let [users,setUsers] = useState([])
+    let [userName,setUsername] = useState('')
+    let [userId,setUserId] = useState('')
     let [shows,setShows] = useState([])
     let [showName,setShowName] = useState('')
+    let [showId,setShowId] = useState('')
     let [numTickets,setNumTickets] = useState(0)
+    let [ticketPrice,setTicketPrice] = useState([0,0]) // balcony then regular
+    let [selectedTicketPrice,setSelectedTicketPrice] = useState(0)
     let [ticketType,setTicketType] = useState('')
     let [open, setOpen] = useState(false)
     let [message,setMessage] = useState(0)
 
-    let changeShowName = callerEvent => {
-        setShowName(callerEvent.target.value)
+    let changeShowName = (callerEvent) => {
+        setShowName(callerEvent.target.value.toString())
+
+        for(let show of shows){
+            let datetime = show.date.concat('T').concat(show.time)
+            // console.log(datetime)
+            // console.log(callerEvent.target.value)
+            if(callerEvent.target.value.toString().includes(new Date(datetime).toString())){
+                setShowId(bigIntToString(show.id))
+                setTicketPrice([show.balconyTicketPrice,show.regularTicketPrice])
+                if(ticketType === 'Regular'){
+                    setSelectedTicketPrice(ticketPrice[1])
+                }
+                else{
+                    setSelectedTicketPrice(ticketPrice[0])
+                }
+                break
+            }
+        }
         setMessage(0)
     }
 
     let changeUsername = callerEvent => {
         setUsername(callerEvent.target.value)
+        for(let user of users){
+            if(callerEvent.target.value.toString() === user.name){
+                setUserId(bigIntToString(user.id))
+                return
+            }
+        }
         setMessage(0)
     }
     let changeNumTickets = callerEvent => {
@@ -52,6 +80,12 @@ function bookTicket(props){
     }
     let changeTicketType = callerEvent => {
         setTicketType(callerEvent.target.value)
+        if(callerEvent.target.value.toString() === 'Regular'){
+            setSelectedTicketPrice(ticketPrice[1])
+        }
+        else{
+            setSelectedTicketPrice(ticketPrice[0])
+        }
         setMessage(0)
     }
 
@@ -67,19 +101,42 @@ function bookTicket(props){
         }
     }
 
+    const fetchAllUsers = async () => {
+        try{
+            let url =  `${props.baseURL}/users`
+            setUsers([])
+            const response = await axios.get(url, {transformResponse : data => data })
+            const json = JSONbig.parse(response.data)
+            setUsers(json)
+        }catch (e){
+            setUsers([])
+        }
+    }
+
     let getElement = (show)=>{
         let uKey = bigIntToString(show.id)
-        // console.log(uKey)
         let datetime = show.date.concat('T').concat(show.time)
+        // console.log(uKey)
+        let showString = `${show.name} on ${new Date(datetime).toString()}`
         return(
-            <MenuItem value={datetime} key={uKey}>
-                {datetime}
+            <MenuItem value={showString} key={uKey}>
+                {showString}
+            </MenuItem>
+        )
+    }
+
+    let getUser = (user)=>{
+        let uKey = bigIntToString(user.id)
+        return(
+            <MenuItem value={user.username} key={uKey}>
+                {user.username}
             </MenuItem>
         )
     }
 
     useEffect(() => {
         fetchAllShows()
+        fetchAllUsers()
     },[])
 
 
@@ -88,23 +145,34 @@ function bookTicket(props){
     }
 
     const submitAndClose = () => {
-        // let data = {
-        //     username : username,
-        //     password : password,
-        //     type : ticketType
-        // }
-        // axios.post(`${props.baseURL}/users`,data)
-        //     .then((response) =>{
-        //         console.log(response)
-        //         if(response.data !== '' )
-        //             setMessage(1)
-        //         else
-        //             setMessage(2)
-        //     }).catch((error)=>{
-        //         console.log(error)
-        //         setMessage(2)
-        //     })
+    //     if(showId.length === 0 || amount === 0.0 || reason.length === 0) {
+    //         setMessage(2)
+    //         return
+    //     }
+        let data = {
+            ticket: {
+                showId: showId,
+                type: ticketType,
+                price: selectedTicketPrice,
+                userId: props.userId
+            },
+            salespersonId: props.salespersonId
+        }
+        for(let i=0;i<numTickets;i++)
+        {
+            axios.post(`${props.baseURL}/tickets`,data)
+                .then((response) =>{
+                    console.log(response)
+                    if(response.data !== '' )
+                        setMessage(1)
+                    else
+                        setMessage(2)
+                }).catch((error)=>{
+                    console.log(error)
+                    setMessage(2)
+                })
 
+        }
         setOpen(false)
     }
 
@@ -140,6 +208,10 @@ function bookTicket(props){
         // console.log(currentTime)
         return showTime>=currentTime
     }).map( show => getElement(show))
+
+    let menuOfUsers = users.filter( (user) =>{
+        return user.type === 'Customer'
+    } ).map( user => getUser(user))
 
     return(
         <Container>
@@ -183,7 +255,7 @@ function bookTicket(props){
                 <Grid item xs={2} />
 
                 <Grid item xs={4}>
-                    <Typography variant="h6" align="right">Select A Customer: </Typography>
+                    <Typography variant="h6" align="right">Select a Customer: </Typography>
                 </Grid>
 
                 <Grid item xs={6} >
@@ -192,15 +264,14 @@ function bookTicket(props){
                         <Select
                             labelId="demo-simple-select-outlined-label"
                             id="demo-simple-select-outlined"
-                            value={username}
+                            value={userName}
                             onChange={changeUsername}
                             label="Select Customer"
                         >
                             <MenuItem value="">
                                 <em>Select One Cutomer</em>
                             </MenuItem>
-                            <MenuItem value={'a'}>a</MenuItem>
-                            <MenuItem value={'b'}>b</MenuItem>
+                            {menuOfUsers}
                         </Select>
                     </FormControl>
                 </Grid>
