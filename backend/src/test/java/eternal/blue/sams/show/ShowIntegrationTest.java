@@ -57,9 +57,9 @@ public class ShowIntegrationTest extends BaseIntegrationTest {
 
     @Test
     public void getAllShowsValidParamsSuccess() throws Exception {
-        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("10:00:00"), Duration.ofMinutes(100), 5, 5, 100.0, 50.0));
-        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("12:00:00"), Duration.ofMinutes(100), 5, 5, 100.0, 50.0));
-        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("14:00:00"), Duration.ofMinutes(150), 5, 5, 100.0, 50.0));
+        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("10:00:00"), Duration.ofMinutes(100), 5, 5, 100.0, 50.0,"Kimi no Na wa"));
+        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("12:00:00"), Duration.ofMinutes(100), 5, 5, 100.0, 50.0,"Kimi no Na wa"));
+        makePostCall(new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("14:00:00"), Duration.ofMinutes(150), 5, 5, 100.0, 50.0,"Kimi no Na wa"));
         List<Show> showListResponse = makeGetAllCall();
         assertThat(showListResponse.size()).isEqualTo(3);
     }
@@ -97,7 +97,7 @@ public class ShowIntegrationTest extends BaseIntegrationTest {
     }
 
     private Show getShowRequest() {
-        return new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("10:49:00"), Duration.ofMinutes(125) , 5, 5, 100.0, 50.0);
+        return new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("10:49:00"), Duration.ofMinutes(125) , 5, 5, 100.0, 50.0,"Kimi no Na wa");
     }
 
 }

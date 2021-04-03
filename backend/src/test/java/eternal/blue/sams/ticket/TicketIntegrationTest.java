@@ -68,7 +68,7 @@ public class TicketIntegrationTest extends BaseIntegrationTest {
                 100,
                 500,
                 1000,
-                450));
+                450,"Kimi no Na wa"));
 
         // Create customer and salesperson
         customer = userRepository.save(

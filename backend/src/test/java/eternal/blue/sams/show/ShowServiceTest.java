@@ -19,8 +19,8 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 class ShowServiceTest {
-    private static final Show SHOW = new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("10:49:00"), Duration.ofMinutes(125) , 5, 5, 100.0, 50.0);
-    private static final Show SHOW2 = new Show(LocalDate.parse("2021-01-02"), LocalTime.parse("07:49:00"), Duration.ofMinutes(150) , 5, 5, 100.0, 50.0);
+    private static final Show SHOW = new Show(LocalDate.parse("2021-01-01"), LocalTime.parse("10:49:00"), Duration.ofMinutes(125) , 5, 5, 100.0, 50.0,"Kimi no Na wa");
+    private static final Show SHOW2 = new Show(LocalDate.parse("2021-01-02"), LocalTime.parse("07:49:00"), Duration.ofMinutes(150) , 5, 5, 100.0, 50.0,"Your Name");
     
     @Mock private ShowRepository showRepository;
     private ShowService showService;
