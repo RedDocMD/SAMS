@@ -61,6 +61,7 @@ function ManagerDashboard(props) {
                         </Typography>
                     </Box>
                 </Grid>
+                <Grid item xs={4} />
                 <Grid item xs={4}>
                     <List classNames={classes.root}>
                         <ListItem button onClick={() => setShowsOpen(!showsOpen)}>
