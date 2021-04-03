@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     Button,
     Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
@@ -12,7 +12,17 @@ import {
 } from '@material-ui/core'
 import axios from 'axios'
 import {Alert, AlertTitle} from '@material-ui/lab'
+import JSONbig from 'json-bigint'
 
+
+const bigIntToString = num => {
+    const parts = num.c
+    let res = ''
+    for (const part of parts) {
+        res = res.concat(part.toString())
+    }
+    return res
+}
 
 function addExpenditure(props){
     //dummy
@@ -21,14 +31,26 @@ function addExpenditure(props){
     }
 
     let [showName,setShowName] = useState('')
+    let [showid,setShowid] = useState('')
     let [amount,setAmount] = useState(0)
     let [reason,setReason] = useState('')
     let [open, setOpen] = useState(false)
     let [message,setMessage] = useState(0)
+    let [shows,setShows] = useState([])
 
 
     let changeShowName = callerEvent => {
-        setShowName(callerEvent.target.value)
+        setShowName(callerEvent.target.value.toString())
+
+        for(let show of shows){
+            let datetime = show.date.concat('T').concat(show.time)
+            // console.log(datetime)
+            // console.log(callerEvent.target.value)
+            if(datetime === callerEvent.target.value){
+                setShowid(bigIntToString(show.id))
+                break
+            }
+        }
         setMessage(0)
     }
 
@@ -41,33 +63,62 @@ function addExpenditure(props){
         setMessage(0)
 
     }
-    
 
     const handleClickOpen = () => {
         setOpen(true)
     }
 
+    const fetchAllShows = async () => {
+        try{
+            let url =  `${props.baseURL}/shows`
+            setShows([])
+            const response = await axios.get(url, {transformResponse : data => data })
+            const json = JSONbig.parse(response.data)
+            setShows(json)
+        }catch (e){
+            setShows([])
+        }
+    }
 
+    useEffect(() => {
+        fetchAllShows()
+    },[])
 
     const submitAndClose = () => {
-        // let data = {
-        //     username : username,
-        //     password : password,
-        //     type : ticketType
-        // }
-        // axios.post(`${props.baseURL}/users`,data)
-        //     .then((response) =>{
-        //         console.log(response)
-        //         if(response.data !== '' )
-        //             setMessage(1)
-        //         else
-        //             setMessage(2)
-        //     }).catch((error)=>{
-        //         console.log(error)
-        //         setMessage(2)
-        //     })
+        let data = {
+            expenditure: {
+                amount: amount,
+                reason: reason,
+                showId: (showid)
+            },
+            accountantId: props.accountantId,
+        }
+        console.log(data)
+        axios.post(`${props.baseURL}/expenditures`,data)
+            .then((response) =>{
+                // console.log(response)
+                console.log(data.showid)
+                if(response.data)
+                    setMessage(1)
+                else
+                    setMessage(2)
+            }).catch((error)=>{
+                // console.log(error)
+                setMessage(2)
+            })
 
         setOpen(false)
+    }
+
+    let getElement = (show)=>{
+        let uKey = bigIntToString(show.id)
+        // console.log(uKey)
+        let datetime = show.date.concat('T').concat(show.time)
+        return(
+            <MenuItem value={datetime} key={uKey}>
+                {datetime}
+            </MenuItem>
+        )
     }
 
     const handleClose = () => {
@@ -81,18 +132,32 @@ function addExpenditure(props){
         break
     case 1:
         alertMessage = <Alert variant="filled" severity="success">
-                Successfully created Account
+                Successfully Added Expenditure
         </Alert>
         break
     case 2:
         alertMessage = <Alert variant="filled" severity="error">
-                Invalid Data or Username already exists.
+                You entered invalid data.
         </Alert>
         break
     default:
-        throw Error('Invalid state in Create Account')
+        throw Error('Invalid state in Add expenditure')
     }
 
+    console.log(shows)
+    let menuOfShows = shows.filter( (show)=>{
+        let datetime = show.date.concat('T').concat(show.time)
+        let showTime = new Date(datetime)
+        let currentTime = new Date()
+        // console.log(new Date(datetime))
+        // console.log(currentTime)
+        return showTime>=currentTime
+    }).map( show => getElement(show))
+
+    // console.log(listOfShows.length)
+
+    console.log(showid)
+    console.log(showName)
 
     return(
         <Container>
@@ -105,15 +170,10 @@ function addExpenditure(props){
                     </Alert>
                 </Grid>
 
-
                 <Grid item xs={6}>
                     <Typography variant="h3" align="center">Add an Expenditure</Typography>
                 </Grid>
-
                 <Grid item xs={3}/>
-
-
-
 
                 <Grid item xs={4}>
                     <Typography variant="h6" align="right">Select a show: </Typography>
@@ -129,11 +189,10 @@ function addExpenditure(props){
                             onChange={changeShowName}
                             label="Shows"
                         >
-                            <MenuItem value="">
+                            <MenuItem value="" name="">
                                 <em>Select One Show</em>
                             </MenuItem>
-                            <MenuItem value={'a'}>a</MenuItem>
-                            <MenuItem value={'b'}>b</MenuItem>
+                            {menuOfShows}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -171,7 +230,7 @@ function addExpenditure(props){
                         <DialogTitle id="alert-dialog-title">{'Are you sure?'}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Please confirm that you want to create this account.
+                                Please confirm that you want to add this expenditure.
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
@@ -179,7 +238,7 @@ function addExpenditure(props){
                                 No, Take me Back
                             </Button>
                             <Button variant="contained" onClick={submitAndClose} color="primary" autoFocus>
-                                Yes, I want to create
+                                Yes, I want to add
                             </Button>
                         </DialogActions>
                     </Dialog>

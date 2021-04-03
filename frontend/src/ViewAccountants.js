@@ -23,6 +23,10 @@ function viewAccountants(props){
         props.callback()
     }
 
+    let [users,setUsers] = useState([])
+    let [open, setOpen] = useState(false)
+
+
     const fetchAllUsers = async () => {
         try{
             let url =  `${props.baseURL}/users`
@@ -46,7 +50,6 @@ function viewAccountants(props){
         setOpen(false)
     }
 
-    let [open, setOpen] = useState(false)
 
     const handleClickOpen = () => {
         setOpen(true)
@@ -56,7 +59,6 @@ function viewAccountants(props){
         setOpen(false)
     }
 
-    let [users,setUsers] = useState([])
 
     useEffect(() => {
         fetchAllUsers()

@@ -40,7 +40,6 @@ function bookTicket(props){
     let changeNumTickets = callerEvent => {
         setNumTickets(parseInt(callerEvent.target.value))
         setMessage(0)
-
     }
     let changeTicketType = callerEvent => {
         setTicketType(callerEvent.target.value)
@@ -50,8 +49,6 @@ function bookTicket(props){
     const handleClickOpen = () => {
         setOpen(true)
     }
-
-
 
     const submitAndClose = () => {
         // let data = {
@@ -210,7 +207,7 @@ function bookTicket(props){
                         <DialogTitle id="alert-dialog-title">{'Are you sure?'}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Please confirm that you want to create this account.
+                                Please confirm that you want to book?
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
@@ -218,7 +215,7 @@ function bookTicket(props){
                                 No, Take me Back
                             </Button>
                             <Button variant="contained" onClick={submitAndClose} color="primary" autoFocus>
-                                Yes, I want to create
+                                Yes, I want to book
                             </Button>
                         </DialogActions>
                     </Dialog>
