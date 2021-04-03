@@ -14,7 +14,6 @@ import axios from 'axios'
 import {Alert, AlertTitle} from '@material-ui/lab'
 import JSONbig from 'json-bigint'
 
-
 const bigIntToString = num => {
     const parts = num.c
     let res = ''
@@ -38,7 +37,6 @@ function addExpenditure(props){
     let [message,setMessage] = useState(0)
     let [shows,setShows] = useState([])
 
-
     let changeShowName = callerEvent => {
         setShowName(callerEvent.target.value.toString())
 
@@ -61,7 +59,6 @@ function addExpenditure(props){
     let changeAmount = callerEvent => {
         setAmount(parseInt(callerEvent.target.value))
         setMessage(0)
-
     }
 
     const handleClickOpen = () => {
@@ -112,7 +109,10 @@ function addExpenditure(props){
                 // console.log(error)
                 setMessage(2)
             })
+    }
 
+    const handleClose = () => {
+        setOpen(false)
     }
 
     let getElement = (show)=>{
@@ -124,10 +124,6 @@ function addExpenditure(props){
                 {datetime}
             </MenuItem>
         )
-    }
-
-    const handleClose = () => {
-        setOpen(false)
     }
 
     let alertMessage
@@ -149,7 +145,6 @@ function addExpenditure(props){
         throw Error('Invalid state in Add expenditure')
     }
 
-    console.log(shows)
     let menuOfShows = shows.filter( (show)=>{
         let datetime = show.date.concat('T').concat(show.time)
         let showTime = new Date(datetime)
@@ -159,10 +154,10 @@ function addExpenditure(props){
         return showTime>=currentTime
     }).map( show => getElement(show))
 
+    // console.log(shows)
     // console.log(listOfShows.length)
-
-    console.log(showid)
-    console.log(showName)
+    // console.log(showid)
+    // console.log(showName)
 
     return(
         <Container>
@@ -219,7 +214,6 @@ function addExpenditure(props){
                 </Grid>
                 <Grid item xs={2} />
 
-
                 <Grid item xs={4} />
                 <Grid item xs={2}>
                     <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Log Out</Button>
@@ -259,8 +253,6 @@ function addExpenditure(props){
             </Grid>
         </Container>
     )
-
-
 }
 
 export default addExpenditure

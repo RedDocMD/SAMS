@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     Button,
     Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
@@ -12,7 +12,16 @@ import {
 } from '@material-ui/core'
 import axios from 'axios'
 import {Alert, AlertTitle} from '@material-ui/lab'
+import JSONbig from 'json-bigint'
 
+const bigIntToString = num => {
+    const parts = num.c
+    let res = ''
+    for (const part of parts) {
+        res = res.concat(part.toString())
+    }
+    return res
+}
 
 function bookTicket(props){
     //dummy
@@ -21,12 +30,12 @@ function bookTicket(props){
     }
 
     let [username,setUsername] = useState('')
+    let [shows,setShows] = useState([])
     let [showName,setShowName] = useState('')
     let [numTickets,setNumTickets] = useState(0)
     let [ticketType,setTicketType] = useState('')
     let [open, setOpen] = useState(false)
     let [message,setMessage] = useState(0)
-
 
     let changeShowName = callerEvent => {
         setShowName(callerEvent.target.value)
@@ -45,6 +54,34 @@ function bookTicket(props){
         setTicketType(callerEvent.target.value)
         setMessage(0)
     }
+
+    const fetchAllShows = async () => {
+        try{
+            let url =  `${props.baseURL}/shows`
+            setShows([])
+            const response = await axios.get(url, {transformResponse : data => data })
+            const json = JSONbig.parse(response.data)
+            setShows(json)
+        }catch (e){
+            setShows([])
+        }
+    }
+
+    let getElement = (show)=>{
+        let uKey = bigIntToString(show.id)
+        // console.log(uKey)
+        let datetime = show.date.concat('T').concat(show.time)
+        return(
+            <MenuItem value={datetime} key={uKey}>
+                {datetime}
+            </MenuItem>
+        )
+    }
+
+    useEffect(() => {
+        fetchAllShows()
+    },[])
+
 
     const handleClickOpen = () => {
         setOpen(true)
@@ -94,6 +131,15 @@ function bookTicket(props){
         throw Error('Invalid state in Create Account')
     }
 
+    // console.log(shows)
+    let menuOfShows = shows.filter( (show)=>{
+        let datetime = show.date.concat('T').concat(show.time)
+        let showTime = new Date(datetime)
+        let currentTime = new Date()
+        // console.log(new Date(datetime))
+        // console.log(currentTime)
+        return showTime>=currentTime
+    }).map( show => getElement(show))
 
     return(
         <Container>
@@ -130,8 +176,7 @@ function bookTicket(props){
                             <MenuItem value="">
                                 <em>Select One Show</em>
                             </MenuItem>
-                            <MenuItem value={'a'}>a</MenuItem>
-                            <MenuItem value={'b'}>b</MenuItem>
+                            {menuOfShows}
                         </Select>
                     </FormControl>
                 </Grid>
