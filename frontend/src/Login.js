@@ -20,6 +20,10 @@ function LoginPage(props) {
     let [password, setPassword] = useState('')
     let [userNotFoundError, setUserNotFoundError] = useState(false)
 
+    let createAccountHandler = () => {
+        props.signUpHandler()
+    }
+
     let loginButtonAction = async () => {
         let url = `${props.baseURL}/users/login?username=${username}&password=${password}`
         const response = await axios.get(url, {transformResponse: data => data})
@@ -68,13 +72,17 @@ function LoginPage(props) {
                     <TextField id="password" label="Password" type="Password" fullWidth onChange={passwordChanged} />
                 </Grid>
                 <Grid item xs={3} />
-                <Grid item xs={5} />
+                <Grid item xs={3} />
                 <Grid item xs={2} mt={3}>
                     <Box display='flex' justifyContent='center'>
                         <Button variant="contained" color="primary" onClick={loginButtonAction}>Login</Button>
                     </Box>
                 </Grid>
-                <Grid item xs={5} />
+                <Grid item xs = {2} />
+                <Grid item xs={2} mt={3}>
+                    <Button align = 'center' variant="contained" color="primary" onClick={createAccountHandler}>SignUp</Button>
+                </Grid>
+                <Grid item xs={3} />
             </Grid>
         </Container>
     )
@@ -82,7 +90,8 @@ function LoginPage(props) {
 
 LoginPage.propTypes = {
     baseURL: PropTypes.string.isRequired,
-    loginCallback: PropTypes.func.isRequired
+    loginCallback: PropTypes.func.isRequired,
+    signUpHandler: PropTypes.func.isRequired,
 }
 
 export default LoginPage
