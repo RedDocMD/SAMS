@@ -71,7 +71,7 @@ function viewAccountants(props){
     let getElement = (user) => {
         let id = bigIntToString(user.id)
         return (
-            <Grid item xs={6} key={id}>
+            <Grid item xs={4} key={id}>
 
                 <Card variant="outlined" style={{backgroundColor: 'black'}}>
                     <CardContent>
