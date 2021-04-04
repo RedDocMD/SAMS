@@ -44,17 +44,14 @@ function ViewShows(props) {
         setViewState(ViewShowsEnum.default)
     }
     let viewShowStatsHandler = (show) => {
-        console.log(show)
-        console.log(typeof(show))
-        console.log('#########')
         setViewState(ViewShowsEnum.viewShowStats)
         setShow(show)
     }
 
     let getElement = (show, i) => {
         return (
-            <Grid item xs = {12}>
-                <Box className = {classes.root} key = {show.id}>
+            <Grid item xs = {12}  key = {show.id}>
+                <Box className = {classes.root}>
                     <Accordion>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
