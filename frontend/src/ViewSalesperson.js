@@ -42,12 +42,12 @@ function ViewSalesperson(props) {
         return (
             <TableRow key={salesperson.id}>
                 <TableCell>{name}</TableCell>
-                <TableCell>{totalTickets}</TableCell>
-                <TableCell>{`₹ ${totalMoney}`}</TableCell>
-                <TableCell>
+                <TableCell align='right'>{totalTickets}</TableCell>
+                <TableCell align='right'>{`₹ ${totalMoney}`}</TableCell>
+                <TableCell align='center'>
                     <Button variant='contained' color='primary'>All Transactions</Button>
                 </TableCell>
-                <TableCell>
+                <TableCell align='center'>
                     <IconButton color='secondary'>
                         <DeleteIcon />
                     </IconButton>
@@ -72,9 +72,15 @@ function ViewSalesperson(props) {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Username</TableCell> 
-                                    <TableCell>Tickets sold</TableCell> 
-                                    <TableCell>Total credit</TableCell>
+                                    <TableCell>
+                                        <Box component='span' fontWeight='fontWeightBold'>Username</Box>
+                                    </TableCell> 
+                                    <TableCell align='right'>
+                                        <Box component='span' fontWeight='fontWeightBold'>Tickets sold</Box>
+                                    </TableCell> 
+                                    <TableCell align='right'>
+                                        <Box component='span' fontWeight='fontWeightBold'>Money earned</Box>
+                                    </TableCell>
                                     <TableCell />
                                     <TableCell />
                                 </TableRow>
