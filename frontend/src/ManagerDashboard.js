@@ -153,7 +153,6 @@ function ManagerDashboard(props) {
     default:
         throw Error('Invalid state in Manager Dashboard')
     }
-
     return currView
 }
 
