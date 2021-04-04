@@ -11,6 +11,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import {bigIntToString} from './utils'
 
 const useStyles = makeStyles({
     table: {
@@ -27,16 +28,6 @@ function ViewShowStats(props) {
 
     let [tickets, setTickets] = useState([])
     let [transactions, setTransactions] = useState([])
-
-    const bigIntToString = num => {
-        const parts = num.c
-        let res = ''
-        for (const part of parts) {
-            res = res.concat(part.toString())
-        }
-        return res
-    }
-
 
     useEffect(() => {
         const fetchTickets = async () => {
