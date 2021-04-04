@@ -11,7 +11,8 @@ import {
     MenuItem,
     Select,
     TextField,
-    Typography
+    Typography,
+    Box
 } from '@material-ui/core'
 
 function CreateAccountUser(props) {
@@ -21,6 +22,9 @@ function CreateAccountUser(props) {
     let [message,setMessage] = useState(0)
     let [confirmPassword, setConfirmPassword] = useState('')
 
+    let returnHandler = () => {
+        props.goBackToLogin()
+    }
 
     let changeUsername = callerEvent => {
         setUsername(callerEvent.target.value)
@@ -118,16 +122,20 @@ function CreateAccountUser(props) {
                     <Typography variant="h6" align="right">Retype Password : </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <TextField fullWidth id="outlined-basic" label="ConfirmPassword" variant="outlined" onChange={changeConfirmPassword }/>
+                    <TextField fullWidth id="outlined-basic" label="Confirm Password" variant="outlined" onChange={changeConfirmPassword }/>
                 </Grid>
                 <Grid item xs={2} />
 
                 <Grid item xs={4} />
-                <Grid item xs={2}/>
-                {/*    <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Go back</Button>*/}
-                {/*</Grid>*/}
                 <Grid item xs={2}>
-                    <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Create</Button>
+                    <Box display = 'flex' justifyContent='center'>
+                        <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Go back</Button>
+                    </Box>
+                </Grid>
+                <Grid item xs={2}>
+                    <Box display = 'flex' justifyContent='center'>
+                        <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Create</Button>
+                    </Box>
                     <Dialog
                         open={open}
                         onClose={handleClose}
@@ -165,7 +173,7 @@ function CreateAccountUser(props) {
 
 CreateAccountUser.propTypes = {
     baseURL: PropTypes.string.isRequired,
-    show: PropTypes.object.isRequired,
+    goBackToLogin: PropTypes.func.isRequired,
 }
 
 export default CreateAccountUser

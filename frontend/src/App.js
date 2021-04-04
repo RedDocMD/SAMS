@@ -29,6 +29,10 @@ function App() {
         setCurrState(StateEnum.createAccountUser)
     }
 
+    let loginCallbackHandler = () => {
+        setCurrState(StateEnum.toLogin)
+    }
+
     const loginUser = (id, type, name) => {
         setCurrId(id)
         setCurrUserType(type)
@@ -51,12 +55,12 @@ function App() {
         }
     }
 
-    const loginView = <Login loginCallback={loginUser} baseURL={baseURL} signUpHandler = {createAccountUserHandler} />
+    const loginView = <Login loginCallback={loginUser} baseURL={baseURL} signUpHandler = {createAccountUserHandler}/>
     const managerDashboardView = <ManagerDashboard baseURL={baseURL}/>
     const salespersonDashboardView = <BookTicket baseURL = {baseURL} callback={()=>setCurrState(1)} salesmanId = {currId} name = {currUserName}/>
     const accountantDashboardView = <AddExpenditure baseURL = {baseURL} callback={()=>setCurrState(1)} accountantId = {currId} name = {currUserName} />
     const userDashboardView = <UserDashboard baseURL = {baseURL}/>
-    const createAccountUserView = <CreateAccountUser baseURL = {baseURL}/>
+    const createAccountUserView = <CreateAccountUser baseURL = {baseURL}  goBackToLogin = {loginCallbackHandler}/>
 
     let currView
     switch (currState) {
