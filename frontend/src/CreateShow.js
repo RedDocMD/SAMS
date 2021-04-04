@@ -8,10 +8,11 @@ function CreateShow(props) {
     const [name, setName] = useState('')
     const [dateTime, setDateTime] = useState(new Date())
     const [duration, setDuration] = useState(60)
+    const [regCount, setRegCount] = useState(100)
+    const [regPrice, setRegPrice] = useState(250)
+    const [balCount, setBalCount] = useState()
+    const [balPrice, setBalPrice] = useState()
     
-    console.log(dateTime)
-    console.log(duration)
-
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Container>
@@ -71,6 +72,40 @@ function CreateShow(props) {
                                         </InputAdornment>
                                     )
                                 }}
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={3} />
+
+                    <Grid item xs={3} />
+                    <Grid item xs={6}>
+                        <Box display='flex' justifyContent='space-between'>
+                            <TextField
+                                label='Number of Regular Seats'
+                                variant='outlined'
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                type='number'
+                                onChange={ev => setRegCount(ev.target.value)}
+                                defaultValue={100}
+                            />
+                            <TextField
+                                label='Price of Regular Ticket'
+                                variant='outlined'
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                type='number'
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position='start'>
+                                            ₹ 
+                                        </InputAdornment>
+                                    )
+                                }}
+                                onChange={ev => setRegPrice(ev.target.value)}
+                                defaultValue={250}
                             />
                         </Box>
                     </Grid>
