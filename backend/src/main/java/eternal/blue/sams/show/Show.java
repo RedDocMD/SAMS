@@ -43,6 +43,7 @@ public class Show {
     private int regularTicketCount;
     private double balconyTicketPrice;
     private double regularTicketPrice;
+    private String name;
 
     public Show(LocalDate date,
                 LocalTime time,
@@ -50,7 +51,8 @@ public class Show {
                 int balconyTicketCount,
                 int regularTicketCount,
                 double balconyTicketPrice,
-                double regularTicketPrice) {
+                double regularTicketPrice,
+                String name) {
         this.date = date;
         this.time = time;
         this.duration = duration;
@@ -58,6 +60,7 @@ public class Show {
         this.regularTicketCount = regularTicketCount;
         this.balconyTicketPrice = balconyTicketPrice;
         this.regularTicketPrice = regularTicketPrice;
+        this.name = name;
     }
 
     public Show() {
@@ -74,6 +77,7 @@ public class Show {
                 ", regularTicketCount=" + regularTicketCount +
                 ", balconyTicketPrice=" + balconyTicketPrice +
                 ", regularTicketPrice=" + regularTicketPrice +
+                ", name=" + name +
                 '}';
     }
 
@@ -148,5 +152,13 @@ public class Show {
 
     public void setRegularTicketPrice(double regularTicketPrice) {
         this.regularTicketPrice = regularTicketPrice;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 }

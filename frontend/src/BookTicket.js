@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     Button,
     Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
@@ -12,7 +12,16 @@ import {
 } from '@material-ui/core'
 import axios from 'axios'
 import {Alert, AlertTitle} from '@material-ui/lab'
+import JSONbig from 'json-bigint'
 
+const bigIntToString = num => {
+    const parts = num.c
+    let res = ''
+    for (const part of parts) {
+        res = res.concat(part.toString())
+    }
+    return res
+}
 
 function bookTicket(props){
     //dummy
@@ -20,21 +29,51 @@ function bookTicket(props){
         props.callback()
     }
 
-    let [username,setUsername] = useState('')
+    let [users,setUsers] = useState([])
+    let [userName,setUsername] = useState('')
+    let [userId,setUserId] = useState('')
+    let [shows,setShows] = useState([])
     let [showName,setShowName] = useState('')
+    let [showId,setShowId] = useState('')
     let [numTickets,setNumTickets] = useState(0)
+    let [ticketPrice,setTicketPrice] = useState([0,0]) // balcony then regular
+    let [available,setAvailable] = useState([0,0])
+    let [selectedTicketPrice,setSelectedTicketPrice] = useState(0)
     let [ticketType,setTicketType] = useState('')
     let [open, setOpen] = useState(false)
     let [message,setMessage] = useState(0)
 
+    let changeShowName = (callerEvent) => {
+        setShowName(callerEvent.target.value.toString())
 
-    let changeShowName = callerEvent => {
-        setShowName(callerEvent.target.value)
+        for(let show of shows){
+            let datetime = show.date.concat('T').concat(show.time)
+            // console.log(datetime)
+            // console.log(callerEvent.target.value)
+            if(callerEvent.target.value.toString().includes(new Date(datetime).toString())){
+                setShowId(bigIntToString(show.id))
+                setTicketPrice([parseInt(show.balconyTicketPrice),parseInt(show.regularTicketPrice)])
+                setAvailable([parseInt(show.balconyTicketCount),parseInt(show.regularTicketCount)])
+                if(ticketType === 'Regular'){
+                    setSelectedTicketPrice(parseInt(ticketPrice[1]))
+                }
+                else{
+                    setSelectedTicketPrice(parseInt(ticketPrice[0]))
+                }
+                break
+            }
+        }
         setMessage(0)
     }
 
     let changeUsername = callerEvent => {
-        setUsername(callerEvent.target.value)
+        setUsername(callerEvent.target.value.toString())
+        for(let user of users){
+            if(callerEvent.target.value.toString() === user.username){
+                setUserId(bigIntToString(user.id))
+                return
+            }
+        }
         setMessage(0)
     }
     let changeNumTickets = callerEvent => {
@@ -43,32 +82,102 @@ function bookTicket(props){
     }
     let changeTicketType = callerEvent => {
         setTicketType(callerEvent.target.value)
+        if(callerEvent.target.value.toString() === 'Regular'){
+            setSelectedTicketPrice(ticketPrice[1])
+        }
+        else{
+            setSelectedTicketPrice(ticketPrice[0])
+        }
         setMessage(0)
     }
+
+    const fetchAllShows = async () => {
+        try{
+            let url =  `${props.baseURL}/shows`
+            setShows([])
+            const response = await axios.get(url, {transformResponse : data => data })
+            const json = JSONbig.parse(response.data)
+            setShows(json)
+        }catch (e){
+            setShows([])
+        }
+    }
+
+    const fetchAllUsers = async () => {
+        try{
+            let url =  `${props.baseURL}/users`
+            setUsers([])
+            const response = await axios.get(url, {transformResponse : data => data })
+            const json = JSONbig.parse(response.data)
+            setUsers(json)
+        }catch (e){
+            setUsers([])
+        }
+    }
+
+    let getElement = (show)=>{
+        let uKey = bigIntToString(show.id)
+        let datetime = show.date.concat('T').concat(show.time)
+        // console.log(uKey)
+        let showString = `${show.name} on ${new Date(datetime).toString()}`
+        return(
+            <MenuItem value={showString} key={uKey}>
+                {showString}
+            </MenuItem>
+        )
+    }
+
+    let getUser = (user)=>{
+        let uKey = bigIntToString(user.id)
+        return(
+            <MenuItem value={user.username} key={uKey}>
+                {user.username}
+            </MenuItem>
+        )
+    }
+
+    useEffect(() => {
+        fetchAllShows()
+        fetchAllUsers()
+    },[])
+
 
     const handleClickOpen = () => {
         setOpen(true)
     }
 
     const submitAndClose = () => {
-        // let data = {
-        //     username : username,
-        //     password : password,
-        //     type : ticketType
-        // }
-        // axios.post(`${props.baseURL}/users`,data)
-        //     .then((response) =>{
-        //         console.log(response)
-        //         if(response.data !== '' )
-        //             setMessage(1)
-        //         else
-        //             setMessage(2)
-        //     }).catch((error)=>{
-        //         console.log(error)
-        //         setMessage(2)
-        //     })
-
+    //     if(showId.length === 0 || amount === 0.0 || reason.length === 0) {
+    //         setMessage(2)
+    //         return
+    //     }
         setOpen(false)
+        if( (ticketType === 'Regular' && numTickets>available[1]) || (ticketType === 'Balcony' && numTickets>available[0]) ){
+            setMessage(2)
+            return
+        }
+        let data = {
+            ticket: {
+                showId: showId,
+                type: ticketType,
+                price: selectedTicketPrice,
+                userId: userId
+            },
+            salespersonId: props.salespersonId
+        }
+        for(let i=0;i<numTickets;i++)
+        {
+            axios.post(`${props.baseURL}/tickets`,data)
+                .then((response) =>{
+                    if(response.data !== '' )
+                        setMessage(1)
+                    else
+                        setMessage(2)
+                }).catch((error)=>{
+                    // console.log(error)
+                    setMessage(2)
+                })
+        }
     }
 
     const handleClose = () => {
@@ -82,18 +191,31 @@ function bookTicket(props){
         break
     case 1:
         alertMessage = <Alert variant="filled" severity="success">
-                Successfully created Account
+                Successfully generated ticket.
         </Alert>
         break
     case 2:
         alertMessage = <Alert variant="filled" severity="error">
-                Invalid Data or Username already exists.
+                Either Tickets are sold out or invalid request.
         </Alert>
         break
     default:
         throw Error('Invalid state in Create Account')
     }
 
+    // console.log(shows)
+    let menuOfShows = shows.filter( (show)=>{
+        let datetime = show.date.concat('T').concat(show.time)
+        let showTime = new Date(datetime)
+        let currentTime = new Date()
+        // console.log(new Date(datetime))
+        // console.log(currentTime)
+        return showTime>=currentTime
+    }).map( show => getElement(show))
+
+    let menuOfUsers = users.filter( (user) =>{
+        return user.type === 'Customer'
+    } ).map( user => getUser(user))
 
     return(
         <Container>
@@ -112,7 +234,6 @@ function bookTicket(props){
 
                 <Grid item xs={3}/>
 
-
                 <Grid item xs={4}>
                     <Typography variant="h6" align="right">Select a show: </Typography>
                 </Grid>
@@ -130,15 +251,14 @@ function bookTicket(props){
                             <MenuItem value="">
                                 <em>Select One Show</em>
                             </MenuItem>
-                            <MenuItem value={'a'}>a</MenuItem>
-                            <MenuItem value={'b'}>b</MenuItem>
+                            {menuOfShows}
                         </Select>
                     </FormControl>
                 </Grid>
                 <Grid item xs={2} />
 
                 <Grid item xs={4}>
-                    <Typography variant="h6" align="right">Select A Customer: </Typography>
+                    <Typography variant="h6" align="right">Select a Customer: </Typography>
                 </Grid>
 
                 <Grid item xs={6} >
@@ -147,15 +267,14 @@ function bookTicket(props){
                         <Select
                             labelId="demo-simple-select-outlined-label"
                             id="demo-simple-select-outlined"
-                            value={username}
+                            value={userName}
                             onChange={changeUsername}
                             label="Select Customer"
                         >
                             <MenuItem value="">
                                 <em>Select One Cutomer</em>
                             </MenuItem>
-                            <MenuItem value={'a'}>a</MenuItem>
-                            <MenuItem value={'b'}>b</MenuItem>
+                            {menuOfUsers}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -207,12 +326,12 @@ function bookTicket(props){
                         <DialogTitle id="alert-dialog-title">{'Are you sure?'}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Please confirm that you want to book?
+                                Please confirm that you want to book? It will cost you Rs.{selectedTicketPrice*numTickets}
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
                             <Button variant="contained" onClick={handleClose} color="primary">
-                                No, Take me Back
+                                No, Take me back
                             </Button>
                             <Button variant="contained" onClick={submitAndClose} color="primary" autoFocus>
                                 Yes, I want to book
@@ -231,8 +350,6 @@ function bookTicket(props){
             </Grid>
         </Container>
     )
-
-
 }
 
 export default bookTicket

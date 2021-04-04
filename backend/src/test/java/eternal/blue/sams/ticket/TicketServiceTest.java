@@ -45,7 +45,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var salespersonId = BigInteger.valueOf(1000);
@@ -69,7 +69,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var salespersonId = BigInteger.valueOf(1000);
@@ -93,7 +93,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(11);
         var userId = BigInteger.valueOf(100);
         var salespersonId = BigInteger.valueOf(1000);
@@ -117,7 +117,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var salespersonId = BigInteger.valueOf(1000);
@@ -147,7 +147,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var salespersonId = BigInteger.valueOf(1000);
@@ -177,7 +177,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var salespersonId = BigInteger.valueOf(1000);
@@ -201,7 +201,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var ticket = new Ticket(showId, TicketType.Regular, show.getRegularTicketPrice(), userId);
@@ -226,7 +226,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var ticket = new Ticket(showId, TicketType.Regular, show.getRegularTicketPrice(), userId);
@@ -251,7 +251,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var ticket = new Ticket(showId, TicketType.Balcony, show.getBalconyTicketPrice(), userId);
@@ -276,7 +276,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var ticket = new Ticket(showId, TicketType.Regular, show.getRegularTicketPrice(), userId);
@@ -301,7 +301,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var ticket = new Ticket(showId, TicketType.Regular, show.getRegularTicketPrice(), userId);
@@ -326,7 +326,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var wrongShowId = BigInteger.valueOf(13);
@@ -350,7 +350,7 @@ public class TicketServiceTest {
                 100,
                 500,
                 1000,
-                450);
+                450,"Kimi no Na wa");
         var showId = BigInteger.valueOf(10);
         var userId = BigInteger.valueOf(100);
         var ticket = new Ticket(showId, TicketType.Regular, show.getRegularTicketPrice(), userId);

@@ -14,7 +14,6 @@ import axios from 'axios'
 import {Alert, AlertTitle} from '@material-ui/lab'
 import JSONbig from 'json-bigint'
 
-
 const bigIntToString = num => {
     const parts = num.c
     let res = ''
@@ -38,7 +37,6 @@ function addExpenditure(props){
     let [message,setMessage] = useState(0)
     let [shows,setShows] = useState([])
 
-
     let changeShowName = callerEvent => {
         setShowName(callerEvent.target.value.toString())
 
@@ -46,7 +44,7 @@ function addExpenditure(props){
             let datetime = show.date.concat('T').concat(show.time)
             // console.log(datetime)
             // console.log(callerEvent.target.value)
-            if(datetime === callerEvent.target.value){
+            if(callerEvent.target.value.toString().includes(new Date(datetime).toString())){
                 setShowid(bigIntToString(show.id))
                 break
             }
@@ -61,7 +59,6 @@ function addExpenditure(props){
     let changeAmount = callerEvent => {
         setAmount(parseInt(callerEvent.target.value))
         setMessage(0)
-
     }
 
     const handleClickOpen = () => {
@@ -85,11 +82,17 @@ function addExpenditure(props){
     },[])
 
     const submitAndClose = () => {
+        setOpen(false)
+        if(showid.length === 0 || amount === 0.0 || reason.length === 0) {
+            setMessage(2)
+            return
+        }
+
         let data = {
             expenditure: {
                 amount: amount,
                 reason: reason,
-                showId: (showid)
+                showId: showid
             },
             accountantId: props.accountantId,
         }
@@ -97,7 +100,7 @@ function addExpenditure(props){
         axios.post(`${props.baseURL}/expenditures`,data)
             .then((response) =>{
                 // console.log(response)
-                console.log(data.showid)
+                // console.log(data.showId)
                 if(response.data)
                     setMessage(1)
                 else
@@ -106,23 +109,22 @@ function addExpenditure(props){
                 // console.log(error)
                 setMessage(2)
             })
+    }
 
+    const handleClose = () => {
         setOpen(false)
     }
 
     let getElement = (show)=>{
         let uKey = bigIntToString(show.id)
-        // console.log(uKey)
         let datetime = show.date.concat('T').concat(show.time)
+        // console.log(uKey)
+        let showString = `${show.name} on ${new Date(datetime).toString()}`
         return(
-            <MenuItem value={datetime} key={uKey}>
-                {datetime}
+            <MenuItem value={showString} key={uKey}>
+                {showString}
             </MenuItem>
         )
-    }
-
-    const handleClose = () => {
-        setOpen(false)
     }
 
     let alertMessage
@@ -141,10 +143,9 @@ function addExpenditure(props){
         </Alert>
         break
     default:
-        throw Error('Invalid state in Add expenditure')
+        throw Error('Invalid state in Book Ticket')
     }
 
-    console.log(shows)
     let menuOfShows = shows.filter( (show)=>{
         let datetime = show.date.concat('T').concat(show.time)
         let showTime = new Date(datetime)
@@ -154,10 +155,10 @@ function addExpenditure(props){
         return showTime>=currentTime
     }).map( show => getElement(show))
 
+    // console.log(shows)
     // console.log(listOfShows.length)
-
-    console.log(showid)
-    console.log(showName)
+    // console.log(showid)
+    // console.log(showName)
 
     return(
         <Container>
@@ -189,7 +190,7 @@ function addExpenditure(props){
                             onChange={changeShowName}
                             label="Shows"
                         >
-                            <MenuItem value="" name="">
+                            <MenuItem value="">
                                 <em>Select One Show</em>
                             </MenuItem>
                             {menuOfShows}
@@ -213,7 +214,6 @@ function addExpenditure(props){
                     <TextField fullWidth id="outlined-basic" label="Reason" variant="outlined" onChange={changeReason}/>
                 </Grid>
                 <Grid item xs={2} />
-
 
                 <Grid item xs={4} />
                 <Grid item xs={2}>
@@ -254,8 +254,6 @@ function addExpenditure(props){
             </Grid>
         </Container>
     )
-
-
 }
 
 export default addExpenditure
