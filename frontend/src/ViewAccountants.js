@@ -6,16 +6,8 @@ import {
     Typography, Box
 } from '@material-ui/core'
 import axios from 'axios'
-import JSONbig from 'json-bigint'
+const JSONbig = require('json-bigint')({ storeAsString: true })
 
-const bigIntToString = num => {
-    const parts = num.c
-    let res = ''
-    for (const part of parts) {
-        res = res.concat(part.toString())
-    }
-    return res
-}
 
 function viewAccountants(props){
 
@@ -32,6 +24,7 @@ function viewAccountants(props){
             let url =  `${props.baseURL}/users`
             setUsers([])
             const response = await axios.get(url, {transformResponse : data => data })
+            console.log(response.data)
             const json = JSONbig.parse(response.data)
             setUsers(json)
             // console.log(users)
@@ -42,16 +35,21 @@ function viewAccountants(props){
 
     let handleDelete = async () => {
         let url = `${props.baseURL}/users/`
-        url  = url.concat(userId)
-        console.log(userId)
+        url  = url + userId
+        // console.log(BigInt(userId))
         // console.log(event)
         // console.log(bigId)
         console.log(url)
-        await axios.delete(url)
-            .then((response) => {
-                // console.log(response.data)
-                fetchAllUsers()
-            } )
+        try {
+            const resp = await axios.delete(url)
+            console.log(resp)
+            setUsers(users.filter(user =>{
+                return user.id !== userId
+            }))
+        }catch (e){
+            console.log(e)
+        }
+
         setOpen(false)
     }
 
@@ -69,9 +67,10 @@ function viewAccountants(props){
     },[])
 
     let getElement = (user) => {
-        let id = bigIntToString(user.id)
+        let id = user.id
+        // console.log(user)
         return (
-            <Grid item xs={6} key={id}>
+            <Grid item xs={4} key={id}>
 
                 <Card variant="outlined" style={{backgroundColor: 'black'}}>
                     <CardContent>
@@ -119,6 +118,8 @@ function viewAccountants(props){
     let listView = users.filter( (user) => {
         return user.type.toString() === 'Accountant'
     }).map( (user) => getElement(user))
+
+    console.log(users)
 
     return(
         <Container>
