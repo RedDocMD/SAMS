@@ -2,7 +2,6 @@ import {Box, Button, Typography, Container, Grid} from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import JSONbig from 'json-bigint'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -11,7 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-import {bigIntToString} from './utils'
+const JSONbig = require('json-bigint')({ storeAsString: true })
 
 const useStyles = makeStyles({
     table: {
@@ -28,16 +27,32 @@ function ViewShowStats(props) {
 
     let [tickets, setTickets] = useState([])
     let [transactions, setTransactions] = useState([])
+    let [shows,setShows] = useState([])
+    let [idToShow,setIdToShow] = useState(new Map())
+
+    const fetchAllShows = async () => {
+        try{
+            let url =  `${props.baseURL}/shows`
+            const response = await axios.get(url, {transformResponse : data => data })
+            const json = JSONbig.parse(response.data)
+            setShows(json)
+            for(let show of json){
+                setIdToShow(idToShow.set(show.id,show))
+            }
+        }catch (e){
+            console.log(e)
+        }
+    }
 
     useEffect(() => {
         const fetchTickets = async () => {
             try{
-                let url =  `${props.baseURL}/tickets/by_show/${bigIntToString(props.show.id)}`
+                let url =  `${props.baseURL}/tickets/by_show/${props.show.id}`
                 setTickets([])
                 const response = await axios.get(url,{transformResponse: data => data})
                 const json = JSONbig.parse(response.data)
                 setTickets(json)
-                url = `${props.baseURL}/transactions/by_show/${bigIntToString(props.show.id)}`
+                url = `${props.baseURL}/transactions/by_show/${props.show.id}`
                 const response1 = await axios.get(url,{transformResponse: data => data})
                 const json1 = JSONbig.parse(response1.data)
                 setTransactions(json1)
@@ -46,6 +61,7 @@ function ViewShowStats(props) {
             }
         }
         fetchTickets()
+        fetchAllShows()
     },[])
     let findCount = (flag) => {
         let cnt = 0
@@ -97,8 +113,9 @@ function ViewShowStats(props) {
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
+                                    <TableCell>Name</TableCell>
                                     <TableCell>Type</TableCell>
-                                    <TableCell align="right">Time</TableCell>
+                                    <TableCell align="center">Time</TableCell>
                                     <TableCell align="right">Amount</TableCell>
                                     <TableCell align="right">Initiator</TableCell>
                                 </TableRow>
@@ -106,10 +123,11 @@ function ViewShowStats(props) {
                             <TableBody>
                                 {transactions.map((transaction) => (
                                     <TableRow key={transaction.id}>
+                                        <TableCell align="left">{idToShow.get(transaction.showId).name}</TableCell>
                                         <TableCell component="th" scope="row">
                                             {transaction.type}
                                         </TableCell>
-                                        <TableCell align="right">{transaction.time}</TableCell>
+                                        <TableCell align="center">{new Date(transaction.time).toString()}</TableCell>
                                         <TableCell align="right">{transaction.amount}</TableCell>
                                         <TableCell align="right">{transaction.initiatorType}</TableCell>
                                     </TableRow>
