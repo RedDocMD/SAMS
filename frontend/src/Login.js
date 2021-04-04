@@ -3,8 +3,7 @@ import { Box, Button, Container, Grid, TextField, Typography } from '@material-u
 import Link from '@material-ui/core/Link'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import JSONbig from 'json-bigint'
-import {bigIntToString} from './utils'
+const JSONbig = require('json-bigint')({storeAsString: true})
 
 function LoginPage(props) {
     let [username, setUsername] = useState('')
@@ -24,7 +23,7 @@ function LoginPage(props) {
             let json = JSONbig.parse(data)
             setUserNotFoundError(false)
             let name = json.username
-            let id = bigIntToString(json.id)
+            let id = (json.id)
             let type = json.type
             props.loginCallback(id, type, name)
         } else {
