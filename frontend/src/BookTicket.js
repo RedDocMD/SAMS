@@ -37,6 +37,7 @@ function bookTicket(props){
     let [showId,setShowId] = useState('')
     let [numTickets,setNumTickets] = useState(0)
     let [ticketPrice,setTicketPrice] = useState([0,0]) // balcony then regular
+    let [available,setAvailable] = useState([0,0])
     let [selectedTicketPrice,setSelectedTicketPrice] = useState(0)
     let [ticketType,setTicketType] = useState('')
     let [open, setOpen] = useState(false)
@@ -51,12 +52,13 @@ function bookTicket(props){
             // console.log(callerEvent.target.value)
             if(callerEvent.target.value.toString().includes(new Date(datetime).toString())){
                 setShowId(bigIntToString(show.id))
-                setTicketPrice([show.balconyTicketPrice,show.regularTicketPrice])
+                setTicketPrice([parseInt(show.balconyTicketPrice),parseInt(show.regularTicketPrice)])
+                setAvailable([parseInt(show.balconyTicketCount),parseInt(show.regularTicketCount)])
                 if(ticketType === 'Regular'){
-                    setSelectedTicketPrice(ticketPrice[1])
+                    setSelectedTicketPrice(parseInt(ticketPrice[1]))
                 }
                 else{
-                    setSelectedTicketPrice(ticketPrice[0])
+                    setSelectedTicketPrice(parseInt(ticketPrice[0]))
                 }
                 break
             }
@@ -149,6 +151,11 @@ function bookTicket(props){
     //         setMessage(2)
     //         return
     //     }
+        setOpen(false)
+        if( (ticketType === 'Regular' && numTickets>available[1]) || (ticketType === 'Balcony' && numTickets>available[0]) ){
+            setMessage(2)
+            return
+        }
         let data = {
             ticket: {
                 showId: showId,
@@ -167,12 +174,10 @@ function bookTicket(props){
                     else
                         setMessage(2)
                 }).catch((error)=>{
-                    console.log(error)
+                    // console.log(error)
                     setMessage(2)
                 })
-
         }
-        setOpen(false)
     }
 
     const handleClose = () => {
@@ -326,7 +331,7 @@ function bookTicket(props){
                         </DialogContent>
                         <DialogActions>
                             <Button variant="contained" onClick={handleClose} color="primary">
-                                No, Take me Back
+                                No, Take me back
                             </Button>
                             <Button variant="contained" onClick={submitAndClose} color="primary" autoFocus>
                                 Yes, I want to book
