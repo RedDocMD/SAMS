@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Button, Container, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
+import { Box, Button, Container, Grid, IconButton, ListItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
 import axios from 'axios'
 const JSONbig = require('json-bigint')({ storeAsString: true })
 import collect from 'collect.js'
 import DeleteIcon from '@material-ui/icons/Delete'
+import assert from 'assert'
 
 function ViewSalesperson(props) {
+    const CurrViewEnum = Object.freeze({
+        table: 1,
+        list: 2
+    })
+
     const [salespersons, setSalespersons] = useState([])
     const [transactionMap, setTransactionMap] = useState({})
+    const [currViewState, setCurrViewState] = useState(CurrViewEnum.table)
+    const [chosenId, setChosenId] = useState()
 
     useEffect(() => {
         (async () => {
@@ -34,7 +42,76 @@ function ViewSalesperson(props) {
         })()
     }, [])
 
-    let salespersonItems = salespersons.map(salesperson => {
+    const transactionList = id => {
+        if (!id) {
+            return ''
+        }
+        let salesperson = undefined
+        for (const i of salespersons) {
+            if (i.id === id) {
+                salesperson = i
+                break
+            }
+        }
+        assert(salesperson)
+        const transactions = transactionMap[id]
+        const table =        
+        <TableContainer component={Paper}>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Type</TableCell>
+                        <TableCell align="right">Time</TableCell>
+                        <TableCell align="right">Amount</TableCell>
+                        <TableCell align="right">Initiator</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {transactions.map((transaction) => (
+                        <TableRow key={transaction.id}>
+                            <TableCell component="th" scope="row">
+                                {transaction.type}
+                            </TableCell>
+                            <TableCell align="right">{transaction.time}</TableCell>
+                            <TableCell align="right">{transaction.amount}</TableCell>
+                            <TableCell align="right">{transaction.initiatorType}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+        return (
+            <Container>
+                <Grid container spacing={6}>
+                    <Grid item xs={12}>
+                        <Box mt={3}>
+                            <Typography variant='h4' align='center'>
+                                {`All Transactions of "${salesperson.username}"`}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={3} />
+                    <Grid item xs={6}>
+                        {table}
+                    </Grid>
+                    <Grid item xs={3} />
+                    <Grid item xs={3} />
+                    <Grid item xs={6}>
+                        <Box display='flex' justifyContent='center'>
+                            <Button variant='contained' color='primary' onClick={() => setCurrViewState(CurrViewEnum.table)}>Back</Button>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={3} />
+                </Grid>
+            </Container>
+        )
+    }
+    const showAllTransactionsHandler = id => {
+        setCurrViewState(CurrViewEnum.list)
+        setChosenId(id)
+    }
+
+    const salespersonItems = salespersons.map(salesperson => {
         const transactions = collect(transactionMap[salesperson.id])
         const totalMoney = transactions.reduce((carry, item) => carry + item.amount, 0)
         const totalTickets = transactions.count()
@@ -45,7 +122,7 @@ function ViewSalesperson(props) {
                 <TableCell align='right'>{totalTickets}</TableCell>
                 <TableCell align='right'>{`₹ ${totalMoney}`}</TableCell>
                 <TableCell align='center'>
-                    <Button variant='contained' color='primary'>All Transactions</Button>
+                    <Button variant='contained' color='primary' onClick={() => showAllTransactionsHandler(salesperson.id)}>All Transactions</Button>
                 </TableCell>
                 <TableCell align='center'>
                     <IconButton color='secondary'>
@@ -56,7 +133,7 @@ function ViewSalesperson(props) {
         )
     })
 
-    return (
+    const tableView =     
         <Container>
             <Grid container spacing={6}>
                 <Grid item xs={12}>
@@ -94,7 +171,22 @@ function ViewSalesperson(props) {
                 <Grid item xs={2} />
             </Grid>
         </Container>
-    )
+
+    const listView = transactionList(chosenId)
+
+    let currView = undefined
+    switch (currViewState) {
+    case CurrViewEnum.list:
+        currView = listView
+        break    
+    case CurrViewEnum.table:
+        currView = tableView
+        break
+    default:
+        throw new Error('Inconsistent state in ViewSalesperson.js')
+    }
+
+    return currView
 }
 
 ViewSalesperson.propTypes = {
