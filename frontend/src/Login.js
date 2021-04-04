@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Box, Button, Container, Grid, TextField, Typography } from '@material-ui/core'
+import Link from '@material-ui/core/Link'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import JSONbig from 'json-bigint'
@@ -19,6 +20,10 @@ function LoginPage(props) {
     let [username, setUsername] = useState('')
     let [password, setPassword] = useState('')
     let [userNotFoundError, setUserNotFoundError] = useState(false)
+
+    let createAccountHandler = () => {
+        props.signUpHandler()
+    }
 
     let loginButtonAction = async () => {
         let url = `${props.baseURL}/users/login?username=${username}&password=${password}`
@@ -68,13 +73,20 @@ function LoginPage(props) {
                     <TextField id="password" label="Password" type="Password" fullWidth onChange={passwordChanged} />
                 </Grid>
                 <Grid item xs={3} />
-                <Grid item xs={5} />
-                <Grid item xs={2} mt={3}>
-                    <Box display='flex' justifyContent='center'>
+                <Grid item xs={12} mt={3}>
+                    <Box display = 'flex' justifyContent = 'center'>
                         <Button variant="contained" color="primary" onClick={loginButtonAction}>Login</Button>
                     </Box>
                 </Grid>
-                <Grid item xs={5} />
+                <Grid item xs={12} mt={3}>
+                    <Box display = 'flex' justifyContent = 'center'>
+                        <Link href="#" onClick={createAccountHandler} color="secondary">
+                            Dont have an account? Signup
+                        </Link>
+                    </Box>
+
+                    {/*<Button align = 'center' variant="contained" color="primary" onClick={createAccountHandler}>SignUp</Button>*/}
+                </Grid>
             </Grid>
         </Container>
     )
@@ -82,7 +94,8 @@ function LoginPage(props) {
 
 LoginPage.propTypes = {
     baseURL: PropTypes.string.isRequired,
-    loginCallback: PropTypes.func.isRequired
+    loginCallback: PropTypes.func.isRequired,
+    signUpHandler: PropTypes.func.isRequired,
 }
 
 export default LoginPage
