@@ -7,6 +7,7 @@ const JSONbig = require('json-bigint')({ storeAsString: true })
 import collect from 'collect.js'
 import DeleteIcon from '@material-ui/icons/Delete'
 import assert from 'assert'
+import { Alert } from '@material-ui/lab'
 
 function ViewSalesperson(props) {
     const CurrViewEnum = Object.freeze({
@@ -19,7 +20,7 @@ function ViewSalesperson(props) {
         failedAlert: 1,
         errorAlert: 2,
         successAlert: 3
-    }
+    })
 
     const [salespersons, setSalespersons] = useState([])
     const [transactionMap, setTransactionMap] = useState({})
@@ -125,10 +126,15 @@ function ViewSalesperson(props) {
         const url = `${props.baseURL}/users/${chosenId}`
         axios.delete(url)
             .then(response => {
-
+                if (response.data !== '') {
+                    setAlertLevel(AlertLevelEnum.successAlert)
+                } else {
+                    setAlertLevel(AlertLevelEnum.failedAlert)
+                }
             })
             .catch(err => {
                 console.error(err)
+                setAlertLevel(AlertLevelEnum.errorAlert)
             })
     }
     const deleteButtonHandler = id => {
