@@ -4,17 +4,7 @@ import Link from '@material-ui/core/Link'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import JSONbig from 'json-bigint'
-
-const bigIntToString = num => {
-    const parts = num.c
-    let res = ''
-    for (const part of parts) {
-        res = res.concat(part.toString())
-    }
-    return res
-}
-
-
+import {bigIntToString} from './utils'
 
 function LoginPage(props) {
     let [username, setUsername] = useState('')
@@ -48,9 +38,9 @@ function LoginPage(props) {
     let userTextField
     if (userNotFoundError) {
         userTextField = <TextField id="username" label="Username" helperText="Username or password is incorrect"
-            error fullWidth onChange={usernameChanged} />
+            error fullWidth onChange={usernameChanged} variant='outlined' />
     } else {
-        userTextField = <TextField id="username" label="Username" fullWidth onChange={usernameChanged} />
+        userTextField = <TextField id="username" label="Username" fullWidth onChange={usernameChanged} variant='outlined' />
     }
 
     return (
@@ -70,7 +60,7 @@ function LoginPage(props) {
                 <Grid item xs={3} />
                 <Grid item xs={3} />
                 <Grid item xs={6}>
-                    <TextField id="password" label="Password" type="Password" fullWidth onChange={passwordChanged} />
+                    <TextField id="password" label="Password" type="Password" fullWidth onChange={passwordChanged} variant='outlined' />
                 </Grid>
                 <Grid item xs={3} />
                 <Grid item xs={12} mt={3}>

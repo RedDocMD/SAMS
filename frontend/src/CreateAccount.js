@@ -152,10 +152,10 @@ function CreateAccount(props) {
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button variant="contained" onClick={handleClose} color="primary">
+                            <Button onClick={handleClose} color="default">
                                 No, Take me Back
                             </Button>
-                            <Button variant="contained" onClick={submitAndClose} color="secondary" autoFocus>
+                            <Button onClick={submitAndClose} color="secondary" autoFocus>
                                 Yes, I want to create
                             </Button>
                         </DialogActions>

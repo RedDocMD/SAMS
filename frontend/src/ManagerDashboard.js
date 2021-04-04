@@ -12,12 +12,14 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
 import CreateAccount from './CreateAccount'
 import ViewAccountants from './ViewAccountants'
 import { ExpandLess, ExpandMore } from '@material-ui/icons'
+import CreateShow from './CreateShow'
 
 let ManagerDashboardEnum = Object.freeze({
     'default': 1,
     'createAccount': 2,
     'showAccountants': 3,
     'viewShows': 4,
+    'createShow': 5
 })
 
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +49,9 @@ function ManagerDashboard(props) {
     const showAccountantHandler = () => {
         setViewState(ManagerDashboardEnum.showAccountants)
     }
+    const createShowHandler = () => {
+        setViewState(ManagerDashboardEnum.createShow)
+    }
 
     const [showsOpen, setShowsOpen] = useState(false)
     const [accountsOpen, setAccountsOpen] = useState(false)
@@ -73,7 +78,7 @@ function ManagerDashboard(props) {
                         </ListItem>
                         <Collapse in={showsOpen} timeout="auto" unmountOnExit>
                             <List disablePadding>
-                                <ListItem button className={classes.nested}>
+                                <ListItem button className={classes.nested} onClick={createShowHandler}>
                                     <ListItemIcon>
                                         <AddIcon />
                                     </ListItemIcon>
@@ -132,9 +137,10 @@ function ManagerDashboard(props) {
         </Container>
     )
 
-    let createAccountView = <CreateAccount callback={dashboardCallback} baseURL = {props.baseURL} />
-    let showAccountantView = <ViewAccountants callback={dashboardCallback} baseURL = {props.baseURL} />
-    let viewShowsView = <ViewShows callback = {dashboardCallback} baseURL = {props.baseURL}/>
+    let createAccountView = <CreateAccount callback={dashboardCallback} baseURL={props.baseURL} />
+    let showAccountantView = <ViewAccountants callback={dashboardCallback} baseURL={props.baseURL} />
+    let viewShowsView = <ViewShows callback={dashboardCallback} baseURL={props.baseURL}/>
+    let createShowsView = <CreateShow callback={dashboardCallback} baseURL={props.baseURL} />
 
     let currView
     switch (viewState) {
@@ -149,6 +155,9 @@ function ManagerDashboard(props) {
         break
     case ManagerDashboardEnum.viewShows:
         currView = viewShowsView
+        break
+    case ManagerDashboardEnum.createShow:
+        currView = createShowsView
         break
     default:
         throw Error('Invalid state in Manager Dashboard')
