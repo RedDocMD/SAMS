@@ -1,17 +1,78 @@
-import { Container, Grid, Typography, Box, TextField, InputAdornment } from '@material-ui/core'
+import { Container, Grid, Typography, Box, TextField, InputAdornment, Button,
+    Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions } from '@material-ui/core'
 import React, { useState } from 'react'
 import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers'
+import { Alert } from '@material-ui/lab'
 import DateFnsUtils from '@date-io/date-fns'
+import format from 'date-fns/format'
+import PropTypes from 'prop-types'
 import 'date-fns'
+import axios from 'axios'
 
 function CreateShow(props) {
+    const AlertLevelEnum = Object.freeze({
+        noAlert: 0,
+        failedAlert: 1,
+        errorAlert: 2,
+        successAlert: 3
+    })
+
     const [name, setName] = useState('')
     const [dateTime, setDateTime] = useState(new Date())
     const [duration, setDuration] = useState(60)
     const [regCount, setRegCount] = useState(100)
     const [regPrice, setRegPrice] = useState(250)
-    const [balCount, setBalCount] = useState()
-    const [balPrice, setBalPrice] = useState()
+    const [balCount, setBalCount] = useState(50)
+    const [balPrice, setBalPrice] = useState(500)
+    const [isOpen, setOpen] = useState(false)
+    const [alertLevel, setAlertLevel] = useState(AlertLevelEnum.noAlert)
+
+    const createHandler = () => {
+        const dateString = format(dateTime, 'yyyy-LL-dd')
+        const timeString = format(dateTime, 'kk:mm:ss')
+        const showData = {
+            name: name,
+            date: dateString,
+            time: timeString,
+            duration: `PT${duration}M`,
+            balconyTicketCount: balCount,
+            balconyTicketPrice: balPrice,
+            regularTicketCount: regCount,
+            regularTicketPrice: regPrice
+        }
+        console.log(showData)
+        axios.post(`${props.baseURL}/shows`, showData)
+            .then(response => {
+                if (response.data !== '') {
+                    setAlertLevel(AlertLevelEnum.successAlert)
+                } else {
+                    setAlertLevel(AlertLevelEnum.failedAlert)
+                }
+            })
+            .catch((err) => {
+                console.error(err)
+                setAlertLevel(AlertLevelEnum.errorAlert)
+            })
+        setOpen(false)
+    }
+
+    let alert = undefined
+    switch (alertLevel) {
+    case AlertLevelEnum.noAlert:
+        alert = ''
+        break
+    case AlertLevelEnum.failedAlert:
+        alert = <Alert severity='error'>Failed to create show - erroneous data</Alert>
+        break
+    case AlertLevelEnum.errorAlert:
+        alert = <Alert severity='warning'>Failed to create show - server error</Alert>
+        break
+    case AlertLevelEnum.successAlert:
+        alert = <Alert severity='success'>Created the show `${name}`</Alert>
+        break
+    default:
+        throw new Error('Inconsistent message state')
+    }
     
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -27,7 +88,7 @@ function CreateShow(props) {
 
                     <Grid item xs={3} />
                     <Grid item xs={6}>
-                        <TextField fullWidth variant='outlined' label='Show Name' onChange={ev => setName(ev.target.value)}/>
+                        <TextField required fullWidth variant='outlined' label='Show Name' onChange={ev => setName(ev.target.value)}/>
                     </Grid>
                     <Grid item xs={3} />
 
@@ -111,10 +172,81 @@ function CreateShow(props) {
                     </Grid>
                     <Grid item xs={3} />
 
+                    <Grid item xs={3} />
+                    <Grid item xs={6}>
+                        <Box display='flex' justifyContent='space-between'>
+                            <TextField
+                                label='Number of Balcony Seats'
+                                variant='outlined'
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                type='number'
+                                onChange={ev => setBalCount(ev.target.value)}
+                                defaultValue={50}
+                            />
+                            <TextField
+                                label='Price of Balcony Ticket'
+                                variant='outlined'
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                type='number'
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position='start'>
+                                            ₹ 
+                                        </InputAdornment>
+                                    )
+                                }}
+                                onChange={ev => setBalPrice(ev.target.value)}
+                                defaultValue={500}
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={3} />
+                    
+                    <Grid item xs={3} />
+                    <Grid item xs={6}>
+                        <Box display='flex' justifyContent='space-around'>
+                            <Button size='large' variant='contained' color='primary' onClick={props.callback}>Back</Button>
+                            <Button size='large' variant='contained' color='secondary' onClick={() => setOpen(true)}>Create</Button>
+                            <Dialog
+                                open={isOpen}
+                                onClose={() => setOpen(false)}
+                            >
+                                <DialogTitle>{'Are you sure?'}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        Please confirm that you want to create this show.
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={() => setOpen(false)} color='default' autofocus>
+                                        No, Take me Back
+                                    </Button>
+                                    <Button color='secondary' onClick={createHandler}>
+                                        Yes, I want to create
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={3} />
+
+                    <Grid item xs={3} />
+                    <Grid item xs={6}>{alert}</Grid>
+                    <Grid item xs={3} />
+
                 </Grid>
             </Container>
         </MuiPickersUtilsProvider>
     )
+}
+
+CreateShow.propTypes = {
+    baseURL: PropTypes.string.isRequired,
+    callback: PropTypes.func.isRequired
 }
 
 export default CreateShow
