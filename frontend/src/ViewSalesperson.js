@@ -128,6 +128,13 @@ function ViewSalesperson(props) {
             .then(response => {
                 if (response.data !== '') {
                     setAlertLevel(AlertLevelEnum.successAlert)
+                    for (let i = 0; i < salespersons.length; ++i) {
+                        if (salespersons[i].id === chosenId) {
+                            const newSalespersons = salespersons.splice(i, 1)
+                            setSalespersons(newSalespersons)
+                            break
+                        }
+                    }
                 } else {
                     setAlertLevel(AlertLevelEnum.failedAlert)
                 }
