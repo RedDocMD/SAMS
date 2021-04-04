@@ -49,11 +49,11 @@ function ViewShowStats(props) {
     },[])
     let findCount = (flag) => {
         let cnt = 0
-        for (var i in tickets){
-            if (flag == 0 && tickets[i].type == 'Regular'){
+        for (const i in tickets){
+            if (flag === 0 && tickets[i].type === 'Regular'){
                 cnt++
             }
-            if (flag == 1 && tickets[i].type == 'Balcony'){
+            if (flag === 1 && tickets[i].type === 'Balcony'){
                 cnt++
             }
         }
@@ -74,7 +74,7 @@ function ViewShowStats(props) {
                     Number of Regular Seats Booked : {findCount(0)}
                 </Grid>
                 <Grid item xs={4}>
-                    Percentage of Regular Seats Booked : {props.show.regularTicketCount == 0?0:findCount(0)/props.show.regularTicketCount}%
+                    Percentage of Regular Seats Booked : {props.show.regularTicketCount === 0 ? 0 : findCount(0) / props.show.regularTicketCount * 100}%
                 </Grid>
                 <Grid item xs={2} />
                 <Grid item xs={2} />
@@ -82,7 +82,7 @@ function ViewShowStats(props) {
                     Number of Balcony Seats Booked : {findCount(1)}
                 </Grid>
                 <Grid item xs={4}>
-                    Percentage of Regular Seats Booked : {props.show.balconyTicketCount == 0?0:findCount(1)/props.show.balconyTicketCount}%
+                    Percentage of Balcony Seats Booked : {props.show.balconyTicketCount === 0 ? 0 : findCount(1) / props.show.balconyTicketCount * 100}%
                 </Grid>
                 <Grid item xs={2} />
                 <Grid item xs={12}>
