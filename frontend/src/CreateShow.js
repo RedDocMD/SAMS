@@ -1,4 +1,4 @@
-import { Container, Grid, Typography, Box, TextField } from '@material-ui/core'
+import { Container, Grid, Typography, Box, TextField, InputAdornment } from '@material-ui/core'
 import React, { useState } from 'react'
 import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
@@ -7,8 +7,10 @@ import 'date-fns'
 function CreateShow(props) {
     const [name, setName] = useState('')
     const [dateTime, setDateTime] = useState(new Date())
+    const [duration, setDuration] = useState(60)
     
     console.log(dateTime)
+    console.log(duration)
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -21,11 +23,13 @@ function CreateShow(props) {
                             </Typography>
                         </Box>
                     </Grid>
+
                     <Grid item xs={3} />
                     <Grid item xs={6}>
                         <TextField fullWidth variant='outlined' label='Show Name' onChange={ev => setName(ev.target.value)}/>
                     </Grid>
                     <Grid item xs={3} />
+
                     <Grid item xs={3} />
                     <Grid item xs={6}>
                         <Box display='flex' justifyContent='space-between'>
@@ -40,14 +44,38 @@ function CreateShow(props) {
                             <KeyboardTimePicker
                                 variant='inline'
                                 id='time-picker'
-                                label='Time picker'
+                                label='Show time'
                                 value={dateTime}
                                 onChange={time => setDateTime(time)}
                             />
-
                         </Box>
                     </Grid>
                     <Grid item xs={3} />
+
+                    <Grid item xs={3} />
+                    <Grid item xs={6} >
+                        <Box display='flex' justifyContent='center'>
+                            <TextField 
+                                onChange={ev => setDuration(ev.target.value)}
+                                defaultValue={60}
+                                label='Duration'
+                                type='number'
+                                variant='outlined'
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position='end'>
+                                            min
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={3} />
+
                 </Grid>
             </Container>
         </MuiPickersUtilsProvider>
