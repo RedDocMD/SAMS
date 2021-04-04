@@ -122,7 +122,14 @@ function ViewSalesperson(props) {
                 <TableCell align='right'>{totalTickets}</TableCell>
                 <TableCell align='right'>{`₹ ${totalMoney}`}</TableCell>
                 <TableCell align='center'>
-                    <Button variant='contained' color='primary' onClick={() => showAllTransactionsHandler(salesperson.id)}>All Transactions</Button>
+                    <Button 
+                        variant='contained'
+                        color='default'
+                        onClick={() => showAllTransactionsHandler(salesperson.id)}
+                        disableElevation
+                    >
+                        All Transactions
+                    </Button>
                 </TableCell>
                 <TableCell align='center'>
                     <IconButton color='secondary'>
@@ -134,43 +141,48 @@ function ViewSalesperson(props) {
     })
 
     const tableView =     
-        <Container>
-            <Grid container spacing={6}>
-                <Grid item xs={12}>
-                    <Box mt={3}>
-                        <Typography variant='h4' align='center'>
-                            Salespersons
-                        </Typography>
-                    </Box>
-                </Grid>
-                <Grid item xs={2} />
-                <Grid item xs={8}>
-                    <TableContainer component={Paper}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>
-                                        <Box component='span' fontWeight='fontWeightBold'>Username</Box>
-                                    </TableCell> 
-                                    <TableCell align='right'>
-                                        <Box component='span' fontWeight='fontWeightBold'>Tickets sold</Box>
-                                    </TableCell> 
-                                    <TableCell align='right'>
-                                        <Box component='span' fontWeight='fontWeightBold'>Money earned</Box>
-                                    </TableCell>
-                                    <TableCell />
-                                    <TableCell />
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {salespersonItems}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
-                <Grid item xs={2} />
+    <Container>
+        <Grid container spacing={6}>
+            <Grid item xs={12}>
+                <Box mt={3}>
+                    <Typography variant='h4' align='center'>
+                        Salespersons
+                    </Typography>
+                </Box>
             </Grid>
-        </Container>
+            <Grid item xs={2} />
+            <Grid item xs={8}>
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    <Box component='span' fontWeight='fontWeightBold'>Username</Box>
+                                </TableCell> 
+                                <TableCell align='right'>
+                                    <Box component='span' fontWeight='fontWeightBold'>Tickets sold</Box>
+                                </TableCell> 
+                                <TableCell align='right'>
+                                    <Box component='span' fontWeight='fontWeightBold'>Money earned</Box>
+                                </TableCell>
+                                <TableCell />
+                                <TableCell />
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {salespersonItems}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Grid>
+            <Grid item xs={2} />
+            <Grid item xs={12}>
+                <Box display='flex' justifyContent='center'>
+                    <Button variant='contained' color='primary' onClick={props.callback}>Back</Button>
+                </Box>
+            </Grid>
+        </Grid>
+    </Container>
 
     const listView = transactionList(chosenId)
 
