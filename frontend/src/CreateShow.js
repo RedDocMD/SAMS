@@ -222,7 +222,7 @@ function CreateShow(props) {
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
-                                    <Button onClick={() => setOpen(false)} color='default' autofocus>
+                                    <Button onClick={() => setOpen(false)} color='default' autoFocus>
                                         No, Take me Back
                                     </Button>
                                     <Button color='secondary' onClick={createHandler}>
