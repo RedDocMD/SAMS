@@ -48,7 +48,7 @@ function CreateAccount(props) {
         }
         axios.post(`${props.baseURL}/users`,data)
             .then((response) =>{
-                console.log(response)
+                // console.log(response)
                 if(response.data !== '' )
                     setMessage(1)
                 else
@@ -138,7 +138,7 @@ function CreateAccount(props) {
                     <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Go back</Button>
                 </Grid>
                 <Grid item xs={2}>
-                    <Button size="large" variant="contained" color="warning" onClick={handleClickOpen}>Create</Button>
+                    <Button size="large" variant="contained" color="secondary" onClick={handleClickOpen}>Create</Button>
                     <Dialog
                         open={open}
                         onClose={handleClose}
@@ -155,7 +155,7 @@ function CreateAccount(props) {
                             <Button variant="contained" onClick={handleClose} color="primary">
                                 No, Take me Back
                             </Button>
-                            <Button variant="contained" onClick={submitAndClose} color="warning" autoFocus>
+                            <Button variant="contained" onClick={submitAndClose} color="secondary" autoFocus>
                                 Yes, I want to create
                             </Button>
                         </DialogActions>

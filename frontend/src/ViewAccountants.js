@@ -24,8 +24,8 @@ function viewAccountants(props){
     }
 
     let [users,setUsers] = useState([])
+    let [userId,setUserId] = useState('')
     let [open, setOpen] = useState(false)
-
 
     const fetchAllUsers = async () => {
         try{
@@ -34,38 +34,35 @@ function viewAccountants(props){
             const response = await axios.get(url, {transformResponse : data => data })
             const json = JSONbig.parse(response.data)
             setUsers(json)
-            console.log(users)
+            // console.log(users)
         }catch (e){
             setUsers([])
         }
     }
 
-    let handleDelete = async (id) => {
-        // console.log(event)
-        // console.log(event.target)
+    let handleDelete = async () => {
         let url = `${props.baseURL}/users/`
-        // console.log(event.target.value)
-        // let bigId =event.target.value
+        url  = url.concat(userId)
+        console.log(userId)
+        // console.log(event)
         // console.log(bigId)
-        url  = url.concat(id)
         console.log(url)
-        await axios.delete(url,{headers: {'Access-Control-Allow-Origin':'*' } })
+        await axios.delete(url)
             .then((response) => {
-                console.log(response.data)
+                // console.log(response.data)
                 fetchAllUsers()
             } )
         setOpen(false)
     }
 
-
-    const handleClickOpen = () => {
+    const handleClickOpen = (id) => {
         setOpen(true)
+        setUserId(id)
     }
 
     const handleClose = () => {
         setOpen(false)
     }
-
 
     useEffect(() => {
         fetchAllUsers()
@@ -91,26 +88,24 @@ function viewAccountants(props){
                     </CardContent>
 
                     <CardActions >
-                        <Button variant="contained" color="secondary" size="small" onClick={handleClickOpen} >Delete Account </Button>
-
+                        <Button variant="contained" color="secondary" size="small" onClick={() => handleClickOpen(id)} >Delete Account </Button>
                         <Dialog
                             open={open}
                             onClose={handleClose}
                             aria-labelledby="alert-dialog-title"
                             aria-describedby="alert-dialog-description"
                         >
-
                             <DialogTitle id="alert-dialog-title">{'Are you sure?'}</DialogTitle>
                             <DialogContent>
                                 <DialogContentText id="alert-dialog-description">
                                         Please confirm that you want to delete this account.
                                 </DialogContentText>
                             </DialogContent>
-                            <DialogActions>
+                            <DialogActions >
                                 <Button variant="contained" onClick={handleClose} color="primary">
                                         No, Take me Back
                                 </Button>
-                                <Button variant="contained" onClick={() => handleDelete(id)} color="secondary">
+                                <Button variant="contained" onClick={handleDelete} color="secondary">
                                         Yes, I want to delete
                                 </Button>
                             </DialogActions>
@@ -127,7 +122,7 @@ function viewAccountants(props){
 
     return(
         <Container>
-            <Grid container spacing={6} alignItems="center">
+            <Grid container spacing={6} >
                 <Grid item xs={12}>
                     <Box mt={3}>
                         <Typography variant="h4" align="center">Accountants</Typography>
@@ -137,17 +132,14 @@ function viewAccountants(props){
                 <Grid item xs={12} />
                 <Grid item xs={5} />
 
-                <Grid item xs={4} alignItems="center">
+                <Grid item xs={4}>
                     <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Go back</Button>
                 </Grid>
                 <Grid item xs={3} />
 
-
             </Grid>
         </Container>
     )
-
-
 }
 
 export default viewAccountants

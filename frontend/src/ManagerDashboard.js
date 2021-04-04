@@ -63,7 +63,7 @@ function ManagerDashboard(props) {
                 </Grid>
                 <Grid item xs={4} />
                 <Grid item xs={4}>
-                    <List classNames={classes.root}>
+                    <List className={classes.root}>
                         <ListItem button onClick={() => setShowsOpen(!showsOpen)}>
                             <ListItemIcon>
                                 <MovieIcon />

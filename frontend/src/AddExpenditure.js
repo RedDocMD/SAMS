@@ -100,7 +100,7 @@ function addExpenditure(props){
         axios.post(`${props.baseURL}/expenditures`,data)
             .then((response) =>{
                 // console.log(response)
-                console.log(data.showid)
+                // console.log(data.showId)
                 if(response.data)
                     setMessage(1)
                 else
@@ -143,7 +143,7 @@ function addExpenditure(props){
         </Alert>
         break
     default:
-        throw Error('Invalid state in Add expenditure')
+        throw Error('Invalid state in Book Ticket')
     }
 
     let menuOfShows = shows.filter( (show)=>{

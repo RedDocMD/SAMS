@@ -229,7 +229,6 @@ function bookTicket(props){
 
                 <Grid item xs={3}/>
 
-
                 <Grid item xs={4}>
                     <Typography variant="h6" align="right">Select a show: </Typography>
                 </Grid>
@@ -346,8 +345,6 @@ function bookTicket(props){
             </Grid>
         </Container>
     )
-
-
 }
 
 export default bookTicket
