@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {Box, Button, Container, Grid, Typography} from '@material-ui/core'
 import axios from 'axios'
+const JSONbig = require('json-bigint')({storeAsString: true})
 
 
 function ViewBookedTickets(props) {
@@ -17,9 +18,7 @@ function ViewBookedTickets(props) {
                 let url =  `${props.baseURL}/tickets/by_user/${props.customerId}`
                 setTickets([])
                 const response = await axios.get(url,{transformResponse: data => data})
-                console.log(response.data)
                 const json = JSONbig.parse(response.data)
-                console.log(json)
                 setTickets(json)
             }catch (e){
                 console.log(e)
