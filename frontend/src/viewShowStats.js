@@ -11,7 +11,6 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-import {bigIntToString} from './utils'
 
 const useStyles = makeStyles({
     table: {
@@ -32,12 +31,13 @@ function ViewShowStats(props) {
     useEffect(() => {
         const fetchTickets = async () => {
             try{
-                let url =  `${props.baseURL}/tickets/by_show/${bigIntToString(props.show.id)}`
+                console.log(props.show)
+                let url =  `${props.baseURL}/tickets/by_show/${props.show.id}`
                 setTickets([])
                 const response = await axios.get(url,{transformResponse: data => data})
                 const json = JSONbig.parse(response.data)
                 setTickets(json)
-                url = `${props.baseURL}/transactions/by_show/${bigIntToString(props.show.id)}`
+                url = `${props.baseURL}/transactions/by_show/${props.show.id}`
                 const response1 = await axios.get(url,{transformResponse: data => data})
                 const json1 = JSONbig.parse(response1.data)
                 setTransactions(json1)
