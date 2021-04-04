@@ -13,13 +13,15 @@ import CreateAccount from './CreateAccount'
 import ViewAccountants from './ViewAccountants'
 import { ExpandLess, ExpandMore } from '@material-ui/icons'
 import CreateShow from './CreateShow'
+import ViewSalesperson from './ViewSalesperson'
 
 let ManagerDashboardEnum = Object.freeze({
     'default': 1,
     'createAccount': 2,
     'showAccountants': 3,
     'viewShows': 4,
-    'createShow': 5
+    'createShow': 5,
+    'viewSalesperson': 6
 })
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +53,9 @@ function ManagerDashboard(props) {
     }
     const createShowHandler = () => {
         setViewState(ManagerDashboardEnum.createShow)
+    }
+    const viewSalespersonHandler = () => {
+        setViewState(ManagerDashboardEnum.viewSalesperson)
     }
 
     const [showsOpen, setShowsOpen] = useState(false)
@@ -109,7 +114,7 @@ function ManagerDashboard(props) {
                                 </ListItem>
                             </List>
                             <List disablePadding>
-                                <ListItem button className={classes.nested}>
+                                <ListItem button className={classes.nested} onClick={viewSalespersonHandler}>
                                     <ListItemIcon>
                                         <ShowChartIcon />
                                     </ListItemIcon>
@@ -141,6 +146,7 @@ function ManagerDashboard(props) {
     let showAccountantView = <ViewAccountants callback={dashboardCallback} baseURL={props.baseURL} />
     let viewShowsView = <ViewShows callback={dashboardCallback} baseURL={props.baseURL}/>
     let createShowsView = <CreateShow callback={dashboardCallback} baseURL={props.baseURL} />
+    let viewSalesperson = <ViewSalesperson callback={dashboardCallback} baseURL={props.baseURL} />
 
     let currView
     switch (viewState) {
@@ -158,6 +164,9 @@ function ManagerDashboard(props) {
         break
     case ManagerDashboardEnum.createShow:
         currView = createShowsView
+        break
+    case ManagerDashboardEnum.viewSalesperson:
+        currView = viewSalesperson
         break
     default:
         throw Error('Invalid state in Manager Dashboard')
