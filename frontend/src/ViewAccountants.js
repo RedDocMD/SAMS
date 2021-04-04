@@ -8,7 +8,6 @@ import {
 import axios from 'axios'
 const JSONbig = require('json-bigint')({ storeAsString: true })
 
-
 function viewAccountants(props){
 
     let returnHandler = () => {
@@ -24,10 +23,9 @@ function viewAccountants(props){
             let url =  `${props.baseURL}/users`
             setUsers([])
             const response = await axios.get(url, {transformResponse : data => data })
-            console.log(response.data)
+            // console.log(response.data)
             const json = JSONbig.parse(response.data)
             setUsers(json)
-            // console.log(users)
         }catch (e){
             setUsers([])
         }
@@ -35,11 +33,8 @@ function viewAccountants(props){
 
     let handleDelete = async () => {
         let url = `${props.baseURL}/users/`
-        url  = url + userId
-        // console.log(BigInt(userId))
-        // console.log(event)
-        // console.log(bigId)
-        console.log(url)
+        url  = url.concat( userId )
+        // console.log(url)
         try {
             const resp = await axios.delete(url)
             console.log(resp)
@@ -119,7 +114,7 @@ function viewAccountants(props){
         return user.type.toString() === 'Accountant'
     }).map( (user) => getElement(user))
 
-    console.log(users)
+    // console.log(users)
 
     return(
         <Container>

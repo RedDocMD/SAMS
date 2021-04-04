@@ -57,9 +57,9 @@ function App() {
 
     const loginView = <Login loginCallback={loginUser} baseURL={baseURL} signUpHandler = {createAccountUserHandler}/>
     const managerDashboardView = <ManagerDashboard baseURL={baseURL}/>
-    const salespersonDashboardView = <BookTicket baseURL = {baseURL} callback={()=>setCurrState(1)} salespersonId={currId} name = {currUserName}/>
+    const salespersonDashboardView = <BookTicket baseURL = {baseURL} callback={()=>setCurrState(1)} salespersonId = {currId} name = {currUserName}/>
     const accountantDashboardView = <AddExpenditure baseURL = {baseURL} callback={()=>setCurrState(1)} accountantId = {currId} name = {currUserName} />
-    const userDashboardView = <UserDashboard baseURL = {baseURL} customerId = {currId}/>
+    const userDashboardView = <UserDashboard baseURL = {baseURL}/>
     const createAccountUserView = <CreateAccountUser baseURL = {baseURL}  goBackToLogin = {loginCallbackHandler}/>
 
     let currView

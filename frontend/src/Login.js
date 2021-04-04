@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Box, Button, Container, Grid, TextField, Typography } from '@material-ui/core'
+import {Box, Button, Container, Fab, Grid, TextField, Typography} from '@material-ui/core'
 import Link from '@material-ui/core/Link'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-const JSONbig = require('json-bigint')({storeAsString: true})
+import AddIcon from '@material-ui/icons/Add'
+const JSONbig = require('json-bigint')({ storeAsString: true })
 
 function LoginPage(props) {
     let [username, setUsername] = useState('')
@@ -23,7 +24,7 @@ function LoginPage(props) {
             let json = JSONbig.parse(data)
             setUserNotFoundError(false)
             let name = json.username
-            let id = (json.id)
+            let id = json.id
             let type = json.type
             props.loginCallback(id, type, name)
         } else {
@@ -44,7 +45,7 @@ function LoginPage(props) {
 
     return (
         <Container>
-            <Grid container spacing={3}>
+            <Grid container spacing={5}>
                 <Grid item xs={12}>
                     <Box mt={3}>
                         <Typography variant="h3" align="center">
@@ -69,9 +70,9 @@ function LoginPage(props) {
                 </Grid>
                 <Grid item xs={12} mt={3}>
                     <Box display = 'flex' justifyContent = 'center'>
-                        <Link href="#" onClick={createAccountHandler} color="secondary">
+                        <Fab variant="extended" onClick={createAccountHandler}>
                             Dont have an account? Signup
-                        </Link>
+                        </Fab>
                     </Box>
 
                     {/*<Button align = 'center' variant="contained" color="primary" onClick={createAccountHandler}>SignUp</Button>*/}

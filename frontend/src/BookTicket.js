@@ -12,16 +12,7 @@ import {
 } from '@material-ui/core'
 import axios from 'axios'
 import {Alert, AlertTitle} from '@material-ui/lab'
-import JSONbig from 'json-bigint'
-
-const bigIntToString = num => {
-    const parts = num.c
-    let res = ''
-    for (const part of parts) {
-        res = res.concat(part.toString())
-    }
-    return res
-}
+const JSONbig = require('json-bigint')({ storeAsString: true })
 
 function bookTicket(props){
     //dummy
@@ -31,13 +22,11 @@ function bookTicket(props){
 
     let [users,setUsers] = useState([])
     let [userName,setUsername] = useState('')
-    let [userId,setUserId] = useState('')
     let [shows,setShows] = useState([])
     let [showName,setShowName] = useState('')
     let [showId,setShowId] = useState('')
     let [numTickets,setNumTickets] = useState(0)
     let [ticketPrice,setTicketPrice] = useState([0,0]) // balcony then regular
-    let [available,setAvailable] = useState([0,0])
     let [selectedTicketPrice,setSelectedTicketPrice] = useState(0)
     let [ticketType,setTicketType] = useState('')
     let [open, setOpen] = useState(false)
@@ -51,9 +40,8 @@ function bookTicket(props){
             // console.log(datetime)
             // console.log(callerEvent.target.value)
             if(callerEvent.target.value.toString().includes(new Date(datetime).toString())){
-                setShowId(bigIntToString(show.id))
+                setShowId(show.id)
                 setTicketPrice([parseInt(show.balconyTicketPrice),parseInt(show.regularTicketPrice)])
-                setAvailable([parseInt(show.balconyTicketCount),parseInt(show.regularTicketCount)])
                 if(ticketType === 'Regular'){
                     setSelectedTicketPrice(parseInt(ticketPrice[1]))
                 }
@@ -68,12 +56,6 @@ function bookTicket(props){
 
     let changeUsername = callerEvent => {
         setUsername(callerEvent.target.value.toString())
-        for(let user of users){
-            if(callerEvent.target.value.toString() === user.username){
-                setUserId(bigIntToString(user.id))
-                return
-            }
-        }
         setMessage(0)
     }
     let changeNumTickets = callerEvent => {
@@ -116,7 +98,7 @@ function bookTicket(props){
     }
 
     let getElement = (show)=>{
-        let uKey = bigIntToString(show.id)
+        let uKey = show.id
         let datetime = show.date.concat('T').concat(show.time)
         // console.log(uKey)
         let showString = `${show.name} on ${new Date(datetime).toString()}`
@@ -128,7 +110,7 @@ function bookTicket(props){
     }
 
     let getUser = (user)=>{
-        let uKey = bigIntToString(user.id)
+        let uKey = user.id
         return(
             <MenuItem value={user.username} key={uKey}>
                 {user.username}
@@ -141,7 +123,6 @@ function bookTicket(props){
         fetchAllUsers()
     },[])
 
-
     const handleClickOpen = () => {
         setOpen(true)
     }
@@ -152,9 +133,24 @@ function bookTicket(props){
     //         return
     //     }
         setOpen(false)
-        if( (ticketType === 'Regular' && numTickets>available[1]) || (ticketType === 'Balcony' && numTickets>available[0]) ){
+        let availableTickets = 0
+        for(let show of shows){
+            if(showId === show.id){
+                availableTickets = parseInt( (ticketType === 'Regular') ? show.regularTicketCount : show.balconyTicketCount )
+                break
+            }
+        }
+        if(numTickets>availableTickets){
             setMessage(2)
             return
+        }
+
+        let userId = 0
+        for(let user of users){
+            if(user.username === userName){
+                userId = user.id
+                break
+            }
         }
         let data = {
             ticket: {
@@ -235,7 +231,7 @@ function bookTicket(props){
                 <Grid item xs={3}/>
 
                 <Grid item xs={4}>
-                    <Typography variant="h6" align="right">Select a show: </Typography>
+                    <Typography variant="h6" align="right">Select a show : </Typography>
                 </Grid>
 
                 <Grid item xs={6} >
@@ -258,7 +254,7 @@ function bookTicket(props){
                 <Grid item xs={2} />
 
                 <Grid item xs={4}>
-                    <Typography variant="h6" align="right">Select a Customer: </Typography>
+                    <Typography variant="h6" align="right">Select a Customer : </Typography>
                 </Grid>
 
                 <Grid item xs={6} >
@@ -284,7 +280,7 @@ function bookTicket(props){
                     <Typography variant="h6" align="right">Enter Number of Tickets : </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <TextField fullWidth id="outlined-basic" label="Number of Tickets" variant="outlined" onChange={changeNumTickets}/>
+                    <TextField type='number' fullWidth id="outlined-basic" label="Number of Tickets" variant="outlined" onChange={changeNumTickets}/>
                 </Grid>
                 <Grid item xs={2} />
 
@@ -316,7 +312,7 @@ function bookTicket(props){
                     <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Log Out</Button>
                 </Grid>
                 <Grid item xs={2}>
-                    <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Book</Button>
+                    <Button size="large" variant="contained" color="secondary" onClick={handleClickOpen}>Book</Button>
                     <Dialog
                         open={open}
                         onClose={handleClose}
@@ -333,7 +329,7 @@ function bookTicket(props){
                             <Button variant="contained" onClick={handleClose} color="primary">
                                 No, Take me back
                             </Button>
-                            <Button variant="contained" onClick={submitAndClose} color="primary" autoFocus>
+                            <Button variant="contained" onClick={submitAndClose} color="secondary" autoFocus>
                                 Yes, I want to book
                             </Button>
                         </DialogActions>

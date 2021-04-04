@@ -35,7 +35,11 @@ function ViewShowsUser(props) {
                 setShows([])
                 const response = await axios.get(url,{transformResponse: data => data})
                 const json = JSONbig.parse(response.data)
-                setShows(json)
+                setShows(json.filter((show)=>{
+                    let currDate = new Date()
+                    let showDate = new Date(show.date.concat('T').concat(show.time))
+                    return showDate>=currDate
+                }))
             }catch (e){
                 setShows([])
             }

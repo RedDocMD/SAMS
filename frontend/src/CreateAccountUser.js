@@ -5,7 +5,11 @@ import {Alert} from '@material-ui/lab'
 import {
     Button,
     Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+    FormControl,
     Grid,
+    InputLabel,
+    MenuItem,
+    Select,
     TextField,
     Typography,
     Box
@@ -44,6 +48,7 @@ function CreateAccountUser(props) {
             type : 'Customer',
         }
         if(password != confirmPassword){
+            setOpen(false)
             setMessage(3)
         }
         else {
