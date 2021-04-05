@@ -3,7 +3,7 @@ import {
     Avatar,
     Button, Card, CardActions, CardContent,
     Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid,
-    Typography, Box
+    Typography, Box, Paper
 } from '@material-ui/core'
 import axios from 'axios'
 const JSONbig = require('json-bigint')({ storeAsString: true })
@@ -65,24 +65,24 @@ function viewAccountants(props){
         let id = user.id
         // console.log(user)
         return (
-            <Grid item xs={4} key={id}>
+            <Grid item xs={3} key={id}>
 
-                <Card variant="outlined" style={{backgroundColor: 'black'}}>
+                <Card component={Paper} variant="outlined" >
                     <CardContent>
                         <Grid container spacing={1} alignItems="center">
                             <Grid item xs={3}>
-                                <Avatar style={{backgroundColor:'blue'}}>{user.username[0].toUpperCase()}</Avatar>
+                                <Avatar style={{color:'white'}}>{user.username[0].toUpperCase()}</Avatar>
                             </Grid>
                             <Grid item xs ={9}>
                                 <Typography style={{fontSize:17,color:'white'}}>
-                                    Username: {user.username}
+                                    {user.username}
                                 </Typography>
                             </Grid>
                         </Grid>
                     </CardContent>
 
                     <CardActions >
-                        <Button variant="contained" color="secondary" size="small" onClick={() => handleClickOpen(id)} >Delete Account </Button>
+                        <Button  variant="contained" color="secondary" size="small" onClick={() => handleClickOpen(id)} >Delete Account </Button>
                         <Dialog
                             open={open}
                             onClose={handleClose}
