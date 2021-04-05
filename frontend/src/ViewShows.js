@@ -46,7 +46,7 @@ function ViewShows(props) {
 
     let [viewState, setViewState] = useState(1)
     let [shows, setShows] = useState([])
-    let [show, setShow] = useState('')
+    let [show, setShow] = useState({})
 
     let goBackHandler = () => {
         props.callback()
