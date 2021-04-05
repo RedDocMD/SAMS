@@ -22,8 +22,8 @@ const StateEnum = Object.freeze({
 const baseURL = 'http://localhost:8080'
 
 function App() {
-    const [currId, setCurrId] = useState(undefined)
-    const [currUserName,setCurrUserName] = useState(undefined)
+    const [currId, setCurrId] = useState('')
+    const [currUserName,setCurrUserName] = useState('')
     const [currState, setCurrState] = useState(StateEnum.toLogin)
 
     let createAccountUserHandler = () => {
@@ -31,8 +31,8 @@ function App() {
     }
 
     let loginCallbackHandler = () => {
-        setCurrId(undefined)
-        setCurrUserName(undefined)
+        setCurrId('')
+        setCurrUserName('')
         setCurrState(StateEnum.toLogin)
     }
 
@@ -59,8 +59,8 @@ function App() {
 
     const loginView = <Login loginCallback={loginUser} baseURL={baseURL} signUpHandler = {createAccountUserHandler}/>
     const managerDashboardView = <ManagerDashboard baseURL={baseURL}/>
-    const salespersonDashboardView = <BookTicket baseURL = {baseURL} callback={()=>setCurrState(1)} salespersonId = {currId} name = {currUserName}/>
-    const accountantDashboardView = <AddExpenditure baseURL = {baseURL} callback={()=>setCurrState(1)} accountantId = {currId} name = {currUserName} />
+    const salespersonDashboardView = <BookTicket baseURL = {baseURL} callback={loginCallbackHandler} salespersonId = {currId} name = {currUserName}/>
+    const accountantDashboardView = <AddExpenditure baseURL = {baseURL} callback={loginCallbackHandler} accountantId = {currId} name = {currUserName} />
     const userDashboardView = <UserDashboard baseURL = {baseURL} customerId = {currId}/>
     const createAccountUserView = <CreateAccountUser baseURL = {baseURL}  goBackToLogin = {loginCallbackHandler}/>
 
@@ -100,7 +100,7 @@ function App() {
             <AccountCircleIcon />
             <Box component='span' display='flex' align='center' pl={1}>
                 <Typography>
-                    Hello
+                    {currUserName ? currUserName : ''}
                 </Typography>
             </Box>
         </Box>
