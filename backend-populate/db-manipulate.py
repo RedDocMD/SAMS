@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import datetime
 import argparse
+import time
 
 client = MongoClient('localhost', 27017)
 db = client['test']
@@ -17,8 +18,8 @@ show_date = datetime.date.today()
 shows = [
     {
         'name': 'You Name',
-        'date': show_date.strftime('%Y-%m-%d'),
-        'time': '16:00:00',
+        'date': show_date,
+        'time': datetime.datetime(2021, 10, 20, 16, 00, 00).time(),
         'duration': 'PT90M',
         'balconyTicketCount': 250,
         'balconyTicketPrice': 1000,
@@ -27,8 +28,8 @@ shows = [
     },
     {
         'name': 'DJ Aajgar',
-        'date': show_date.strftime('%Y-%m-%d'),
-        'time': '20:00:00',
+        'date': show_date,
+        'time': datetime.datetime(2021, 10, 20, 20, 00, 00).time(),
         'duration': 'PT15M',
         'balconyTicketCount': 250,
         'balconyTicketPrice': 100,
@@ -37,8 +38,8 @@ shows = [
     },
     {
         'name': 'Frozen 2',
-        'date': show_date.strftime('%Y-%m-%d'),
-        'time': '9:00:00',
+        'date': show_date,
+        'time': datetime.datetime(2021, 10, 20, 9, 00, 00).time(),
         'duration': 'PT100M',
         'balconyTicketCount': 250,
         'balconyTicketPrice': 750,

@@ -19,8 +19,7 @@ public class PreloadDatabase {
     @Bean
     CommandLineRunner preloadUserDatabase(UserRepository userRepository) {
         return arg -> {
-            var allUsers = userRepository.findAll();
-            if (allUsers.isEmpty()) {
+            if (userRepository.findByUsername("root").isEmpty()) {
                 var rootUser = new User("root", "toor", UserType.Manager);
                 log.info("Preloading " + userRepository.save(rootUser));
             }
