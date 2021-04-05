@@ -61,6 +61,7 @@ function ViewShowsUser(props) {
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                             <TableRow>
+                                <TableCell align="left">Show Name</TableCell>
                                 <TableCell>Date</TableCell>
                                 <TableCell align="right">Time</TableCell>
                                 <TableCell align="right">Duration</TableCell>
@@ -71,10 +72,11 @@ function ViewShowsUser(props) {
                         <TableBody>
                             {shows.map((show) => (
                                 <TableRow key={show.id}>
+                                    <TableCell align="left">{show.name}</TableCell>
                                     <TableCell component="th" scope="row">
-                                        {show.date}
+                                        {new Date(show.date).toLocaleDateString()}
                                     </TableCell>
-                                    <TableCell align="right">{show.time}</TableCell>
+                                    <TableCell align="right">{new Date(show.date.concat('T').concat(show.time)).toLocaleTimeString()}</TableCell>
                                     <TableCell align="right">{show.duration}</TableCell>
                                     <TableCell align="right">{show.regularTicketPrice}</TableCell>
                                     <TableCell align="right">{show.balconyTicketPrice}</TableCell>
