@@ -1,5 +1,5 @@
 import Login from './Login'
-import {AppBar, Box, Toolbar, Typography, Menu, MenuItem} from '@material-ui/core'
+import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, IconButton} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import React, {useState} from 'react'
 
@@ -26,7 +26,6 @@ function App() {
     const [currUserName,setCurrUserName] = useState('')
     const [currState, setCurrState] = useState(StateEnum.toLogin)
     const [anchorEl, setAnchorEl] = useState(null)
-
     const isMenuOpen = Boolean(anchorEl)
 
     let createAccountUserHandler = () => {
@@ -40,7 +39,7 @@ function App() {
     }
 
     const openMenuHandler = ev => {
-        setAnchorEl(ev.currentTarget)
+        setAnchorEl(ev.target)
     }
 
     const closeMenuHandler = () => {
@@ -118,29 +117,31 @@ function App() {
                         Student Auditorium Management System (SAMS)
                     </Typography>
                     {currId && 
-                    (<Box component='span' display='flex' align='center' className={classes.logout} onClick={openMenuHandler}>
-                        <AccountCircleIcon />
-                        <Box component='span' display='flex' align='center' pl={1}>
-                            <Typography>
-                                {currUserName}
-                            </Typography>
+                    (<Box component='span' alignItems='center'> 
+                        <Box component='span'>
+                            <IconButton onClick={openMenuHandler}>
+                                <AccountCircleIcon />
+                            </IconButton>
+                            <Menu
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={isMenuOpen}
+                                onClose={closeMenuHandler}
+                            >
+                                <MenuItem onClick={loginCallbackHandler}>Logout</MenuItem>
+                            </Menu>
                         </Box>
-                        <Menu
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={isMenuOpen}
-                            onClose={closeMenuHandler}
-                        >
-                            <MenuItem onClick={loginCallbackHandler}>Logout</MenuItem>
-                        </Menu>
+                        <Box component='span' fontSize='h6.fontSize' justifyContent='center'>
+                            {currUserName}
+                        </Box>
                     </Box>)}
                 </Toolbar>
             </AppBar>
