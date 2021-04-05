@@ -1,4 +1,7 @@
 package eternal.blue.db.matters;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -17,12 +20,21 @@ import static com.google.common.collect.Lists.newArrayList;
 public class UnloadAndPreloadDatabase {
     private static final Logger log = LoggerFactory.getLogger(UnloadAndPreloadDatabase.class);
 
+    private void clearDatabase() {
+        MongoClient client = MongoClients.create();
+        MongoDatabase db = client.getDatabase("test");
+        for (var collectionName : db.listCollectionNames()) {
+            var collection = db.getCollection(collectionName);
+            collection.drop();
+            log.info("Cleared " + collectionName);
+        }
+    }
+
     @Bean
     CommandLineRunner preloadUserDatabase(UserRepository userRepository, ShowRepository showRepository) {
         return arg -> {
-            userRepository.deleteAll();
-            showRepository.deleteAll();
-            log.info("Cleared user and show repos");
+            clearDatabase();
+
             LocalDate today = LocalDate.now();
             LocalDate showDay = today.plus(Period.ofDays(10));
             List<Show> shows = newArrayList(
