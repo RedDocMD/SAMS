@@ -139,7 +139,7 @@ function App() {
                                 <MenuItem onClick={loginCallbackHandler}>Logout</MenuItem>
                             </Menu>
                         </Box>
-                        <Box component='span' fontSize='h6.fontSize' justifyContent='center'>
+                        <Box component='span' fontSize='h6.fontSize' alignItems="center">
                             {currUserName}
                         </Box>
                     </Box>)}

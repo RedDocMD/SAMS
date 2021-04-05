@@ -8,18 +8,14 @@ import {
     MenuItem,
     Select,
     TextField,
-    Typography
+    Typography,
+    Box
 } from '@material-ui/core'
 import axios from 'axios'
-import {Alert, AlertTitle} from '@material-ui/lab'
+import {Alert} from '@material-ui/lab'
 const JSONbig = require('json-bigint')({ storeAsString: true })
 
 function bookTicket(props){
-    //dummy
-    let returnHandler = () => {
-        props.callback()
-    }
-
     let [users,setUsers] = useState([])
     let [userName,setUsername] = useState('')
     let [shows,setShows] = useState([])
@@ -217,11 +213,11 @@ function bookTicket(props){
         <Container>
             <Grid container spacing={6} alignItems="center">
                 <Grid item xs={3}>
-                    <Alert severity="success">
+                    {/* <Alert severity="success">
                         <AlertTitle>
                             <Typography variant="h5" align="center">Welcome, {props.name}</Typography>
                         </AlertTitle>
-                    </Alert>
+                    </Alert> */}
                 </Grid>
 
                 <Grid item xs={6}>
@@ -308,11 +304,13 @@ function bookTicket(props){
                 <Grid item xs={2} />
 
                 <Grid item xs={4} />
-                <Grid item xs={2}>
+                {/* <Grid item xs={2}>
                     <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Log Out</Button>
-                </Grid>
-                <Grid item xs={2}>
-                    <Button size="large" variant="contained" color="secondary" onClick={handleClickOpen}>Book</Button>
+                </Grid> */}
+                <Grid item xs={4}>
+                    <Box display='flex' justifyContent='center'>
+                        <Button size="large" variant="contained" color="secondary" onClick={handleClickOpen}>Book</Button>
+                    </Box>
                     <Dialog
                         open={open}
                         onClose={handleClose}
