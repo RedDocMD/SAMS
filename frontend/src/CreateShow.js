@@ -68,7 +68,7 @@ function CreateShow(props) {
         alert = <Alert severity='warning'>Failed to create show - server error</Alert>
         break
     case AlertLevelEnum.successAlert:
-        alert = <Alert severity='success'>Created the show `${name}`</Alert>
+        alert = <Alert severity='success'>Created the show `{name}`</Alert>
         break
     default:
         throw new Error('Inconsistent message state')
@@ -222,7 +222,7 @@ function CreateShow(props) {
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
-                                    <Button onClick={() => setOpen(false)} color='default' autoFocus>
+                                    <Button onClick={() => setOpen(false)} color='default' autofocus>
                                         No, Take me Back
                                     </Button>
                                     <Button color='secondary' onClick={createHandler}>

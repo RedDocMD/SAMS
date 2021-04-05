@@ -13,7 +13,7 @@ import CreateAccount from './CreateAccount'
 import ViewAccountants from './ViewAccountants'
 import { ExpandLess, ExpandMore } from '@material-ui/icons'
 import CreateShow from './CreateShow'
-import ViewSalesperson from './ViewSalesperson'
+import YearlyBalanceSheet from './YearlyBalanceSheet'
 
 let ManagerDashboardEnum = Object.freeze({
     'default': 1,
@@ -21,7 +21,7 @@ let ManagerDashboardEnum = Object.freeze({
     'showAccountants': 3,
     'viewShows': 4,
     'createShow': 5,
-    'viewSalesperson': 6
+    'yearlyBalanceSheet': 6
 })
 
 const useStyles = makeStyles((theme) => ({
@@ -54,8 +54,9 @@ function ManagerDashboard(props) {
     const createShowHandler = () => {
         setViewState(ManagerDashboardEnum.createShow)
     }
-    const viewSalespersonHandler = () => {
-        setViewState(ManagerDashboardEnum.viewSalesperson)
+
+    const showYearlyBalanceSheet = () => {
+        setViewState(ManagerDashboardEnum.yearlyBalanceSheet)
     }
 
     const [showsOpen, setShowsOpen] = useState(false)
@@ -114,7 +115,7 @@ function ManagerDashboard(props) {
                                 </ListItem>
                             </List>
                             <List disablePadding>
-                                <ListItem button className={classes.nested} onClick={viewSalespersonHandler}>
+                                <ListItem button className={classes.nested}>
                                     <ListItemIcon>
                                         <ShowChartIcon />
                                     </ListItemIcon>
@@ -130,7 +131,7 @@ function ManagerDashboard(props) {
                                 </ListItem>
                             </List>
                         </Collapse>
-                        <ListItem button>
+                        <ListItem button onClick={showYearlyBalanceSheet}>
                             <ListItemIcon>
                                 <AccountBalanceIcon />
                             </ListItemIcon>
@@ -146,7 +147,7 @@ function ManagerDashboard(props) {
     let showAccountantView = <ViewAccountants callback={dashboardCallback} baseURL={props.baseURL} />
     let viewShowsView = <ViewShows callback={dashboardCallback} baseURL={props.baseURL}/>
     let createShowsView = <CreateShow callback={dashboardCallback} baseURL={props.baseURL} />
-    let viewSalesperson = <ViewSalesperson callback={dashboardCallback} baseURL={props.baseURL} />
+    let viewYearlyBalanceSheet = <YearlyBalanceSheet callback={dashboardCallback} baseURL = {props.baseURL} />
 
     let currView
     switch (viewState) {
@@ -165,8 +166,8 @@ function ManagerDashboard(props) {
     case ManagerDashboardEnum.createShow:
         currView = createShowsView
         break
-    case ManagerDashboardEnum.viewSalesperson:
-        currView = viewSalesperson
+    case ManagerDashboardEnum.yearlyBalanceSheet:
+        currView = viewYearlyBalanceSheet
         break
     default:
         throw Error('Invalid state in Manager Dashboard')

@@ -11,6 +11,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import {bigIntToString} from './utils'
 
 const useStyles = makeStyles({
     table: {
@@ -31,13 +32,12 @@ function ViewShowStats(props) {
     useEffect(() => {
         const fetchTickets = async () => {
             try{
-                console.log(props.show)
-                let url =  `${props.baseURL}/tickets/by_show/${props.show.id}`
+                let url =  `${props.baseURL}/tickets/by_show/${bigIntToString(props.show.id)}`
                 setTickets([])
                 const response = await axios.get(url,{transformResponse: data => data})
                 const json = JSONbig.parse(response.data)
                 setTickets(json)
-                url = `${props.baseURL}/transactions/by_show/${props.show.id}`
+                url = `${props.baseURL}/transactions/by_show/${bigIntToString(props.show.id)}`
                 const response1 = await axios.get(url,{transformResponse: data => data})
                 const json1 = JSONbig.parse(response1.data)
                 setTransactions(json1)
@@ -49,11 +49,11 @@ function ViewShowStats(props) {
     },[])
     let findCount = (flag) => {
         let cnt = 0
-        for (const i in tickets){
-            if (flag === 0 && tickets[i].type === 'Regular'){
+        for (var i in tickets){
+            if (flag == 0 && tickets[i].type == 'Regular'){
                 cnt++
             }
-            if (flag === 1 && tickets[i].type === 'Balcony'){
+            if (flag == 1 && tickets[i].type == 'Balcony'){
                 cnt++
             }
         }
@@ -74,7 +74,7 @@ function ViewShowStats(props) {
                     Number of Regular Seats Booked : {findCount(0)}
                 </Grid>
                 <Grid item xs={4}>
-                    Percentage of Regular Seats Booked : {props.show.regularTicketCount === 0 ? 0 : findCount(0) / props.show.regularTicketCount * 100}%
+                    Percentage of Regular Seats Booked : {props.show.regularTicketCount == 0?0:findCount(0)/props.show.regularTicketCount}%
                 </Grid>
                 <Grid item xs={2} />
                 <Grid item xs={2} />
@@ -82,7 +82,7 @@ function ViewShowStats(props) {
                     Number of Balcony Seats Booked : {findCount(1)}
                 </Grid>
                 <Grid item xs={4}>
-                    Percentage of Balcony Seats Booked : {props.show.balconyTicketCount === 0 ? 0 : findCount(1) / props.show.balconyTicketCount * 100}%
+                    Percentage of Regular Seats Booked : {props.show.balconyTicketCount == 0?0:findCount(1)/props.show.balconyTicketCount}%
                 </Grid>
                 <Grid item xs={2} />
                 <Grid item xs={12}>

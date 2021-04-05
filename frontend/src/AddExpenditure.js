@@ -12,16 +12,7 @@ import {
 } from '@material-ui/core'
 import axios from 'axios'
 import {Alert, AlertTitle} from '@material-ui/lab'
-import JSONbig from 'json-bigint'
-
-const bigIntToString = num => {
-    const parts = num.c
-    let res = ''
-    for (const part of parts) {
-        res = res.concat(part.toString())
-    }
-    return res
-}
+const JSONbig = require('json-bigint')({ storeAsString: true })
 
 function addExpenditure(props){
     //dummy
@@ -45,7 +36,7 @@ function addExpenditure(props){
             // console.log(datetime)
             // console.log(callerEvent.target.value)
             if(callerEvent.target.value.toString().includes(new Date(datetime).toString())){
-                setShowid(bigIntToString(show.id))
+                setShowid(show.id)
                 break
             }
         }
@@ -116,7 +107,7 @@ function addExpenditure(props){
     }
 
     let getElement = (show)=>{
-        let uKey = bigIntToString(show.id)
+        let uKey = show.id
         let datetime = show.date.concat('T').concat(show.time)
         // console.log(uKey)
         let showString = `${show.name} on ${new Date(datetime).toString()}`
