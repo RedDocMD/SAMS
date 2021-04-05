@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: theme.typography.fontWeightBold,
     },
     content: {
-        backgroundColor: '#3F51B4' ,
+        backgroundColor: 'rgba(112, 88, 209,0.75)',
         color: '#FFF'
     },
 }))

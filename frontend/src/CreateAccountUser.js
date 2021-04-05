@@ -95,7 +95,9 @@ function CreateAccountUser(props) {
         <Container>
             <Grid container spacing={6} alignItems="center">
                 <Grid item xs={12}>
-                    <Typography variant="h3" align="center">Create Account</Typography>
+                    <Box mt={3}>
+                        <Typography variant="h3" align="center">Create Account</Typography>
+                    </Box>
                 </Grid>
 
                 <Grid item xs={4}>
@@ -111,7 +113,7 @@ function CreateAccountUser(props) {
                     <Typography variant="h6" align="right">Enter New Password : </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <TextField fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={changePassword}/>
+                    <TextField type='password' fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={changePassword}/>
                 </Grid>
                 <Grid item xs={2} />
 
@@ -119,7 +121,7 @@ function CreateAccountUser(props) {
                     <Typography variant="h6" align="right">Retype Password : </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <TextField fullWidth id="outlined-basic" label="Confirm Password" variant="outlined" onChange={changeConfirmPassword }/>
+                    <TextField type='password' fullWidth id="outlined-basic" label="Confirm Password" variant="outlined" onChange={changeConfirmPassword }/>
                 </Grid>
                 <Grid item xs={2} />
 
@@ -131,7 +133,7 @@ function CreateAccountUser(props) {
                 </Grid>
                 <Grid item xs={2}>
                     <Box display = 'flex' justifyContent='center'>
-                        <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Create</Button>
+                        <Button size="large" variant="contained" color="secondary" onClick={handleClickOpen}>Create</Button>
                     </Box>
                     <Dialog
                         open={open}
@@ -146,10 +148,10 @@ function CreateAccountUser(props) {
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button variant="contained" onClick={handleClose} color="primary">
+                            <Button onClick={handleClose} color="primary">
                                 No, Take me Back
                             </Button>
-                            <Button variant="contained" onClick={submitAndClose} color="primary" autoFocus>
+                            <Button onClick={submitAndClose} color="secondary" autoFocus>
                                 Yes, I want to create
                             </Button>
                         </DialogActions>
