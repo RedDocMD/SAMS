@@ -89,13 +89,13 @@ function ViewBookedTickets(props) {
         fetchTickets()
     },[])
 
-    let listOfShows = []
-    let mapShowToTicket = {}
+    let listOfTickets = []
+    let mapTicketToShow= {}
     for (const ticket of tickets){
         for(const show of shows){
             if(show.id === ticket.showId){
-                listOfShows.push(show)
-                mapShowToTicket[show.id] = ticket
+                listOfTickets.push(ticket)
+                mapTicketToShow[ticket.id] = show
             }
         }
     }
@@ -122,16 +122,16 @@ function ViewBookedTickets(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {listOfShows.map((show) => (
-                                <TableRow key={show.id}>
+                            {listOfTickets.map((ticket) => (
+                                <TableRow key={ticket.id}>
                                     <TableCell component="th" scope="row">
-                                        {show.name}
+                                        {mapTicketToShow[ticket.id].name}
                                     </TableCell>
-                                    <TableCell align="right">{mapShowToTicket[show.id].type}</TableCell>
-                                    <TableCell align="right">{show.time}</TableCell>
-                                    <TableCell align="right">{show.date}</TableCell>
+                                    <TableCell align="right">{ticket.type}</TableCell>
+                                    <TableCell align="right">{mapTicketToShow[ticket.id].time}</TableCell>
+                                    <TableCell align="right">{mapTicketToShow[ticket.id].date}</TableCell>
                                     <TableCell align="right">
-                                        <Button variant="contained" color="secondary" size="small" onClick={() => handleClickOpen(mapShowToTicket[show.id].id)} >Delete Ticket </Button>
+                                        <Button variant="contained" color="secondary" size="small" onClick={() => handleClickOpen(ticket.id)} >Delete Ticket </Button>
                                         <Dialog
                                             open={open}
                                             onClose={handleClose}
