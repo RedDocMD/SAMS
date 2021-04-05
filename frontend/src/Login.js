@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import {Box, Button, Container, Fab, Grid, TextField, Typography} from '@material-ui/core'
-import Link from '@material-ui/core/Link'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import AddIcon from '@material-ui/icons/Add'
 const JSONbig = require('json-bigint')({ storeAsString: true })
 
 function LoginPage(props) {

@@ -13,7 +13,6 @@ function yearlyBalanceSheet(props){
     }
 
     let [transactions,setTransactions] = useState([])
-    let [shows,setShows] = useState([])
     let [idToShow,setIdToShow] =useState(new Map())
 
     // console.log(idToShow)
@@ -23,7 +22,6 @@ function yearlyBalanceSheet(props){
             let url =  `${props.baseURL}/shows`
             const response = await axios.get(url, {transformResponse : data => data })
             const json = JSONbig.parse(response.data)
-            setShows(json)
             for(let show of json){
                 setIdToShow(idToShow.set(show.id,show))
             }
