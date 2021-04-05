@@ -1,6 +1,6 @@
 FROM node:lts-alpine
 WORKDIR /app
-ADD package.json package.json
+ADD package.json .
 RUN npm install
 COPY src/ src
 COPY public/ public
