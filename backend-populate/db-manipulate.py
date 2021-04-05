@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 import datetime
+import argparse
 
 client = MongoClient('localhost', 27017)
 db = client['test']
@@ -96,7 +97,16 @@ def prepopulate():
 
 
 def main():
-    pass
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '-c', '--clear', help='Clear all data in test db', action='store_true')
+    parser.add_argument('-p', '--populate',
+                        help='Populate db with some init data', action='store_true')
+    args = parser.parse_args()
+    if args.clear:
+        clear_all_collections()
+    if args.populate:
+        prepopulate()
 
 
 if __name__ == '__main__':
