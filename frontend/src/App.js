@@ -1,5 +1,5 @@
 import Login from './Login'
-import {AppBar, Box, Toolbar, Typography} from '@material-ui/core'
+import {AppBar, Box, Toolbar, Typography, Menu, MenuItem} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import React, {useState} from 'react'
 
@@ -25,6 +25,9 @@ function App() {
     const [currId, setCurrId] = useState('')
     const [currUserName,setCurrUserName] = useState('')
     const [currState, setCurrState] = useState(StateEnum.toLogin)
+    const [anchorEl, setAnchorEl] = useState(null)
+
+    const isMenuOpen = Boolean(anchorEl)
 
     let createAccountUserHandler = () => {
         setCurrState(StateEnum.createAccountUser)
@@ -34,6 +37,14 @@ function App() {
         setCurrId('')
         setCurrUserName('')
         setCurrState(StateEnum.toLogin)
+    }
+
+    const openMenuHandler = ev => {
+        setAnchorEl(ev.currentTarget)
+    }
+
+    const closeMenuHandler = () => {
+        setAnchorEl(null)
     }
 
     const loginUser = (id, type, name) => {
@@ -100,13 +111,29 @@ function App() {
     const classes = useStyles()
 
     const loginComp = (
-        <Box component='span' display='flex' align='center' className={classes.logout} onClick={loginCallbackHandler}>
+        <Box component='span' display='flex' align='center' className={classes.logout} onClick={openMenuHandler}>
             <AccountCircleIcon />
             <Box component='span' display='flex' align='center' pl={1}>
                 <Typography>
                     {currUserName}
                 </Typography>
             </Box>
+            <Menu
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                open={isMenuOpen}
+                onClose={closeMenuHandler}
+            >
+                <MenuItem onClick={loginCallbackHandler}>Logout</MenuItem>
+            </Menu>
         </Box>
     )
 
