@@ -20,17 +20,8 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import TableBody from '@material-ui/core/TableBody'
-import {makeStyles} from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
 const JSONbig = require('json-bigint')({storeAsString: true})
-
-const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-})
-
-
 
 function ViewBookedTickets(props) {
     let [tickets, setTickets] = useState([])
@@ -83,9 +74,6 @@ function ViewBookedTickets(props) {
     const handleClose = () => {
         setOpen(false)
     }
-
-
-    const classes = useStyles()
 
     useEffect(() => {
         fetchTickets()
