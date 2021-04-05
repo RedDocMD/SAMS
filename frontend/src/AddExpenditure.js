@@ -8,18 +8,14 @@ import {
     MenuItem,
     Select,
     TextField,
-    Typography
+    Typography,
+    Box
 } from '@material-ui/core'
 import axios from 'axios'
-import {Alert, AlertTitle} from '@material-ui/lab'
+import {Alert} from '@material-ui/lab'
 const JSONbig = require('json-bigint')({ storeAsString: true })
 
 function addExpenditure(props){
-    //dummy
-    let returnHandler = () => {
-        props.callback()
-    }
-
     let [showName,setShowName] = useState('')
     let [showid,setShowid] = useState('')
     let [amount,setAmount] = useState(0)
@@ -155,11 +151,11 @@ function addExpenditure(props){
         <Container>
             <Grid container spacing={5} alignItems="center">
                 <Grid item xs={3}>
-                    <Alert severity="success">
+                    {/* <Alert severity="success">
                         <AlertTitle>
                             <Typography  variant="h5" >Welcome, {props.name}</Typography>
                         </AlertTitle>
-                    </Alert>
+                    </Alert> */}
                 </Grid>
 
                 <Grid item xs={6}>
@@ -207,11 +203,10 @@ function addExpenditure(props){
                 <Grid item xs={2} />
 
                 <Grid item xs={4} />
-                <Grid item xs={2}>
-                    <Button size="large" variant="contained" color="primary" onClick={returnHandler}>Log Out</Button>
-                </Grid>
-                <Grid item xs={2}>
-                    <Button size="large" variant="contained" color="primary" onClick={handleClickOpen}>Add</Button>
+                <Grid item xs={4}>
+                    <Box display='flex' justifyContent='center'>
+                        <Button size="large" variant="contained" color="secondary" onClick={handleClickOpen}>Add</Button>
+                    </Box>
                     <Dialog
                         open={open}
                         onClose={handleClose}

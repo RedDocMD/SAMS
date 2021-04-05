@@ -1,5 +1,6 @@
 import Login from './Login'
-import {AppBar, Box, Toolbar, Typography} from '@material-ui/core'
+import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, IconButton} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import React, {useState} from 'react'
 
 import ManagerDashboard from './ManagerDashboard'
@@ -7,6 +8,7 @@ import UserDashboard from './UserDashboard'
 import BookTicket from './BookTicket'
 import AddExpenditure from './AddExpenditure'
 import CreateAccountUser from './CreateAccountUser'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
 const StateEnum = Object.freeze({
     'toLogin': 1,
@@ -22,20 +24,30 @@ const baseURL = 'http://localhost:8080'
 function App() {
     const [currId, setCurrId] = useState('')
     const [currUserName,setCurrUserName] = useState('')
-    const [currUserType, setCurrUserType] = useState('')
     const [currState, setCurrState] = useState(StateEnum.toLogin)
+    const [anchorEl, setAnchorEl] = useState(null)
+    const isMenuOpen = Boolean(anchorEl)
 
     let createAccountUserHandler = () => {
         setCurrState(StateEnum.createAccountUser)
     }
 
     let loginCallbackHandler = () => {
+        setCurrId('')
+        setCurrUserName('')
         setCurrState(StateEnum.toLogin)
+    }
+
+    const openMenuHandler = ev => {
+        setAnchorEl(ev.target)
+    }
+
+    const closeMenuHandler = () => {
+        setAnchorEl(null)
     }
 
     const loginUser = (id, type, name) => {
         setCurrId(id)
-        setCurrUserType(type)
         setCurrUserName(name)
         switch (type) {
         case 'Manager':
@@ -57,8 +69,8 @@ function App() {
 
     const loginView = <Login loginCallback={loginUser} baseURL={baseURL} signUpHandler = {createAccountUserHandler}/>
     const managerDashboardView = <ManagerDashboard baseURL={baseURL}/>
-    const salespersonDashboardView = <BookTicket baseURL = {baseURL} callback={()=>setCurrState(1)} salespersonId = {currId} name = {currUserName}/>
-    const accountantDashboardView = <AddExpenditure baseURL = {baseURL} callback={()=>setCurrState(1)} accountantId = {currId} name = {currUserName} />
+    const salespersonDashboardView = <BookTicket baseURL = {baseURL} callback={loginCallbackHandler} salespersonId = {currId} name = {currUserName}/>
+    const accountantDashboardView = <AddExpenditure baseURL = {baseURL} callback={loginCallbackHandler} accountantId = {currId} name = {currUserName} />
     const userDashboardView = <UserDashboard baseURL = {baseURL} customerId = {currId}/>
     const createAccountUserView = <CreateAccountUser baseURL = {baseURL}  goBackToLogin = {loginCallbackHandler}/>
 
@@ -86,13 +98,51 @@ function App() {
         throw new Error()
     }
 
+    const useStyles = makeStyles(theme => ({
+        title: {
+            flexGrow: 1
+        },
+        logout: {
+            cursor: 'pointer'
+        }    
+    })
+    )
+    const classes = useStyles()
+
     return (
         <Box>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h6">
+                    <Typography variant="h6" className={classes.title}>
                         Student Auditorium Management System (SAMS)
                     </Typography>
+                    {currId && 
+                    (<Box component='span' alignItems='center'> 
+                        <Box component='span'>
+                            <IconButton onClick={openMenuHandler}>
+                                <AccountCircleIcon />
+                            </IconButton>
+                            <Menu
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={isMenuOpen}
+                                onClose={closeMenuHandler}
+                            >
+                                <MenuItem onClick={loginCallbackHandler}>Logout</MenuItem>
+                            </Menu>
+                        </Box>
+                        <Box component='span' fontSize='h6.fontSize' alignItems="center">
+                            {currUserName}
+                        </Box>
+                    </Box>)}
                 </Toolbar>
             </AppBar>
             {currView}
