@@ -91,16 +91,20 @@ function App() {
     const useStyles = makeStyles(theme => ({
         title: {
             flexGrow: 1
-        }})
+        },
+        logout: {
+            cursor: 'pointer'
+        }    
+    })
     )
     const classes = useStyles()
 
     const loginComp = (
-        <Box component='span' display='flex' align='center'>
+        <Box component='span' display='flex' align='center' className={classes.logout} onClick={loginCallbackHandler}>
             <AccountCircleIcon />
             <Box component='span' display='flex' align='center' pl={1}>
                 <Typography>
-                    {currUserName ? currUserName : ''}
+                    {currUserName}
                 </Typography>
             </Box>
         </Box>
@@ -113,7 +117,7 @@ function App() {
                     <Typography variant="h6" className={classes.title}>
                         Student Auditorium Management System (SAMS)
                     </Typography>
-                    {currId ? loginComp : ''}
+                    {currId && loginComp}
                 </Toolbar>
             </AppBar>
             {currView}
