@@ -159,7 +159,9 @@ function addExpenditure(props){
                 </Grid>
 
                 <Grid item xs={6}>
-                    <Typography variant="h3" align="center">Add an Expenditure</Typography>
+                    <Box mt={3}>
+                        <Typography variant="h3" align="center">Add an Expenditure</Typography>
+                    </Box>
                 </Grid>
                 <Grid item xs={3}/>
 

@@ -221,7 +221,9 @@ function bookTicket(props){
                 </Grid>
 
                 <Grid item xs={6}>
-                    <Typography variant="h3" align="center">Book a Ticket</Typography>
+                    <Box mt={3}>
+                        <Typography variant="h3" align="center">Book a Ticket</Typography>
+                    </Box>
                 </Grid>
 
                 <Grid item xs={3}/>

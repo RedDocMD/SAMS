@@ -39,7 +39,7 @@ function App() {
     }
 
     const openMenuHandler = ev => {
-        setAnchorEl(ev.target)
+        setAnchorEl(ev.currentTarget)
     }
 
     const closeMenuHandler = () => {
@@ -49,6 +49,7 @@ function App() {
     const loginUser = (id, type, name) => {
         setCurrId(id)
         setCurrUserName(name)
+        setAnchorEl(null)
         switch (type) {
         case 'Manager':
             setCurrState(StateEnum.managerDashboard)
