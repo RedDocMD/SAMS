@@ -110,33 +110,6 @@ function App() {
     )
     const classes = useStyles()
 
-    const loginComp = (
-        <Box component='span' display='flex' align='center' className={classes.logout} onClick={openMenuHandler}>
-            <AccountCircleIcon />
-            <Box component='span' display='flex' align='center' pl={1}>
-                <Typography>
-                    {currUserName}
-                </Typography>
-            </Box>
-            <Menu
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-                open={isMenuOpen}
-                onClose={closeMenuHandler}
-            >
-                <MenuItem onClick={loginCallbackHandler}>Logout</MenuItem>
-            </Menu>
-        </Box>
-    )
-
     return (
         <Box>
             <AppBar position="static">
@@ -144,7 +117,31 @@ function App() {
                     <Typography variant="h6" className={classes.title}>
                         Student Auditorium Management System (SAMS)
                     </Typography>
-                    {currId && loginComp}
+                    {currId && 
+                    (<Box component='span' display='flex' align='center' className={classes.logout} onClick={openMenuHandler}>
+                        <AccountCircleIcon />
+                        <Box component='span' display='flex' align='center' pl={1}>
+                            <Typography>
+                                {currUserName}
+                            </Typography>
+                        </Box>
+                        <Menu
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={isMenuOpen}
+                            onClose={closeMenuHandler}
+                        >
+                            <MenuItem onClick={loginCallbackHandler}>Logout</MenuItem>
+                        </Menu>
+                    </Box>)}
                 </Toolbar>
             </AppBar>
             {currView}
