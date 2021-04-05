@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import {
     Box,
-    Button,
-    Collapse,
     Container,
     Grid,
     List,
@@ -14,7 +12,6 @@ import {
 import ViewShowsUser from './ViewShowsUser'
 import ViewBookedTickets from './ViewBookedTickets'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
 import ListIcon from '@material-ui/icons/List'
 import MovieIcon from '@material-ui/icons/Movie'
 
@@ -24,17 +21,7 @@ let UserDashboardEnum = Object.freeze({
     'viewBookedTickets': 3,
 })
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-}))
-
-
 function UserDashboard(props) {
-    const classes = useStyles()
 
     let [viewState, setViewState] = useState(1)
     let dashboardCallback = () => {
