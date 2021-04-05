@@ -1,5 +1,6 @@
 import Login from './Login'
 import {AppBar, Box, Toolbar, Typography} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import React, {useState} from 'react'
 
 import ManagerDashboard from './ManagerDashboard'
@@ -7,6 +8,7 @@ import UserDashboard from './UserDashboard'
 import BookTicket from './BookTicket'
 import AddExpenditure from './AddExpenditure'
 import CreateAccountUser from './CreateAccountUser'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
 const StateEnum = Object.freeze({
     'toLogin': 1,
@@ -20,9 +22,8 @@ const StateEnum = Object.freeze({
 const baseURL = 'http://localhost:8080'
 
 function App() {
-    const [currId, setCurrId] = useState('')
-    const [currUserName,setCurrUserName] = useState('')
-    const [currUserType, setCurrUserType] = useState('')
+    const [currId, setCurrId] = useState(undefined)
+    const [currUserName,setCurrUserName] = useState(undefined)
     const [currState, setCurrState] = useState(StateEnum.toLogin)
 
     let createAccountUserHandler = () => {
@@ -30,12 +31,13 @@ function App() {
     }
 
     let loginCallbackHandler = () => {
+        setCurrId(undefined)
+        setCurrUserName(undefined)
         setCurrState(StateEnum.toLogin)
     }
 
     const loginUser = (id, type, name) => {
         setCurrId(id)
-        setCurrUserType(type)
         setCurrUserName(name)
         switch (type) {
         case 'Manager':
@@ -86,13 +88,32 @@ function App() {
         throw new Error()
     }
 
+    const useStyles = makeStyles(theme => ({
+        title: {
+            flexGrow: 1
+        }})
+    )
+    const classes = useStyles()
+
+    const loginComp = (
+        <Box component='span' display='flex' align='center'>
+            <AccountCircleIcon />
+            <Box component='span' display='flex' align='center' pl={1}>
+                <Typography>
+                    Hello
+                </Typography>
+            </Box>
+        </Box>
+    )
+
     return (
         <Box>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h6">
+                    <Typography variant="h6" className={classes.title}>
                         Student Auditorium Management System (SAMS)
                     </Typography>
+                    {currId ? loginComp : ''}
                 </Toolbar>
             </AppBar>
             {currView}
