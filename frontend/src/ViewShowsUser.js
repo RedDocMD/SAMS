@@ -52,7 +52,7 @@ function ViewShowsUser(props) {
             <Grid item xs={12}>
                 <Box mt={3} mb = {3}>
                     <Typography variant="h4" align="center">
-                        Show Stats
+                        All Shows
                     </Typography>
                 </Box>
             </Grid>
