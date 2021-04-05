@@ -82,7 +82,6 @@ function viewAccountants(props){
                     </CardContent>
 
                     <CardActions >
-
                         <Button  variant="contained" color="secondary" size="small" onClick={() => handleClickOpen(id)} >Delete Account </Button>
                         <Dialog
                             open={open}
