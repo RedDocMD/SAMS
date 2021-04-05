@@ -45,3 +45,59 @@ shows = [
         'regularTicketPrice': 400
     },
 ]
+
+users = [
+    {
+        'username': 'deep',
+        'password': 'blue',
+        'type': 'Customer'
+    },
+    {
+        'username': 'bob',
+        'password': 'thebuilder',
+        'type': 'Customer'
+    },
+    {
+        'username': 'aaditya',
+        'password': 'godspeed',
+        'type': 'Customer'
+    },
+    {
+        'username': 'motu',
+        'password': 'samosa',
+        'type': 'Salesperson'
+    },
+    {
+        'username': 'patlu',
+        'password': 'idea',
+        'type': 'Salesperson'
+    },
+    {
+        'username': 'borda',
+        'password': 'chade',
+        'type': 'Accountant'
+    },
+    {
+        'username': 'mejda',
+        'password': 'useless',
+        'type': 'Accountant'
+    },
+    {
+        'username': 'chorda',
+        'password': 'overworked',
+        'type': 'Accountant'
+    },
+]
+
+
+def prepopulate():
+    db.user.insert_many(users)
+    db.show.insert_many(shows)
+
+
+def main():
+    pass
+
+
+if __name__ == '__main__':
+    main()
