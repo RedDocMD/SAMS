@@ -30,6 +30,17 @@ let ViewShowsEnum = Object.freeze({
     'viewShowStats': 2,
 })
 
+function GetSortOrder(prop) {
+    return function(a, b) {
+        if (Date(a[prop]) > Date(b[prop])) {
+            return 1
+        } else if (a[prop] < b[prop]) {
+            return -1
+        }
+        return 0
+    }
+}
+
 function ViewShows(props) {
     const classes = useStyles()
 
@@ -49,6 +60,7 @@ function ViewShows(props) {
     }
 
     let getElement = (show, i) => {
+        let datetime = new Date(show.date.concat('T').concat(show.time))
         return (
             <Grid item xs = {12}  key = {show.id}>
                 <Box className = {classes.root}>
@@ -58,7 +70,7 @@ function ViewShows(props) {
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
-                            <Typography className={classes.heading}>Show at {show.time} on {show.date}</Typography>
+                            <Typography className={classes.heading}>{i+1}. {show.name} on { datetime.toLocaleDateString()} at {datetime.toLocaleTimeString()}</Typography>
                         </AccordionSummary>
                         <AccordionDetails className = {classes.content}>
                             <Grid container spacing={3}>
@@ -103,6 +115,7 @@ function ViewShows(props) {
                 setShows([])
                 const response = await axios.get(url,{transformResponse: data => data})
                 const json = JSONbig.parse(response.data)
+                json.sort(GetSortOrder('date'))
                 setShows(json)
             }catch (e){
                 setShows([])

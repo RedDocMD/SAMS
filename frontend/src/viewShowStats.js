@@ -27,22 +27,7 @@ function ViewShowStats(props) {
 
     let [tickets, setTickets] = useState([])
     let [transactions, setTransactions] = useState([])
-    let [shows,setShows] = useState([])
-    let [idToShow,setIdToShow] = useState(new Map())
 
-    const fetchAllShows = async () => {
-        try{
-            let url =  `${props.baseURL}/shows`
-            const response = await axios.get(url, {transformResponse : data => data })
-            const json = JSONbig.parse(response.data)
-            setShows(json)
-            for(let show of json){
-                setIdToShow(idToShow.set(show.id,show))
-            }
-        }catch (e){
-            console.log(e)
-        }
-    }
 
     useEffect(() => {
         const fetchTickets = async () => {
@@ -61,7 +46,6 @@ function ViewShowStats(props) {
             }
         }
         fetchTickets()
-        fetchAllShows()
     },[])
     let findCount = (flag) => {
         let cnt = 0
@@ -104,7 +88,7 @@ function ViewShowStats(props) {
                 <Grid item xs={12}>
                     <Box mt={3}>
                         <Typography variant="h6" align="center">
-                            Balance Sheet
+                            Balance Sheet for Show: {props.show.name}
                         </Typography>
                     </Box>
                 </Grid>
@@ -113,7 +97,6 @@ function ViewShowStats(props) {
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Name</TableCell>
                                     <TableCell>Type</TableCell>
                                     <TableCell align="center">Time</TableCell>
                                     <TableCell align="right">Amount</TableCell>
@@ -123,7 +106,6 @@ function ViewShowStats(props) {
                             <TableBody>
                                 {transactions.map((transaction) => (
                                     <TableRow key={transaction.id}>
-                                        <TableCell align="left">{idToShow.get(transaction.showId).name}</TableCell>
                                         <TableCell component="th" scope="row">
                                             {transaction.type}
                                         </TableCell>
