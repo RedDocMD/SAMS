@@ -73,8 +73,11 @@ function yearlyBalanceSheet(props){
             credit += data.amount
             ticketsSold++
         }
-        else
+        else{
+            if(data.initiator === 'Customer')
+                ticketsSold--
             debit += data.amount
+        }
         rows.push(data)
     }
 
