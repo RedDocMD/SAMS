@@ -3,10 +3,11 @@ import {Accordion, AccordionDetails, Box, Button, Container, Grid, Typography} f
 import { DataGrid } from '@material-ui/data-grid'
 import axios from 'axios'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import PropTypes from 'prop-types'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
 const JSONbig = require('json-bigint')({ storeAsString: true })
 
-function yearlyBalanceSheet(props){
+function YearlyBalanceSheet(props){
 
     let handleReturn = () =>{
         props.callback()
@@ -148,4 +149,9 @@ function yearlyBalanceSheet(props){
     )
 }
 
-export default yearlyBalanceSheet
+YearlyBalanceSheet.propTypes = {
+    baseURL: PropTypes.string.isRequired,
+    callback: PropTypes.func.isRequired
+}
+
+export default YearlyBalanceSheet

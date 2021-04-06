@@ -13,9 +13,10 @@ import {
 } from '@material-ui/core'
 import axios from 'axios'
 import {Alert} from '@material-ui/lab'
+import PropTypes from 'prop-types'
 const JSONbig = require('json-bigint')({ storeAsString: true })
 
-function addExpenditure(props){
+function AddExpenditure(props){
     let [showName,setShowName] = useState('')
     let [showid,setShowid] = useState('')
     let [amount,setAmount] = useState(0)
@@ -244,5 +245,11 @@ function addExpenditure(props){
     )
 }
 
-export default addExpenditure
+AddExpenditure.propTypes = {
+    baseURL: PropTypes.string.isRequired,
+    callback: PropTypes.func.isRequired,
+    accountantId: PropTypes.string.isRequired,
+}
+
+export default AddExpenditure
 
