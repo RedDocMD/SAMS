@@ -13,9 +13,10 @@ import {
 } from '@material-ui/core'
 import axios from 'axios'
 import {Alert} from '@material-ui/lab'
+import PropTypes from 'prop-types'
 const JSONbig = require('json-bigint')({ storeAsString: true })
 
-function bookTicket(props){
+function BookTicket(props){
     let [users,setUsers] = useState([])
     let [userName,setUsername] = useState('')
     let [shows,setShows] = useState([])
@@ -348,5 +349,10 @@ function bookTicket(props){
     )
 }
 
-export default bookTicket
+BookTicket.propTypes = {
+    baseURL: PropTypes.string.isRequired,
+    salespersonId: PropTypes.string.isRequired
+}
+
+export default BookTicket
 

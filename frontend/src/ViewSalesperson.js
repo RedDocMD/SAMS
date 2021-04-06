@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Box, Button, Container, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, 
     TableHead, TableRow, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core'
 import axios from 'axios'
-const JSONbig = require('json-bigint')({ storeAsString: true })
 import collect from 'collect.js'
 import DeleteIcon from '@material-ui/icons/Delete'
 import assert from 'assert'
 import { Alert } from '@material-ui/lab'
+const JSONbig = require('json-bigint')({ storeAsString: true })
 
 function ViewSalesperson(props) {
     const CurrViewEnum = Object.freeze({

@@ -6,9 +6,10 @@ import {
     Typography, Box, Paper
 } from '@material-ui/core'
 import axios from 'axios'
+import PropTypes from 'prop-types'
 const JSONbig = require('json-bigint')({ storeAsString: true })
 
-function viewAccountants(props){
+function ViewAccountants(props){
 
     let returnHandler = () => {
         props.callback()
@@ -138,4 +139,9 @@ function viewAccountants(props){
     )
 }
 
-export default viewAccountants
+ViewAccountants.propTypes = {
+    baseURL: PropTypes.string.isRequired,
+    callback: PropTypes.func.isRequired
+}
+
+export default ViewAccountants
