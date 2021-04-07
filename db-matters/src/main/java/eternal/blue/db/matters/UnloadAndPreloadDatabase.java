@@ -7,12 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import picocli.CommandLine;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -20,21 +22,38 @@ import static com.google.common.collect.Lists.newArrayList;
 public class UnloadAndPreloadDatabase {
     private static final Logger log = LoggerFactory.getLogger(UnloadAndPreloadDatabase.class);
 
-    private void clearDatabase() {
-        MongoClient client = MongoClients.create();
-        MongoDatabase db = client.getDatabase("test");
-        for (var collectionName : db.listCollectionNames()) {
-            var collection = db.getCollection(collectionName);
-            collection.drop();
-            log.info("Cleared " + collectionName);
-        }
-    }
-
     @Bean
     CommandLineRunner preloadUserDatabase(UserRepository userRepository, ShowRepository showRepository) {
         return arg -> {
-            clearDatabase();
+            new CommandLine(new DatabaseUndertaker(userRepository, showRepository)).execute(arg);
+        };
+    }
 
+    @CommandLine.Command(name="DBUndertaker")
+    private static class DatabaseUndertaker implements Callable<Integer> {
+
+        private final UserRepository userRepository;
+        private final ShowRepository showRepository;
+
+        @CommandLine.Option(names="-c") boolean clear;
+        @CommandLine.Option(names="-p") boolean preset;
+
+        public DatabaseUndertaker(UserRepository userRepository, ShowRepository showRepository) {
+            this.userRepository = userRepository;
+            this.showRepository = showRepository;
+        }
+
+        private void clearDatabase() {
+            MongoClient client = MongoClients.create();
+            MongoDatabase db = client.getDatabase("test");
+            for (var collectionName : db.listCollectionNames()) {
+                var collection = db.getCollection(collectionName);
+                collection.drop();
+                log.info("Cleared " + collectionName);
+            }
+        }
+
+        private void loadDatabase() {
             LocalDate today = LocalDate.now();
             LocalDate showDay = today.plus(Period.ofDays(10));
             List<Show> shows = newArrayList(
@@ -114,7 +133,18 @@ public class UnloadAndPreloadDatabase {
                     )
             );
             userRepository.saveAll(users);
-            log.info("Made " + users.toString());
-        };
+            log.info("Made " + users);
+        }
+
+        @Override
+        public Integer call() {
+            if (clear) {
+                clearDatabase();
+            }
+            if (preset) {
+                loadDatabase();
+            }
+            return 0;
+        }
     }
 }
